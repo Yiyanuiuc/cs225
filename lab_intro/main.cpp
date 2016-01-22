@@ -56,6 +56,12 @@ PNG brighten(PNG original, int amount)
     for (size_t yi = 0; yi < original.height(); yi++) {
         for (size_t xi = 0; xi < original.width(); xi++) {
             /// Your code here!
+            if (original(xi,yi)->red + amount > 255) original(xi,yi)->red = 255;
+            else original(xi,yi)->red = original(xi,yi)->red + amount;
+            if (original(xi,yi)->green + amount > 255) original(xi,yi)->green = 255;
+            else original(xi,yi)->green = original(xi,yi)->green + amount;
+            if (original(xi,yi)->blue + amount > 255) original(xi,yi)->blue = 255;
+            else original(xi,yi)->blue = original(xi,yi)->blue + amount;
         }
     }
     return original;
@@ -74,6 +80,16 @@ PNG brighten(PNG original, int amount)
 PNG blendImages(PNG firstImage, PNG secondImage)
 {
     /// Your code here!
+    secondImage.resize(firstImage.width(), firstImage.height()); 
+
+    for (int x = 0; x < firstImage.width(); x++) {
+        for (int y = 0; y < firstImage.height(); y++) {
+            firstImage(x, y)->red = (firstImage(x, y)->red + secondImage(x, y)->red)/2;
+            firstImage(x, y)->green = (firstImage(x, y)->green + secondImage(x, y)->green)/2;
+            firstImage(x, y)->blue = (firstImage(x, y)->blue + secondImage(x, y)->blue)/2;
+        }
+    }
+
     return firstImage;
 }
 
@@ -113,3 +129,6 @@ int main()
 
     return 0;
 }
+
+
+
