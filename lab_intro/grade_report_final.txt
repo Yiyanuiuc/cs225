@@ -1,0 +1,35 @@
+Monad Autograder
+Testing lab_intro at 2016-01-25 00:19:22
+
+"Simplicity and elegance are unpopular because they require hard work and discipline to achieve and education to be appreciated." ~ Edsger Dijkstra
+
+Setting up test environment...
+Compiling...
+================================================================
+main.cpp:85:23: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned long') [-Wsign-compare]
+    for (int x = 0; x < firstImage.width(); x++) {
+                    ~ ^ ~~~~~~~~~~~~~~~~~~
+main.cpp:86:27: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned long') [-Wsign-compare]
+        for (int y = 0; y < firstImage.height(); y++) {
+                        ~ ^ ~~~~~~~~~~~~~~~~~~~
+2 warnings generated.
+main.cpp:85:23: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned long') [-Wsign-compare]
+    for (int x = 0; x < firstImage.width(); x++) {
+                    ~ ^ ~~~~~~~~~~~~~~~~~~
+main.cpp:86:27: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned long') [-Wsign-compare]
+        for (int y = 0; y < firstImage.height(); y++) {
+                        ~ ^ ~~~~~~~~~~~~~~~~~~~
+2 warnings generated.
+
+
+Running tests...
+================================================================
+testBrighten  . [33 pts] - passed
+testCrosshairs  [33 pts] - passed
+testBlendImages [34 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 100
+
