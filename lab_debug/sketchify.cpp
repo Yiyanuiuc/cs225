@@ -62,7 +62,7 @@ void sketchify()
     output->writeToFile("out.png");
 
     // Clean up memory
-
+    delete myPixel;
     delete output;
     delete original;
 }
