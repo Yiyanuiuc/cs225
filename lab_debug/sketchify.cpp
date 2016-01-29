@@ -12,12 +12,12 @@ PNG* setupOutput(int w, int h)
 }
 
 // Returns my favorite color
-RGBAPixel myFavoriteColor(int intensity)
+RGBAPixel* myFavoriteColor(int intensity)
 {
-    RGBAPixel color;
-    color.red   = 0;
-    color.green = intensity / 2;
-    color.blue  = intensity;
+    RGBAPixel* color = new RGBAPixel;
+    color->red = 0;
+    color->green = intensity / 2;
+    color->blue = intensity;
     return color;
 }
 
@@ -38,8 +38,7 @@ void sketchify()
     output = setupOutput(width, height);
 
     // Load our favorite color to color the outline
-    RGBAPixel temp = myFavoriteColor(192);
-    RGBAPixel* myPixel = &temp;
+    RGBAPixel* myPixel = myFavoriteColor(192);
 
     // Go over the whole image, and if a pixel differs from that to its upper
     // left, color it my favorite color in the output
