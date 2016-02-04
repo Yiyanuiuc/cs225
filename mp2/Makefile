@@ -1,18 +1,29 @@
-EXENAME = testscene
-OBJS = testscene.o scene.o image.o png.o rgbapixel.o
+#EXENAME = testscene testimage
+OBJSS = testscene.o testimage.o scene.o image.o png.o rgbapixel.o
+OBJSI = testimage.o image.o png.o rgbapixel.o
 
 CXX = clang++
 CXXFLAGS = -std=c++1y -stdlib=libc++ -c -g -O0 -Wall
 LD = clang++
 LDFLAGS = -std=c++1y -stdlib=libc++ -lpng -lc++abi
 
-all : $(EXENAME)
+#all : $(EXENAME)
+all : testimage testscene
 
-$(EXENAME) : $(OBJS)
-	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
+#$(EXENAME) : $(OBJS)
+#	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
+
+testscene : $(OBJSS)
+	$(LD) $(OBJSS) $(LDFLAGS) -o testscene
+
+testimage : $(OBJSI)
+	$(LD) $(OBJSI) $(LDFLAGS) -o testimage
 
 testscene.o : testscene.cpp scene.h image.h png.h rgbapixel.h
 	$(CXX) $(CXXFLAGS) testscene.cpp
+
+testimage.o : testimage.cpp image.h png.h rgbapixel.h
+	$(CXX) $(CXXFLAGS) testimage.cpp
 
 scene.o : scene.cpp scene.h image.h png.h rgbapixel.h
 	$(CXX) $(CXXFLAGS) scene.cpp
