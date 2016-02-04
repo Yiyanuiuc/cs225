@@ -1,5 +1,5 @@
-EXENAME = testimage
-OBJS = testimage.o image.o png.o rgbapixel.o
+EXENAME = testscene
+OBJS = testscene.o scene.o image.o png.o rgbapixel.o
 
 CXX = clang++
 CXXFLAGS = -std=c++1y -stdlib=libc++ -c -g -O0 -Wall
@@ -11,8 +11,11 @@ all : $(EXENAME)
 $(EXENAME) : $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
-testimage.o : testimage.cpp image.h png.h rgbapixel.h
-	$(CXX) $(CXXFLAGS) testimage.cpp
+testscene.o : testscene.cpp scene.h image.h png.h rgbapixel.h
+	$(CXX) $(CXXFLAGS) testscene.cpp
+
+scene.o : scene.cpp scene.h image.h png.h rgbapixel.h
+	$(CXX) $(CXXFLAGS) scene.cpp
 
 image.o : image.cpp image.h png.h rgbapixel.h
 	$(CXX) $(CXXFLAGS) image.cpp
