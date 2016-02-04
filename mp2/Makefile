@@ -1,5 +1,5 @@
-#EXENAME = testscene testimage
-OBJSS = testscene.o testimage.o scene.o image.o png.o rgbapixel.o
+EXENAME = testscene testimage
+OBJSS = testscene.o scene.o image.o png.o rgbapixel.o
 OBJSI = testimage.o image.o png.o rgbapixel.o
 
 CXX = clang++
@@ -7,8 +7,7 @@ CXXFLAGS = -std=c++1y -stdlib=libc++ -c -g -O0 -Wall
 LD = clang++
 LDFLAGS = -std=c++1y -stdlib=libc++ -lpng -lc++abi
 
-#all : $(EXENAME)
-all : testimage testscene
+all : $(EXENAME)
 
 #$(EXENAME) : $(OBJS)
 #	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)

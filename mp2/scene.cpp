@@ -12,19 +12,19 @@ Scene::Scene (int max) { // done ?
 	this->xCoord = new int[max];
 	this->yCoord = new int[max];
 
-	for (int i=0; i < this->length - 1; i++) {
-		this->collection[i] = NULL;
-		this->xCoord[i] = 0;
-		this->yCoord[i] = 0;
+	for (int n=0; n < this->length - 1; n++) {
+		this->collection[n] = NULL;
+		this->xCoord[n] = 0;
+		this->yCoord[n] = 0;
 	}
 	cout << "Finish Scene" << endl;
 }
 
 void Scene::clear() {
 
-	for (int i=0; i<length; i++) {
-		delete collection[i];
-		collection[i] = NULL;
+	for (int n=0; n<length; n++) {
+		delete collection[n];
+		collection[n] = NULL;
 	}
 	delete [] collection;
 	delete [] xCoord;
@@ -201,14 +201,14 @@ Image Scene::drawscene () const { // done ?
 
 	int* newW = new int[length];
 	int* newH = new int[length];
-	for (int i=0; i<length; i++) {
-		if (collection[i]!=NULL) {
-			newW[i] = xCoord[i] + collection[i]->width();
-			newH[i] = yCoord[i] + collection[i]->height();
+	for (int n=0; n<length; n++) {
+		if (collection[n]!=NULL) {
+			newW[n] = xCoord[n] + collection[n]->width();
+			newH[n] = yCoord[n] + collection[n]->height();
 		}
 		else {
-			newW[i] = 0;
-			newH[i] = 0;
+			newW[n] = 0;
+			newH[n] = 0;
 		}
 	}
 
@@ -220,8 +220,8 @@ Image Scene::drawscene () const { // done ?
 
 	for (int n=0; n<length; n++) {
 		if (collection[n]!=NULL) {
-			for (int i=0; i<collection[n]->width(); i++) {
-				for (int j=0; j<collection[n]->height(); j++) {
+			for (size_t i=0; i<collection[n]->width(); i++) {
+				for (size_t j=0; j<collection[n]->height(); j++) {
 					*(*result)(xCoord[n]+i, yCoord[n]+j) = *(*collection[n])(i,j);
 				}
 			}
