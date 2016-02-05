@@ -25,6 +25,9 @@ class Allocator
      */
     Allocator(const string& studentFile, const string& roomFile);
 
+    // modified: 
+    ~Allocator();
+    void clear();
 
     /**
      * Calls the solving routine to allocate student letter

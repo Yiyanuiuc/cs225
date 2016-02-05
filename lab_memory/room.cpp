@@ -6,7 +6,7 @@
 #include "room.h"
 
 Room::Room()
-    : capacity(0), count(0), max_letters(26), letters(NULL), letterCount(0)
+    : capacity(0), count(0), max_letters(26), letters(NULL), letterCount(0) 
 {
 }
 
@@ -18,7 +18,9 @@ Room::Room(const string& init_name, int init_capacity)
       letterCount(0)
 {
     letters = new Letter[max_letters];
+//    for (int i=0; i<max_letters; i++) letters[i] = Letter(); // set all pointers pointing to default
 }
+
 
 Room::Room(const Room& other)
 {
@@ -60,8 +62,12 @@ void Room::print()
 
 void Room::clear()
 {
-    if (letters != NULL)
-        delete letters;
+    if (letters != NULL) {
+
+        delete [] letters; 
+        letters = NULL; // set to NULL
+
+    }
 }
 
 void Room::copy(const Room& other)
@@ -69,6 +75,16 @@ void Room::copy(const Room& other)
     name = other.name;
     capacity = other.capacity;
     count = other.count;
+
+    // modified: copy max
+    max_letters = other.max_letters;
+
     letterCount = other.letterCount;
-    letters = other.letters;
+
+    //letters = other.letters;
+
+    // modified: copy the array
+    letters = new Letter[other.max_letters]; 
+    for (int i=0; i<max_letters; i++) {letters[i] = other.letters[i];}
+
 }
