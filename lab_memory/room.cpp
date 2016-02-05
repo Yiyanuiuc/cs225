@@ -65,6 +65,7 @@ void Room::clear()
 
         // modified: []
         delete [] letters; 
+        letters = NULL;
     }
 }
 
