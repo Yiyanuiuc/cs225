@@ -31,11 +31,9 @@ void Allocator::clear()
 {
     if (alpha != NULL) {
         delete [] alpha; 
-        //alpha = NULL; // set to NULL
     }
     if (rooms != NULL) {
         delete [] rooms; 
-        //rooms = NULL; // set to NULL
     }
 }
 
@@ -69,17 +67,18 @@ void Allocator::loadRooms(const string& file)
     fileio::loadRooms(file);
 
     // modified
-     roomCount = fileio::getNumRooms();
+    roomCount = fileio::getNumRooms();
 
     rooms = new Room[roomCount];
 
     totalCapacity = 0;
     int i = 0;
+
+    // modified: move i++ to the end
     while (fileio::areMoreRooms()) {
-        
         rooms[i] = fileio::nextRoom();
         totalCapacity += rooms[i].capacity;
-i++;
+        i++;
     }
 }
 
@@ -106,9 +105,6 @@ void Allocator::allocate()
 
 void Allocator::printRooms()
 {
-
-// modified
-   // roomCount = fileio::getNumRooms();
     // Output the allocation
     cout << "Room Allocation (" << studentCount << "/" << totalCapacity << ")" 
          << endl;

@@ -18,7 +18,6 @@ Room::Room(const string& init_name, int init_capacity)
       letterCount(0)
 {
     letters = new Letter[max_letters];
-//    for (int i=0; i<max_letters; i++) letters[i] = Letter(); // set all pointers pointing to default
 }
 
 
@@ -64,9 +63,8 @@ void Room::clear()
 {
     if (letters != NULL) {
 
+        // modified: []
         delete [] letters; 
-        letters = NULL; // set to NULL
-
     }
 }
 
@@ -81,7 +79,8 @@ void Room::copy(const Room& other)
 
     letterCount = other.letterCount;
 
-    //letters = other.letters;
+    // delete: 
+    // letters = other.letters;
 
     // modified: copy the array
     letters = new Letter[other.max_letters]; 
