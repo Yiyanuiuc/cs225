@@ -1,26 +1,12 @@
-Grading r7884 by qilezhi2 committed on Wed Feb  3 18:55:44 CST 2016
+Grading r8344 by qilezhi2 committed on Thu Feb  4 17:35:00 CST 2016
 Monad Autograder
-Testing mp2 at 2016-02-04 00:12:34
+Testing mp2 at 2016-02-05 00:17:28
 
-"I can calculate the motions of the heavenly bodies, but not the madness of people." ~ Isaac Newton
+"Computer Science is no more about computers than astronomy is about telescopes." ~ E. Dijkstra
 
 Setting up test environment...
 Compiling...
 ================================================================
-scene.cpp:223:19: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned long') [-Wsign-compare]
-                        for (int i=0; i<collection[n]->width(); i++) {
-                                      ~^~~~~~~~~~~~~~~~~~~~~~~
-scene.cpp:224:20: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned long') [-Wsign-compare]
-                                for (int j=0; j<collection[n]->height(); j++) {
-                                              ~^~~~~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
-scene.cpp:223:19: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned long') [-Wsign-compare]
-                        for (int i=0; i<collection[n]->width(); i++) {
-                                      ~^~~~~~~~~~~~~~~~~~~~~~~
-scene.cpp:224:20: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned long') [-Wsign-compare]
-                                for (int j=0; j<collection[n]->height(); j++) {
-                                              ~^~~~~~~~~~~~~~~~~~~~~~~~
-2 warnings generated.
 
 
 Running tests...
@@ -31,7 +17,7 @@ FlipLeftOdd  . . . . . . . . . . . [4 pts] - passed
 AdjustBrightnessEven . . . . . . . [3 pts] - passed
 AdjustBrightnessEven2  . . . . . . [3 pts] - passed
 AdjustBrightnessEven3  . . . . . . [3 pts] - passed
-ImageMakefile  . . . . . . . . . . [5 pts] - FAILED
+ImageMakefile  . . . . . . . . . . [5 pts] - passed
 Valgrind1 (asan) . . . . . . . . . [5 pts] - passed
 AddPictureValidIndex . . . . . . . [2 pts] - passed
 AddPictureInvalidIndex . . . . . . [2 pts] - FAILED
@@ -64,5 +50,5 @@ SceneMakefile  . . . . . . . . . . [5 pts] - passed
 
 Total score...
 ================================================================
-TOTAL SCORE: 70
+TOTAL SCORE: 75
 
