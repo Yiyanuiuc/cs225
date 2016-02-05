@@ -17,7 +17,6 @@ Scene::Scene (int max) { // done ?
 		this->xCoord[n] = 0;
 		this->yCoord[n] = 0;
 	}
-	cout << "Finish Scene" << endl;
 }
 
 void Scene::clear() {
@@ -33,13 +32,10 @@ void Scene::clear() {
 	collection = NULL;
 	xCoord = NULL;
 	yCoord = NULL;
-
-	cout << "Finish clear()" << endl;
 }
 
 Scene::~Scene() {
 	clear();
-	cout << "Finish ~Scene()" << endl;
 };
 
 void Scene::copy(const Scene &source) {
@@ -49,8 +45,8 @@ void Scene::copy(const Scene &source) {
 	xCoord = new int[source.length];
 	yCoord = new int[source.length];
 
-	for (int n=0; n<source.length-1; n++) {
-		if (collection[n]!=NULL) {
+	for (int n=0; n<source.length; n++) {
+		if (source.collection[n] != NULL) {
 			collection[n] = (Image*) new PNG(*source.collection[n]);
 			xCoord[n] = source.xCoord[n];
 			yCoord[n] = source.yCoord[n];
@@ -61,13 +57,10 @@ void Scene::copy(const Scene &source) {
 			yCoord[n] = 0;
 		}		
 	}
-
-	cout << "FInish copy" << endl;
 }
 
 Scene::Scene (const Scene &source) {
 	copy(source);
-	cout << "Finish copy Scene()" << endl;
 }
 
 // Member Function
@@ -126,18 +119,19 @@ void Scene::addpicture (const char *FileName, int index, int x, int y) { // done
 		xCoord[index] = x;
 		yCoord[index] = y;
 	}
-	cout << "Finish addpi()" << endl;
 }
 
-void Scene::changelayer (int index, int newindex) { // done ?
+void Scene::changelayer (int index, int newindex) { 
 
 	if (index<0 || index>=length || newindex<0 || newindex>=length) 
 		cout << "invalid index" << endl;
 	else if (index==newindex) return;
 
 	else {
-		if (collection[newindex]!=NULL) 
+		if (collection[newindex]!=NULL) {
 			delete collection[newindex];
+			collection[newindex] = NULL;
+		}
 		collection[newindex] = collection[index];
 		xCoord[newindex] = xCoord[index];
 		yCoord[newindex] = yCoord[index];
@@ -146,7 +140,6 @@ void Scene::changelayer (int index, int newindex) { // done ?
 		yCoord[index] = 0;
 	}
 	
-	cout << "FInish changelayer" << endl;
 }
 
 void Scene::translate (int index, int xcoord, int ycoord) { // done ?
@@ -158,7 +151,6 @@ void Scene::translate (int index, int xcoord, int ycoord) { // done ?
 		xCoord[index] = xcoord;
 		yCoord[index] = ycoord;
 	}
-	cout << "FInish translate" << endl;
 }
 
 void Scene::deletepicture (int index) { // done ?
@@ -170,19 +162,16 @@ void Scene::deletepicture (int index) { // done ?
 		delete collection[index];
 		collection[index] = NULL;
 	}
-	cout << "FInish delete" << endl;
 }
 
 Image * Scene::getpicture (int index) const { // done ?
 
 	if (index<0 || index>=length || collection[index]==NULL) {
 		cout << "invalid index" << endl;
-		cout << "FInish get" << endl;
 		return NULL;
 	}
 
 	else {
-		cout << "FInish get" << endl;
 		return collection[index];
 	}
 }
@@ -231,7 +220,6 @@ Image Scene::drawscene () const { // done ?
 	delete [] newH;
 	newH = NULL;
 	newW = NULL;
-
-	cout << "Finish draw()" << endl;
+	
 	return *result;
 }

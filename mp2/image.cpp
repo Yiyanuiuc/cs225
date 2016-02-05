@@ -2,7 +2,6 @@
 using namespace std;
 
 void Image::flipleft() {
-	// if (this!=NULL) {
 	for (size_t i=0; i<width()/2; i++) {
 		for (size_t j=0; j<height(); j++) {
 			RGBAPixel temp = *(*this)(i,j);
@@ -10,8 +9,6 @@ void Image::flipleft() {
 			*(*this)(width()-1-i,j) = temp;
 		}
 	}
-	cout << "yo" << endl;
-	// }
 }
 
 void Image::adjustbrightness (int r, int g, int b) {
