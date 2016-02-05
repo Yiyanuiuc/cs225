@@ -24,7 +24,6 @@ Image drawscene () const;
 
 void clear();
 void copy(const Scene &source);
-int maximum(int* array, int lo, int hi) const;
 
 Image ** collection;
 int * xCoord;

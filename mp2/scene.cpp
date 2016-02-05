@@ -1,18 +1,19 @@
 #include "scene.h"
 
 #include <iostream>
+
 using namespace std;
 
 // Constructor & Destructor 
 
-Scene::Scene (int max) { // done ?
+Scene::Scene (int max) { 
 
 	this->collection = new Image*[max];
 	this->length = max;
 	this->xCoord = new int[max];
 	this->yCoord = new int[max];
 
-	for (int n=0; n < this->length - 1; n++) {
+	for (int n=0; n < this->length; n++) { // [Change the range]
 		this->collection[n] = NULL;
 		this->xCoord[n] = 0;
 		this->yCoord[n] = 0;
@@ -71,7 +72,6 @@ const Scene & Scene::operator = (const Scene & source){
 		clear();
 		copy(source);
 	}
-
 	return *this;
 }
 
@@ -81,7 +81,6 @@ void Scene::changemaxlayers (int newmax) {
 
 	else {
 
-		length = newmax;
 		Image** newCollection = new Image*[newmax];
 		int* newXCoord = new int[newmax];
 		int* newYCoord = new int[newmax];
@@ -98,18 +97,19 @@ void Scene::changemaxlayers (int newmax) {
 			newYCoord[n] = 0;
 		}
 
+		length = newmax; // [Change length at the end]
+
 		clear();
 
 		collection = newCollection;
 		xCoord = newXCoord;
 		yCoord = newYCoord;
-
 	}
 }
 
-void Scene::addpicture (const char *FileName, int index, int x, int y) { // done ?
+void Scene::addpicture (const char *FileName, int index, int x, int y) { 
 
-	if (index>=length) cout << "index out of bounds" << endl;
+	if (index<0 || index>=length) cout << "index out of bounds" << endl; // [Invalid]
 
 	else {
 		Image* newImage = new Image();
@@ -176,50 +176,31 @@ Image * Scene::getpicture (int index) const { // done ?
 	}
 }
 
+Image Scene::drawscene () const { 
 
-int Scene::maximum(int* array, int lo, int hi) const { // done ?
-	if (lo>=hi) return array[lo];
-	else {
-		int maxOfNext = maximum(array, lo+1, hi);
-		if (array[lo] > maxOfNext) return array[lo];
-		else return maxOfNext;
-	}
-}
-
-Image Scene::drawscene () const { // done ?
-
-	int* newW = new int[length];
-	int* newH = new int[length];
+	size_t newW = 0;
+	size_t newH = 0;
 	for (int n=0; n<length; n++) {
-		if (collection[n]!=NULL) {
-			newW[n] = xCoord[n] + collection[n]->width();
-			newH[n] = yCoord[n] + collection[n]->height();
-		}
-		else {
-			newW[n] = 0;
-			newH[n] = 0;
+		if (collection[n] != NULL) {
+			if (newW < xCoord[n] + collection[n]->width()) 
+				newW = xCoord[n] + collection[n]->width();
+			if (newH < yCoord[n] + collection[n]->height()) 
+				newH = yCoord[n] + collection[n]->height();
 		}
 	}
 
-	int widthNeeded = maximum(newW, 0, length-1);
-	int heightNeeded = maximum(newH, 0, length-1);
-
-	PNG* resultPNG = new PNG(widthNeeded, heightNeeded);
-	Image* result = (Image*) resultPNG;
+	Image result = Image();
+	result.resize(newW, newH);
 
 	for (int n=0; n<length; n++) {
 		if (collection[n]!=NULL) {
 			for (size_t i=0; i<collection[n]->width(); i++) {
 				for (size_t j=0; j<collection[n]->height(); j++) {
-					*(*result)(xCoord[n]+i, yCoord[n]+j) = *(*collection[n])(i,j);
+					*(result.operator()(xCoord[n]+i, yCoord[n]+j)) = *(collection[n]->operator()(i,j));
 				}
 			}
 		}
 	}
-	delete [] newW;
-	delete [] newH;
-	newH = NULL;
-	newW = NULL;
-	
-	return *result;
+
+	return result;
 }

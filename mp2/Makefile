@@ -1,4 +1,5 @@
-EXENAME = testscene testimage
+EXENAME = testscene testimage testscene-asan testimage-asan
+
 OBJSS = testscene.o scene.o image.o png.o rgbapixel.o
 OBJSI = testimage.o image.o png.o rgbapixel.o
 
@@ -7,10 +8,18 @@ CXXFLAGS = -std=c++1y -stdlib=libc++ -c -g -O0 -Wall
 LD = clang++
 LDFLAGS = -std=c++1y -stdlib=libc++ -lpng -lc++abi
 
+ASANFLAGS = -fsanitize=address -fno-omit-frame-pointer
+
 all : $(EXENAME)
 
 #$(EXENAME) : $(OBJS)
 #	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
+
+testscene-asan : $(OBJSS)
+	$(LD) $(OBJSS) $(LDFLAGS) $(ASANFLAGS) -o testscene-asan
+
+testimage-asan : $(OBJSI)
+	$(LD) $(OBJSI) $(LDFLAGS) $(ASANFLAGS) -o testimage-asan
 
 testscene : $(OBJSS)
 	$(LD) $(OBJSS) $(LDFLAGS) -o testscene
