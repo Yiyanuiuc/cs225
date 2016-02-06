@@ -88,7 +88,8 @@ void Scene::changemaxlayers (int newmax) {
 		// [modified the whole for loop]
 		for (int n=0; n<newmax; n++) {
 			if (n<length && collection[n]!=NULL) {
-				newCollection[n] = (Image*) new PNG(*collection[n]);
+				// delete "new"
+				newCollection[n] = collection[n];
 				newXCoord[n] = xCoord[n];
 				newYCoord[n] = yCoord[n];
 			}
@@ -101,8 +102,11 @@ void Scene::changemaxlayers (int newmax) {
 
 		length = newmax; // [Change length at the end]
 
-		clear();
-
+		// clear(); 
+		// Big change here
+		delete [] collection;
+		delete [] xCoord;
+		delete [] yCoord;
 		collection = newCollection;
 		xCoord = newXCoord;
 		yCoord = newYCoord;
