@@ -7,14 +7,19 @@ using namespace std;
 // Constructor & Destructor 
 
 Scene::Scene (int max) { 
+	// "You may assume that max > 0."
 
+	// "dynamically allocating an array of Image pointers of size "max""
 	this->collection = new Image*[max];
+	// "storing "max" as a member variable"
 	this->length = max;
+	// "creating storage for the coordinates"
 	this->xCoord = new int[max];
 	this->yCoord = new int[max];
 
 	// Initialize all variables
 	for (int n=0; n < this->length; n++) { 
+		// "initializing all of them to NULL"
 		this->collection[n] = NULL;
 		this->xCoord[n] = 0;
 		this->yCoord[n] = 0;
@@ -37,6 +42,7 @@ void Scene::clear() {
 }
 
 Scene::~Scene() {
+	// "Frees all space that was dynamically allocated by this Scene"
 	clear();
 };
 
@@ -69,14 +75,19 @@ Scene::Scene (const Scene &source) {
 
 const Scene & Scene::operator = (const Scene & source){
 
+	// "checks for self assignment"
 	if (this != &source) {
+		// "deletes everything this Scene has allocated, "
 		clear();
+		// "makes this Scene an independent copy of the source"
 		copy(source);
 	}
+	// "returns a reference to the current instance"
 	return *this;
 }
 
 void Scene::changemaxlayers (int newmax) { 
+	// "You may assume newmax is greater than zero."
 
 	// "this cannot be done because there are non-null pointers outside the range [0, newmax-1]
 	if (this->length > newmax) cout << "invalid newmax" << endl;
@@ -117,13 +128,16 @@ void Scene::changemaxlayers (int newmax) {
 }
 
 void Scene::addpicture (const char *FileName, int index, int x, int y) { 
+	// "You may assume that x and y are integers in the range [0, MAXINT]."
 
 	// * Invalid input
+	// "If the index is not within the range"
 	if (index<0 || index>=length) cout << "index out of bounds" << endl; 
 
 	else {
 
 		// * 
+		// "If there is already an Image in cell location index it should be replaced by the new Image"
 		if (collection[index] != NULL) {
 			delete collection[index];
 			collection[index] = NULL;
@@ -140,11 +154,16 @@ void Scene::addpicture (const char *FileName, int index, int x, int y) {
 
 void Scene::changelayer (int index, int newindex) { 
 
+	// "If either index is invalid, do nothing and use the following code to print an error message"
 	if (index<0 || index>=length || newindex<0 || newindex>=length) 
 		cout << "invalid index" << endl;
+
+	// "If the new index is the same as the old index, do nothing and return."
 	else if (index==newindex) return;
 
 	else { // * have to move
+
+		// "If the destination is already occupied, delete the image there."
 		if (collection[newindex]!=NULL) {
 			delete collection[newindex];
 			collection[newindex] = NULL;
@@ -152,14 +171,17 @@ void Scene::changelayer (int index, int newindex) {
 
 		// * newindex has been set to NULL
 		// * If index==NULL unchanged. change newX newY
+		// "do not prevent the user from requesting that a NULL Image pointer be moved to an occupied spot."
 		if (collection[index]==NULL) {
 			xCoord[newindex] = 0;
 			yCoord[newindex] = 0;	
 			return;		
 		}
+		// "Rather, just move the pointer."
 		collection[newindex] = collection[index];
 		xCoord[newindex] = xCoord[index];
 		yCoord[newindex] = yCoord[index];
+		// "The source index should be marked vacant by making it value NULL."
 		collection[index] = NULL;
 		xCoord[index] = 0;
 		yCoord[index] = 0;
@@ -169,6 +191,7 @@ void Scene::changelayer (int index, int newindex) {
 
 void Scene::translate (int index, int xcoord, int ycoord) { 
 
+	// "If the index is invalid or if it contains a NULL pointer, do nothing "
 	if (index<0 || index>=length || collection[index]==NULL) 
 		cout << "invalid index" << endl;
 	
@@ -191,6 +214,7 @@ void Scene::deletepicture (int index) {
 
 Image * Scene::getpicture (int index) const { 
 
+	// "If the index is invalid, return NULL"
 	if (index<0 || index>=length || collection[index]==NULL) {
 		cout << "invalid index" << endl;
 		return NULL;
@@ -203,6 +227,7 @@ Image * Scene::getpicture (int index) const {
 
 Image Scene::drawscene () const { 
 
+	// "determine the minimum width and height necessary to ensure"
 	size_t newW = 1;
 	size_t newH = 1;
 	for (int n=0; n<length; n++) {
