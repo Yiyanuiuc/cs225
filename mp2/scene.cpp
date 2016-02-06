@@ -13,7 +13,7 @@ Scene::Scene (int max) {
 	this->xCoord = new int[max];
 	this->yCoord = new int[max];
 
-	// Initialize
+	// Initialize all variables
 	for (int n=0; n < this->length; n++) { 
 		this->collection[n] = NULL;
 		this->xCoord[n] = 0;
@@ -78,19 +78,22 @@ const Scene & Scene::operator = (const Scene & source){
 
 void Scene::changemaxlayers (int newmax) { 
 
+	// "this cannot be done because there are non-null pointers outside the range [0, newmax-1]
 	if (this->length > newmax) cout << "invalid newmax" << endl;
 
 	else {
 
+		// "A new array of Image pointers of size newmax will be allocated"
 		Image** newCollection = new Image*[newmax];
 		int* newXCoord = new int[newmax];
 		int* newYCoord = new int[newmax];
 
-		// [modified the whole for loop]
+		// * [modified the whole for loop]
 		for (int n=0; n<newmax; n++) {
 			if (n<length && collection[n]!=NULL) {
-				// delete "new"
-				newCollection[n] = collection[n];
+				// * Copy the pointer
+				// "the non-null pointers in the old array will be copied over" 
+				newCollection[n] = collection[n]; 
 				newXCoord[n] = xCoord[n];
 				newYCoord[n] = yCoord[n];
 			}
@@ -101,10 +104,9 @@ void Scene::changemaxlayers (int newmax) {
 			}
 		}
 
-		length = newmax; // [Change length at the end]
+		length = newmax; // * Change length at the end
 
-		// clear(); 
-		// Big change here
+		// * Delete clear(); 
 		delete [] collection;
 		delete [] xCoord;
 		delete [] yCoord;
@@ -116,13 +118,17 @@ void Scene::changemaxlayers (int newmax) {
 
 void Scene::addpicture (const char *FileName, int index, int x, int y) { 
 
-	if (index<0 || index>=length) cout << "index out of bounds" << endl; // [Invalid]
+	// * Invalid input
+	if (index<0 || index>=length) cout << "index out of bounds" << endl; 
 
 	else {
+
+		// * 
 		if (collection[index] != NULL) {
 			delete collection[index];
 			collection[index] = NULL;
 		}
+
 		Image* newImage = new Image();
 		newImage->readFromFile(FileName);
 
@@ -138,11 +144,14 @@ void Scene::changelayer (int index, int newindex) {
 		cout << "invalid index" << endl;
 	else if (index==newindex) return;
 
-	else {
+	else { // * have to move
 		if (collection[newindex]!=NULL) {
 			delete collection[newindex];
 			collection[newindex] = NULL;
 		}
+
+		// * newindex has been set to NULL
+		// * If index==NULL unchanged. change newX newY
 		if (collection[index]==NULL) {
 			xCoord[newindex] = 0;
 			yCoord[newindex] = 0;	
@@ -197,7 +206,6 @@ Image Scene::drawscene () const {
 	size_t newW = 1;
 	size_t newH = 1;
 	for (int n=0; n<length; n++) {
-		//cout<<collection[n]<<endl;
 		if (collection[n] != NULL) {
 			if (newW < xCoord[n] + collection[n]->width()) 
 				newW = xCoord[n] + collection[n]->width();
@@ -213,7 +221,7 @@ Image Scene::drawscene () const {
 		if (collection[n]!=NULL) {
 			for (size_t i=0; i<collection[n]->width(); i++) {
 				for (size_t j=0; j<collection[n]->height(); j++) {
-					*(result(xCoord[n]+i, yCoord[n]+j)) = *((*collection[n])(i,j)); // [change]
+					*(result(xCoord[n]+i, yCoord[n]+j)) = *((*collection[n])(i,j)); // * delete operator
 				}
 			}
 		}
