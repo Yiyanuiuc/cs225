@@ -13,7 +13,7 @@ Scene::Scene (int max) {
 	this->xCoord = new int[max];
 	this->yCoord = new int[max];
 
-	for (int n=0; n < this->length; n++) { // [Change the range]
+	for (int n=0; n < this->length; n++) { 
 		this->collection[n] = NULL;
 		this->xCoord[n] = 0;
 		this->yCoord[n] = 0;
@@ -85,6 +85,7 @@ void Scene::changemaxlayers (int newmax) {
 		int* newXCoord = new int[newmax];
 		int* newYCoord = new int[newmax];
 
+		// [modified the whole for loop]
 		for (int n=0; n<newmax; n++) {
 			if (n<length && collection[n]!=NULL) {
 				newCollection[n] = (Image*) new PNG(*collection[n]);
@@ -143,7 +144,7 @@ void Scene::changelayer (int index, int newindex) {
 	
 }
 
-void Scene::translate (int index, int xcoord, int ycoord) { // done ?
+void Scene::translate (int index, int xcoord, int ycoord) { 
 
 	if (index<0 || index>=length || collection[index]==NULL) 
 		cout << "invalid index" << endl;
@@ -154,7 +155,7 @@ void Scene::translate (int index, int xcoord, int ycoord) { // done ?
 	}
 }
 
-void Scene::deletepicture (int index) { // done ?
+void Scene::deletepicture (int index) { 
 
 	if (index<0 || index>=length || collection[index]==NULL) 
 		cout << "invalid index" << endl;
@@ -165,7 +166,7 @@ void Scene::deletepicture (int index) { // done ?
 	}
 }
 
-Image * Scene::getpicture (int index) const { // done ?
+Image * Scene::getpicture (int index) const { 
 
 	if (index<0 || index>=length || collection[index]==NULL) {
 		cout << "invalid index" << endl;
