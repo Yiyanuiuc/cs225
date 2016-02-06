@@ -13,6 +13,7 @@ Scene::Scene (int max) {
 	this->xCoord = new int[max];
 	this->yCoord = new int[max];
 
+	// Initialize
 	for (int n=0; n < this->length; n++) { 
 		this->collection[n] = NULL;
 		this->xCoord[n] = 0;
@@ -26,10 +27,10 @@ void Scene::clear() {
 		delete collection[n];
 		collection[n] = NULL;
 	}
+
 	delete [] collection;
 	delete [] xCoord;
 	delete [] yCoord;
-
 	collection = NULL;
 	xCoord = NULL;
 	yCoord = NULL;
@@ -52,7 +53,7 @@ void Scene::copy(const Scene &source) {
 			xCoord[n] = source.xCoord[n];
 			yCoord[n] = source.yCoord[n];
 		}
-		else {
+		else { // if source.collection[n] == NULL
 			collection[n] = NULL;
 			xCoord[n] = 0;
 			yCoord[n] = 0;
