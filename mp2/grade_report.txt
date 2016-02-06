@@ -1,8 +1,8 @@
-Grading r8344 by qilezhi2 committed on Thu Feb  4 17:35:00 CST 2016
+Grading r8653 by qilezhi2 committed on Fri Feb  5 01:22:45 CST 2016
 Monad Autograder
-Testing mp2 at 2016-02-05 00:17:28
+Testing mp2 at 2016-02-06 00:18:04
 
-"Computer Science is no more about computers than astronomy is about telescopes." ~ E. Dijkstra
+"I've seen it on Google Maps; I think I know what I'm talking about" ~ Kyle Johnson
 
 Setting up test environment...
 Compiling...
@@ -20,21 +20,21 @@ AdjustBrightnessEven3  . . . . . . [3 pts] - passed
 ImageMakefile  . . . . . . . . . . [5 pts] - passed
 Valgrind1 (asan) . . . . . . . . . [5 pts] - passed
 AddPictureValidIndex . . . . . . . [2 pts] - passed
-AddPictureInvalidIndex . . . . . . [2 pts] - FAILED
+AddPictureInvalidIndex . . . . . . [2 pts] - passed
 ImageAssignmentOperator  . . . . . [2 pts] - passed
 SceneGetPictureInvalidIndex  . . . [2 pts] - passed
 SceneChangeMaxLayersLarger . . . . [2 pts] - FAILED
 SceneChangeMaxLayersSmaller (asan) [1 pts] - passed
 SceneChangeMaxLayersInvalidChange  [2 pts] - passed
-SceneCopyCtor  . . . . . . . . . . [2 pts] - FAILED
-SceneCopyCtor2 . . . . . . . . . . [2 pts] - FAILED
-SceneAssignmentOperator  . . . . . [2 pts] - FAILED
-SceneAssignmentOperator2 . . . . . [2 pts] - FAILED
+SceneCopyCtor  . . . . . . . . . . [2 pts] - passed
+SceneCopyCtor2 . . . . . . . . . . [2 pts] - passed
+SceneAssignmentOperator  . . . . . [2 pts] - passed
+SceneAssignmentOperator2 . . . . . [2 pts] - passed
 SceneChangeLayer . . . . . . . . . [2 pts] - passed
 SceneChangeLayerInvalid  . . . . . [2 pts] - passed
 SceneDrawScene . . . . . . . . . . [3 pts] - passed
 SceneDrawScene2  . . . . . . . . . [3 pts] - passed
-SceneDrawScene3  . . . . . . . . . [3 pts] - FAILED
+SceneDrawScene3  . . . . . . . . . [3 pts] - passed
 SceneDrawScene4  . . . . . . . . . [3 pts] - passed
 SceneDrawSceneChangeLayer  . . . . [2 pts] - passed
 SceneDrawSceneDeletePicture  . . . [2 pts] - passed
@@ -43,12 +43,12 @@ SceneDrawSceneTranslate2 . . . . . [2 pts] - passed
 SceneTranslateInvalid  . . . . . . [2 pts] - passed
 SceneTranslateInvalid2 . . . . . . [1 pts] - passed
 SceneDeletePictureInvalid  . . . . [2 pts] - passed
-Valgrind2 (asan) . . . . . . . . . [5 pts] - FAILED
+Valgrind2 (asan) . . . . . . . . . [5 pts] - passed
 Valgrind3 (asan) . . . . . . . . . [5 pts] - FAILED
 SceneMakefile  . . . . . . . . . . [5 pts] - passed
 
 
 Total score...
 ================================================================
-TOTAL SCORE: 75
+TOTAL SCORE: 93
 
