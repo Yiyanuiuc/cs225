@@ -25,6 +25,8 @@ int main()
     myImage->adjustbrightness(20, 20, -40);
     myImage->writeToFile("brightened.png");
 
+    myImage->resize(0,0);
+
     delete myImage;
 
     return 0;

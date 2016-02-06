@@ -119,6 +119,10 @@ void Scene::addpicture (const char *FileName, int index, int x, int y) {
 	if (index<0 || index>=length) cout << "index out of bounds" << endl; // [Invalid]
 
 	else {
+		if (collection[index] != NULL) {
+			delete collection[index];
+			collection[index] = NULL;
+		}
 		Image* newImage = new Image();
 		newImage->readFromFile(FileName);
 
@@ -138,6 +142,11 @@ void Scene::changelayer (int index, int newindex) {
 		if (collection[newindex]!=NULL) {
 			delete collection[newindex];
 			collection[newindex] = NULL;
+		}
+		if (collection[index]==NULL) {
+			xCoord[newindex] = 0;
+			yCoord[newindex] = 0;	
+			return;		
 		}
 		collection[newindex] = collection[index];
 		xCoord[newindex] = xCoord[index];
@@ -185,9 +194,10 @@ Image * Scene::getpicture (int index) const {
 
 Image Scene::drawscene () const { 
 
-	size_t newW = 0;
-	size_t newH = 0;
+	size_t newW = 1;
+	size_t newH = 1;
 	for (int n=0; n<length; n++) {
+		//cout<<collection[n]<<endl;
 		if (collection[n] != NULL) {
 			if (newW < xCoord[n] + collection[n]->width()) 
 				newW = xCoord[n] + collection[n]->width();
@@ -203,7 +213,7 @@ Image Scene::drawscene () const {
 		if (collection[n]!=NULL) {
 			for (size_t i=0; i<collection[n]->width(); i++) {
 				for (size_t j=0; j<collection[n]->height(); j++) {
-					*(result.operator()(xCoord[n]+i, yCoord[n]+j)) = *(collection[n]->operator()(i,j));
+					*(result(xCoord[n]+i, yCoord[n]+j)) = *((*collection[n])(i,j)); // [change]
 				}
 			}
 		}
