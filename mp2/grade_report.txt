@@ -1,8 +1,8 @@
-Grading r8653 by qilezhi2 committed on Fri Feb  5 01:22:45 CST 2016
+Grading r9456 by qilezhi2 committed on Sat Feb  6 22:11:30 CST 2016
 Monad Autograder
-Testing mp2 at 2016-02-06 00:18:04
+Testing mp2 at 2016-02-07 00:14:04
 
-"I've seen it on Google Maps; I think I know what I'm talking about" ~ Kyle Johnson
+"**** ******** **** nickels!!!" ~ Chase Geigle
 
 Setting up test environment...
 Compiling...
@@ -23,7 +23,7 @@ AddPictureValidIndex . . . . . . . [2 pts] - passed
 AddPictureInvalidIndex . . . . . . [2 pts] - passed
 ImageAssignmentOperator  . . . . . [2 pts] - passed
 SceneGetPictureInvalidIndex  . . . [2 pts] - passed
-SceneChangeMaxLayersLarger . . . . [2 pts] - FAILED
+SceneChangeMaxLayersLarger . . . . [2 pts] - passed
 SceneChangeMaxLayersSmaller (asan) [1 pts] - passed
 SceneChangeMaxLayersInvalidChange  [2 pts] - passed
 SceneCopyCtor  . . . . . . . . . . [2 pts] - passed
@@ -44,11 +44,11 @@ SceneTranslateInvalid  . . . . . . [2 pts] - passed
 SceneTranslateInvalid2 . . . . . . [1 pts] - passed
 SceneDeletePictureInvalid  . . . . [2 pts] - passed
 Valgrind2 (asan) . . . . . . . . . [5 pts] - passed
-Valgrind3 (asan) . . . . . . . . . [5 pts] - FAILED
+Valgrind3 (asan) . . . . . . . . . [5 pts] - passed
 SceneMakefile  . . . . . . . . . . [5 pts] - passed
 
 
 Total score...
 ================================================================
-TOTAL SCORE: 93
+TOTAL SCORE: 100
 
