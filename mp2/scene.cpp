@@ -90,41 +90,44 @@ void Scene::changemaxlayers (int newmax) {
 	// "You may assume newmax is greater than zero."
 
 	// "this cannot be done because there are non-null pointers outside the range [0, newmax-1]
-	if (this->length > newmax) cout << "invalid newmax" << endl;
-
-	else {
-
-		// "A new array of Image pointers of size newmax will be allocated"
-		Image** newCollection = new Image*[newmax];
-		int* newXCoord = new int[newmax];
-		int* newYCoord = new int[newmax];
-
-		// * [modified the whole for loop]
-		for (int n=0; n<newmax; n++) {
-			if (n<length && collection[n]!=NULL) {
-				// * Copy the pointer
-				// "the non-null pointers in the old array will be copied over" 
-				newCollection[n] = collection[n]; 
-				newXCoord[n] = xCoord[n];
-				newYCoord[n] = yCoord[n];
-			}
-			else {
-				newCollection[n] = NULL;
-				newXCoord[n] = 0;
-				newYCoord[n] = 0;
+	if (this->length > newmax) {
+		for (int n=newmax; n<length; n++) {
+			if (collection[n]!=NULL) {
+				cout << "invalid newmax" << endl;
+				return;
 			}
 		}
-
-		length = newmax; // * Change length at the end
-
-		// * Delete clear(); 
-		delete [] collection;
-		delete [] xCoord;
-		delete [] yCoord;
-		collection = newCollection;
-		xCoord = newXCoord;
-		yCoord = newYCoord;
 	}
+
+	// "A new array of Image pointers of size newmax will be allocated"
+	Image** newCollection = new Image*[newmax];
+	int* newXCoord = new int[newmax];
+	int* newYCoord = new int[newmax];
+
+	for (int n=0; n<newmax; n++) {
+		if (n<length && collection[n]!=NULL) {
+			// "the non-null pointers in the old array will be copied over" 
+			newCollection[n] = collection[n]; 
+			newXCoord[n] = xCoord[n];
+			newYCoord[n] = yCoord[n];
+		}
+		else {
+			newCollection[n] = NULL;
+			newXCoord[n] = 0;
+			newYCoord[n] = 0;
+		}
+	}
+
+	length = newmax; // * Change length at the end
+
+	// * Delete clear(); 
+	delete [] collection;
+	delete [] xCoord;
+	delete [] yCoord;
+	collection = newCollection;
+	xCoord = newXCoord;
+	yCoord = newYCoord;
+	
 }
 
 void Scene::addpicture (const char *FileName, int index, int x, int y) { 
