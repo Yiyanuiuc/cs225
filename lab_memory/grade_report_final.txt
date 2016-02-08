@@ -1,0 +1,24 @@
+Grading r8621 by qilezhi2 committed on Thu Feb  4 23:55:19 CST 2016
+Monad Autograder
+Testing lab_memory at 2016-02-08 00:21:21
+
+"It'll work, the stack's just not big enough." ~ Eric Rosenberg
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+test_constructor (asan) [5 pts]  - passed
+test_allocate (asan)  . [5 pts]  - passed
+test_printrooms (asan)  [20 pts] - passed
+test_any_output . . . . [30 pts] - passed
+test_correct_output . . [40 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 100
+
