@@ -10,6 +10,10 @@
  * @date (modified) Fall 2011
  */
 
+#include "list.h"
+#include <iostream>
+using namespace std;
+
 /**
  * Destroys the current List. This function should ensure that
  * memory does not leak on destruction of a list.
@@ -18,6 +22,7 @@ template <class T>
 List<T>::~List()
 {
     /// @todo Graded in MP3.1
+    clear();
 }
 
 /**
@@ -28,6 +33,18 @@ template <class T>
 void List<T>::clear()
 {
     /// @todo Graded in MP3.1
+    if (length!=0) {
+        while (head->next!=NULL) {
+            ListNode * temp = head;
+            head = head->next;
+            head->prev = NULL;
+            temp->next = NULL;
+            delete temp;
+            temp = NULL;
+        }
+        delete head;
+        head = NULL;
+    }
 }
 
 /**
@@ -40,6 +57,21 @@ template <class T>
 void List<T>::insertFront(T const& ndata)
 {
     /// @todo Graded in MP3.1
+    if (length!=0) {
+        ListNode * temp = head;
+        head = new ListNode(ndata);
+        head->prev = NULL;
+        head->next = temp;
+        temp->prev = head;
+        temp = NULL;
+    }
+    else {
+        head = new ListNode(ndata);
+        head->prev = NULL;
+        head->next = NULL;
+        tail = head;
+    }
+    length++;
 }
 
 /**
@@ -52,6 +84,21 @@ template <class T>
 void List<T>::insertBack(const T& ndata)
 {
     /// @todo Graded in MP3.1
+    if (length!=0) {
+        ListNode * temp = tail;
+        tail = new ListNode(ndata);
+        tail->next = NULL;
+        tail->prev = temp;
+        temp->next = tail;
+        temp = NULL;
+    }
+    else {
+        tail = new ListNode(ndata);
+        tail->next = NULL;
+        tail->prev = NULL;
+        head = tail;
+    }
+    length++;
 }
 
 /**
@@ -78,6 +125,72 @@ template <class T>
 void List<T>::reverse(ListNode*& startPoint, ListNode*& endPoint)
 {
     /// @todo Graded in MP3.1
+
+    // When there are less than 2 Nodes
+    if (startPoint == endPoint) return;
+
+    // When there are more than 1 Nodes
+    ListNode * tempStart = startPoint;
+    ListNode * tempEnd = startPoint;
+
+    ListNode * move = NULL;
+
+    ListNode * beforeStart = NULL;
+    if (startPoint->prev!=NULL) beforeStart = startPoint->prev;
+
+    ListNode * afterEnd = NULL;
+    if (endPoint->next!=NULL) afterEnd = endPoint->next;
+
+    // When there are still more than 1 need to be moved
+    while (tempEnd->next != endPoint) {
+        // Mark the one to be moved
+        move = tempEnd->next;  
+        // Skip the marked one
+        tempEnd->next = move->next;
+        tempEnd->next->prev = tempEnd;
+        // Modified the marked one
+        move->prev = NULL;
+        move->next = tempStart;
+        tempStart->prev = move;
+        // Renew the tempStart
+        tempStart = move;
+    }
+
+    // When there is only 1 left
+    // Mark the one to be moved
+    move = tempEnd->next; 
+    // Skip the marked one
+    tempEnd->next = NULL;
+    // Modified the marked one
+    move->prev = NULL;
+    move->next = tempStart;
+    tempStart->prev = move;   
+    // Renew the tempStart
+    tempStart = move;
+    // "The startPoint and endPoint pointers should point at the new start and end of the chain of linked memory."
+    startPoint = tempStart;
+    endPoint = tempEnd;
+    move = NULL;
+
+    // Modified two sides
+    if (beforeStart != NULL) {
+        startPoint->prev = beforeStart;
+        beforeStart->next = startPoint;
+        beforeStart = NULL;
+    }
+    else {
+        startPoint->prev = NULL;
+        head = startPoint;
+    }
+    if (afterEnd != NULL) {
+        endPoint->next = afterEnd;
+        afterEnd->prev = endPoint;
+        afterEnd = NULL;
+    }
+    else {
+        endPoint->next = NULL;
+        tail = endPoint;
+    }
 }
 
 /**
@@ -90,6 +203,33 @@ template <class T>
 void List<T>::reverseNth(int n)
 {
     /// @todo Graded in MP3.1
+    if (n<=0) return;
+
+    ListNode * startPoint = head;
+    ListNode * endPoint = head;
+
+    while (endPoint != tail) {
+    
+        for (int i=1; i<n; i++) {
+            endPoint = endPoint->next;
+
+            // "If the final block is not long enough to have nn elements, then just reverse what remains in the list. 
+            // In particular, if nn is larger than the length of the list, this will do the same thing as reverse."
+            if (endPoint == tail) {
+                reverse(startPoint,endPoint);
+                // Final cases
+                startPoint = NULL;
+                endPoint = NULL;
+                return;
+            }
+
+        }
+        reverse(startPoint,endPoint);
+        
+        startPoint = endPoint->next;
+        endPoint = startPoint;
+    }
+
 }
 
 /**
@@ -105,6 +245,24 @@ template <class T>
 void List<T>::waterfall()
 {
     /// @todo Graded in MP3.1
+    if (length==0) return;
+    ListNode * startPoint = head;
+    // There are at least 1 to move
+    while (startPoint->next != NULL && startPoint->next->next!=NULL) {
+        ListNode * move = startPoint->next;
+        // Skip the moved one
+        startPoint->next = move->next;
+        startPoint->next->prev = startPoint;
+        // Move it to the back
+        tail->next = move;
+        move->prev = tail;
+        move->next = NULL;
+        // Renew the startPoint & tail
+        startPoint = startPoint->next;
+        tail = move;
+        move = NULL;
+    }
+    startPoint = NULL;
 }
 
 /**

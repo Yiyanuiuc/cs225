@@ -61,7 +61,7 @@ void testInserts()
     cout << "Start by uncommenting lines " << (__LINE__ + 3) << " through " << (__LINE__ + 26) << "." << endl;
 
     /* uncomment the below */
-    /*
+    
     cout << "[main]: " << __func__ << "()" << endl;
     List<int> list;
 
@@ -84,7 +84,6 @@ void testInserts()
     cout << "[testInserts]: size: " << list2.size() << endl;
     if (list2.size() != 10)
         cout << "[testInserts]: Incorrect size" << endl;
-    */
 }
 
 void testReverse()
