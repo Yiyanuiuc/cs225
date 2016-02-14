@@ -34,11 +34,14 @@ void List<T>::clear()
 {
     /// @todo Graded in MP3.1
     if (length!=0) {
+        ListNode * temp;
         while (head->next!=NULL) {
-            ListNode * temp = head;
+            // Skip the next
+            temp = head;
             head = head->next;
             head->prev = NULL;
             temp->next = NULL;
+            // Delete the skipped one
             delete temp;
             temp = NULL;
         }
@@ -135,9 +138,9 @@ void List<T>::reverse(ListNode*& startPoint, ListNode*& endPoint)
 
     ListNode * move = NULL;
 
+    // Point to the two Nodes outside the modified range
     ListNode * beforeStart = NULL;
     if (startPoint->prev!=NULL) beforeStart = startPoint->prev;
-
     ListNode * afterEnd = NULL;
     if (endPoint->next!=NULL) afterEnd = endPoint->next;
 
@@ -226,6 +229,7 @@ void List<T>::reverseNth(int n)
         }
         reverse(startPoint,endPoint);
         
+        // Modified the start and end points
         startPoint = endPoint->next;
         endPoint = startPoint;
     }
