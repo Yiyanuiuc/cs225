@@ -13,6 +13,9 @@
  * @date (modified) Spring 2014
  */
 
+#include <iostream>
+using namespace std;
+
 /**
  * Destroys the current List. This function should ensure that
  * memory does not leak on destruction of a list.
@@ -32,6 +35,20 @@ void List<T>::clear()
 {
     // @todo Graded in lab_gdb
     // Write this function based on mp3
+    if (length!=0) {
+        ListNode * temp;
+        while (head->next!=NULL) {
+            // Skip the next
+            temp = head;
+            head = head->next;
+            temp->next = NULL;
+            // Delete the skipped one
+            delete temp;
+            temp = NULL;
+        } 
+        delete head;
+        head = NULL;
+    }
 }
 
 /**
@@ -45,6 +62,17 @@ void List<T>::insertFront(T const& ndata)
 {
     // @todo Graded in lab_gdb
     // Write this function based on mp3
+    if (length!=0) {
+        ListNode * temp = head;
+        head = new ListNode(ndata);
+        head->next = temp;
+        temp = NULL;
+    }
+    else {
+        head = new ListNode(ndata);
+        head->next = NULL;
+    }
+    length++;
 }
 
 /**
@@ -58,16 +86,24 @@ void List<T>::insertBack(const T& ndata)
 {
     // @todo Graded in lab_gdb
     // NOTE: Do not use this implementation for MP3!
-    ListNode* temp = head;
 
-    if (temp == NULL) {
+    if (head == NULL) {
         head = new ListNode(ndata);
-    } else {
-        while (temp->next != NULL)
-            temp = temp->next;
-        temp = new ListNode(ndata);
-        length++;
+        // Set NULL
+        head->next = NULL;
+    } 
+    else {
+        // Get the last one
+        ListNode * temp = head;        
+        while (temp->next != NULL) temp = temp->next;
+        ListNode * newAdd = new ListNode(ndata);
+        // Set NULL
+        newAdd->next = NULL;
+        temp->next = newAdd;
+        // Set NULL
+        temp = NULL;
     }
+    length++;
 }
 
 /**
@@ -93,13 +129,22 @@ typename List<T>::ListNode* List<T>::reverse(ListNode* curr, ListNode* prev,
                                              int len)
 {
     // @todo Graded in lab_gdb
+
+    // Do nothing
+    if (len==0) return curr;
+
     ListNode* temp;
-    if (len <= 0) {
+    // Base case: the 10th one
+    if (len == 1) {
         curr->next = prev;
+        // Return the "head"
         return curr;
-    } else {
+    } 
+    else {
+        // temp is the "head"
         temp = reverse(curr->next, curr, len - 1);
         curr->next = prev;
+        // Return the "head"
         return temp;
     }
 }
@@ -120,20 +165,28 @@ void List<T>::shuffle()
     // Find the center, and split the list in half
     // one should point at the start of the first half-list
     // two should point at the start of the second half-list
-    ListNode *one, *two, *prev, *temp;
-    one = two = prev = temp = head;
+    if (length <= 2) return;
+    ListNode *one, *two, *temp1, *temp2;
+    one = two = temp1 = temp2 = head;
 
-    for (int i = 0; i < length / 2; i++) {
-        prev = two;
+    // Here temp1 serves as the end of ONE
+    for (int i = 0; i < (length+1) / 2; i++) {
+        temp1 = two;
         two = two->next;
     }
-    prev->next = NULL;
+    temp1->next = NULL;
+    // temp1 is freed now
+    temp1 = NULL;
 
     // interleave
     while (two != NULL) {
-        temp = one->next;
+        temp1 = one->next;
+        temp2 = two->next;
         one->next = two;
-        two = two->next;
-        one->next->next = temp;
+        two->next = temp1;
+        one = temp1;
+        two = temp2;
     }
+    temp1 = NULL;
+    temp2 = NULL;
 }
