@@ -327,3 +327,130 @@ int main(int argc, char** argv)
 
     return 0;
 }
+
+// int main() {
+
+//     List<int> syTestList;
+//     List<int> syTestListEmpty;
+
+//     cout << "# Begin Test [mp3] By SuY #" << endl;
+//     // Test: insertFront
+//     cout << "===Test: insertFront===" << endl;
+//     for (int i=6; i>0; i--) {
+//         syTestList.insertFront(i);
+//     }
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 1 2 3 4 5 6 >" << endl;
+//     cout << "Length : " << syTestList.size() << endl;
+//     cout << "Correct: 6" << endl;
+
+//     // Test: insertBack
+//     cout << "===Test: insertBack===" << endl;
+//     for (int i=7; i<=9; i++) {
+//         syTestList.insertBack(i);
+//     }
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 1 2 3 4 5 6 7 8 9 >" << endl;
+//     cout << "Length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;
+
+//     // Test: reverse
+//     List<int> syTestListLength1;
+//     cout << "===Test: reverse===" << endl;
+//     cout << "Test 1 : Empty list" << endl;
+//     syTestListEmpty.reverse();
+//     cout << "Test 2 : Normal value" << endl;
+//     syTestList.reverse();
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 9 8 7 6 5 4 3 2 1 >" << endl;
+//     cout << "Length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;
+//     cout << "Test 3 : Extreme value" << endl;
+//     syTestListLength1.insertFront(0);
+//     syTestListLength1.reverse();
+//     cout << "After  : " << syTestListLength1 << endl;
+//     cout << "Correct: < 0 >" << endl;
+//     cout << "Length : " << syTestListLength1.size() << endl;
+//     cout << "Correct: 1" << endl;
+
+//     // Test: reverseNth
+//     cout << "===Test: reverseNth===" << endl;
+//     cout << "Test 1 : N = 3" << endl;
+//     syTestList.reverseNth(3);
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 7 8 9 4 5 6 1 2 3 >" << endl;
+//     cout << "length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;
+//     cout << "Test 2 : N = 4" << endl;
+//     syTestList.reverseNth(4);
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 4 9 8 7 2 1 6 5 3 >" << endl;
+//     cout << "length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;
+//     cout << "Test 3 : N = 1" << endl;
+//     syTestList.reverseNth(1);
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 4 9 8 7 2 1 6 5 3 >" << endl;
+//     cout << "length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;
+//     cout << "Test 4 : N = 0" << endl;
+//     syTestList.reverseNth(0);
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 4 9 8 7 2 1 6 5 3 >" << endl;
+//     cout << "length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;
+//     cout << "Test 5 : Empty list" << endl;
+//     syTestListEmpty.reverseNth(5);
+
+//     // Test: waterfall
+//     cout << "===Test: waterfall===" << endl;
+//     cout << "Test 1 : Empty list" << endl;
+//     syTestListEmpty.waterfall();
+//     cout << "Test 2 : Normal value" << endl;
+//     syTestList.waterfall();
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 4 8 2 6 3 7 5 1 9 >" << endl;
+//     cout << "length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;    
+
+//     // Test: split & mergesort
+//     List<int> syTestSplit;
+//     cout << "===Test: split===" << endl;
+
+//     cout << "Test 1 : splitPoint too small" << endl;
+//     syTestSplit = syTestList.split(0);
+//     cout << "After 1: " << syTestList << endl;
+//     cout << "After 2: " << syTestSplit << endl;
+//     cout << "Correct: < 4 8 2 6 3 7 5 1 9 >" << endl;
+//     syTestList = syTestSplit;
+
+//     cout << "Test 2 : splitPoint too big" << endl;
+//     syTestSplit = syTestList.split(10);
+//     cout << "After 1: " << syTestList << endl;
+//     cout << "Correct: < 4 8 2 6 3 7 5 1 9 >" << endl;
+//     cout << "After 2: " << syTestSplit << endl;
+
+//     cout << "Test 3 : Normal value" << endl;
+//     syTestSplit = syTestList.split(8);
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 4 8 2 6 3 7 5 1 >" << endl;
+//     cout << "length : " << syTestList.size() << endl;
+//     cout << "Correct: 8" << endl;   
+//     cout << "After  : " << syTestSplit << endl;
+//     cout << "Correct: < 9 >" << endl;
+//     cout << "length : " << syTestSplit.size() << endl;
+//     cout << "Correct: 1" << endl; 
+
+
+//     // Test: mergesort
+//     cout << "===Test: mergesort===" << endl;
+//     cout << "Test 1 : Empty list" << endl;
+//     syTestListEmpty.sort();
+//     cout << "Test 2 : Normal case" << endl;
+//     syTestList.sort();
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 1 2 3 4 5 6 7 8 >" << endl;
+
+//     return 0; 
+// }
+

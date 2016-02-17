@@ -129,8 +129,13 @@ void List<T>::reverse(ListNode*& startPoint, ListNode*& endPoint)
 {
     /// @todo Graded in MP3.1
 
+    if (startPoint==NULL || endPoint==NULL) {
+        return;
+    }
     // When there are less than 2 Nodes
-    if (startPoint == endPoint) return;
+    if (startPoint == endPoint) {
+        return;
+    }
 
     // When there are more than 1 Nodes
     ListNode * tempStart = startPoint;
@@ -329,7 +334,20 @@ template <class T>
 typename List<T>::ListNode* List<T>::split(ListNode* start, int splitPoint)
 {
     /// @todo Graded in MP3.2
-    return NULL; // change me!
+
+    if (start==NULL) return NULL;
+
+    ListNode * newHead = start;
+
+    if (splitPoint!=0) {
+        // Move newHead to the startPoint
+        for (int i=0; i<splitPoint; i++) {
+            newHead = newHead->next;
+        }
+        newHead->prev->next = NULL;
+        newHead->prev = NULL;
+    }
+    return newHead;
 }
 
 /**
@@ -372,7 +390,63 @@ template <class T>
 typename List<T>::ListNode* List<T>::merge(ListNode* first, ListNode* second)
 {
     /// @todo Graded in MP3.2
-    return NULL; // change me!
+
+    if (first==NULL) {
+        first = second;
+        second = NULL;
+        return first;
+    }
+    if (second==NULL) return first;
+
+    // first, second has at least one Node
+
+    ListNode * one = first;
+    ListNode * two = second;
+    ListNode * newStart = NULL;
+    ListNode * temp;
+
+    if (one->data < two->data) {
+        newStart = one;
+        one = one->next;
+    }
+    else {
+        newStart = two;
+        two = two->next;
+    }
+    temp = newStart;
+
+    while (one!=NULL && two!=NULL) {
+        if (one->data < two->data) {
+            temp->next = one;
+            one->prev = temp;
+            temp = temp->next;
+            one = one->next;
+        }
+        else {
+            temp->next = two;
+            two->prev = temp;
+            temp = temp->next;
+            two = two->next;
+        }
+    }
+
+    // if one is NULL;
+    if (two != NULL) {
+        temp->next = two;
+        two->prev = temp;
+    }
+
+    // if two is NULL
+    if (one != NULL) {
+        temp->next = one;
+        one->prev = temp;
+    }
+    one = NULL;
+    two = NULL;
+    temp = NULL;
+    first = NULL;
+    second = NULL;
+    return newStart;
 }
 
 /**
@@ -402,5 +476,12 @@ template <class T>
 typename List<T>::ListNode* List<T>::mergesort(ListNode* start, int chainLength)
 {
     /// @todo Graded in MP3.2
-    return NULL; // change me!
+    if (chainLength==0 || chainLength==1 || start==NULL) return start;
+    if (chainLength > length) chainLength = length;
+
+    int mid = chainLength/2;
+    ListNode * secondStart = split(start, mid);
+    start = mergesort(start, mid);
+    secondStart = mergesort(secondStart, chainLength-mid);
+    return merge(start, secondStart);
 }
