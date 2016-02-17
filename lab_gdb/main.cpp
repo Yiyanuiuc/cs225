@@ -125,3 +125,54 @@ int main(int argc, char** argv)
 
     return 0;
 }
+
+// int main() {
+
+//     List<int> syTestList;
+//     List<int> syTestListEmpty;
+
+//     cout << "# Begin Test [lab_gdb] By SuY #" << endl;
+//     // Test: insertFront
+//     cout << "===Test: insertFront===" << endl;
+//     for (int i=6; i>0; i--) {
+//         syTestList.insertFront(i);
+//     }
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 1 2 3 4 5 6 >" << endl;
+//     cout << "Length : " << syTestList.size() << endl;
+//     cout << "Correct: 6" << endl;
+
+//     // Test: insertBack
+//     cout << "===Test: insertBack===" << endl;
+//     for (int i=7; i<=9; i++) {
+//         syTestList.insertBack(i);
+//     }
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 1 2 3 4 5 6 7 8 9 >" << endl;
+//     cout << "Length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;
+
+//     // Test: reverse
+//     cout << "===Test: reverse===" << endl;
+//     cout << "Test 1 : Empty list" << endl;
+//     syTestListEmpty.reverse();
+//     cout << "Test 2 : Normal value" << endl;
+//     syTestList.reverse();
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 9 8 7 6 5 4 3 2 1 >" << endl;
+//     cout << "Length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;
+
+//     // Test: shuffle
+//     cout << "===Test: shuffle===" << endl;
+//     cout << "Test 1 : Empty list" << endl;
+//     syTestListEmpty.shuffle();
+//     cout << "Test 2 : Normal value" << endl;
+//     syTestList.shuffle();
+//     cout << "After  : " << syTestList << endl;
+//     cout << "Correct: < 9 4 8 3 7 2 6 1 5 >" << endl;
+//     cout << "length : " << syTestList.size() << endl;
+//     cout << "Correct: 9" << endl;
+
+//     return 0;
+// }
