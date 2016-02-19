@@ -16,7 +16,9 @@
 class Drawable
 {
   public:
-    ~Drawable()
+
+    // modified: add virtual
+    virtual ~Drawable()
     { /* Nothing */
     }
 

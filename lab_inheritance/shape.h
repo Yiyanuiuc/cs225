@@ -38,7 +38,7 @@ class Shape : public Drawable
      */
     Shape(const Vector2& center, const RGBAPixel& color);
 
-    ~Shape()
+    virtual ~Shape()
     { /* Nothing */
     }
 
@@ -47,14 +47,14 @@ class Shape : public Drawable
      *
      * @return the area (in pixels) of the Shape
      */
-    int area() const;
+    virtual int area() const;
 
     /**
      * @brief Computes and returns the perimeter of the Shape in pixels
      *
      * @return the perimeter (in pixels) of the Shape
      */
-    int perimeter() const;
+    virtual int perimeter() const;
 
     /**
      * @brief Checks to see if the Vector2 p is contained inside of the Shape
@@ -86,7 +86,8 @@ class Shape : public Drawable
      */
     RGBAPixel color() const;
 
-    void draw(PNG* canvas) const;
+    // modified: add virtual
+    virtual void draw(PNG* canvas) const;
 };
 
 #endif // SHAPE_H_
