@@ -9,18 +9,14 @@
 #define FLOWER_H_
 
 #include "shape.h"
-// modified: include
-#include "rectangle.h"
-#include "circle.h"
-#include "triangle.h"
 
 class Flower : public Drawable
 {
   private:
   	// modified: pointer
-    Rectangle* stem;
-    Circle* pistil; // center piece of flower
-    Triangle* leaf;
+    Shape* stem;
+    Shape* pistil; // center piece of flower
+    Shape* leaf;
 
     void drawPetals(PNG* canvas, const Vector2& center, int x, int y) const;
 
