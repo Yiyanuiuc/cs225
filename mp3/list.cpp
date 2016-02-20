@@ -343,6 +343,7 @@ typename List<T>::ListNode* List<T>::split(ListNode* start, int splitPoint)
         // Move newHead to the startPoint
         for (int i=0; i<splitPoint; i++) {
             newHead = newHead->next;
+            if (newHead==NULL) return NULL;
         }
         newHead->prev->next = NULL;
         newHead->prev = NULL;
