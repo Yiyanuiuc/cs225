@@ -1,8 +1,8 @@
-Grading r16637 by qilezhi2 committed on Sat Feb 20 16:54:59 CST 2016
+Grading r16833 by tolar2 committed on Sun Feb 21 00:33:02 CST 2016
 Monad Autograder
-Testing mp3 at 2016-02-21 00:24:29
+Testing mp3 at 2016-02-22 00:53:19
 
-"Worry loudly now or scream louder later." ~ Michael Lopp
+"If debugging is the process of removing bugs, then programming must be the process of putting them in." ~ Edsger W. Dijkstra
 
 Setting up test environment...
 Compiling...
