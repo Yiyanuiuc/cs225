@@ -1,0 +1,27 @@
+Grading r15330 by qilezhi2 committed on Thu Feb 18 23:18:50 CST 2016
+Monad Autograder
+Testing lab_inheritance at 2016-02-22 01:17:55
+
+"The first 90% of the code accounts for the first 90% of the development time. The remaining 10% of the code accounts for the other 90% of the development time." ~ Tom Cargill
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+test_virtual_perim  . . . . . . [10 pts] - passed
+test_virtual_area . . . . . . . [10 pts] - passed
+test_destructor (asan)  . . . . [20 pts] - passed
+test_constructor  . . . . . . . [10 pts] - passed
+test_drawable_destructor (asan) [10 pts] - passed
+test_truck_draw . . . . . . . . [10 pts] - passed
+test_slicing  . . . . . . . . . [20 pts] - passed
+test_flower_destructor (asan) . [10 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 100
+
