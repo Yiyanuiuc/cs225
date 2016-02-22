@@ -62,7 +62,7 @@ void List<T>::insertFront(T const& ndata)
 {
     // @todo Graded in lab_gdb
     // Write this function based on mp3
-    if (length!=0) {
+    if (length>=1) {
         ListNode * temp = head;
         head = new ListNode(ndata);
         head->next = temp;
@@ -131,11 +131,11 @@ typename List<T>::ListNode* List<T>::reverse(ListNode* curr, ListNode* prev,
     // @todo Graded in lab_gdb
 
     // Do nothing
-    if (len==0) return curr;
+    if (len<=0 || curr==NULL) return curr;
 
     ListNode* temp;
     // Base case: the 10th one
-    if (len == 1) {
+    if (len==1) {
         curr->next = prev;
         // Return the "head"
         return curr;
@@ -144,6 +144,7 @@ typename List<T>::ListNode* List<T>::reverse(ListNode* curr, ListNode* prev,
         // temp is the "head"
         temp = reverse(curr->next, curr, len - 1);
         curr->next = prev;
+        // prev->next = NULL;
         // Return the "head"
         return temp;
     }
