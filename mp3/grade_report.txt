@@ -1,8 +1,8 @@
-Grading r16833 by tolar2 committed on Sun Feb 21 00:33:02 CST 2016
+Grading r17725 by tolar2 committed on Mon Feb 22 01:04:33 CST 2016
 Monad Autograder
-Testing mp3 at 2016-02-22 00:53:19
+Testing mp3 at 2016-02-23 00:26:16
 
-"If debugging is the process of removing bugs, then programming must be the process of putting them in." ~ Edsger W. Dijkstra
+"I love deadlines. I like the whooshing sound they make as they fly by." ~ Douglas Adams
 
 Setting up test environment...
 Compiling...
