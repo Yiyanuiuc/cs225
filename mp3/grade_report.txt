@@ -1,8 +1,8 @@
-Grading r18219 by tolar2 committed on Wed Feb 24 00:39:16 CST 2016
+Grading r18664 by tolar2 committed on Thu Feb 25 00:39:53 CST 2016
 Monad Autograder
-Testing mp3 at 2016-02-25 00:31:00
+Testing mp3 at 2016-02-26 00:27:21
 
-"Even if by chance this world should end tomorrow, if it's together with you, would 'I'm okay with that too' be the cool attitude you'd take?" ~ Makino Yui
+"(reading a password) Uppercase 0... [...] Lowercase 0..." ~ Sean Massung
 
 Setting up test environment...
 Compiling...
