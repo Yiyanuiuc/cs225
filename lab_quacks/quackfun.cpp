@@ -4,6 +4,9 @@
  *  stacks and queues portion of the lab.
  */
 
+#include <iostream>
+using namespace std;
+
 namespace QuackFun {
 
 /**
@@ -26,7 +29,15 @@ template <typename T>
 T sum(stack<T>& s)
 {
     // Your code here
-    return T(); // stub return value (0 for primitive types). Change this!
+    if (s.size()==0) return T();
+    else {
+        T removed = s.top();
+        s.pop();
+        T accumulated = removed + sum(s);
+        s.push(removed);
+        return accumulated;
+    }
+    // return T(); // stub return value (0 for primitive types). Change this!
                 // Note: T() is the default value for objects, and 0 for
                 // primitive types
 }
@@ -47,9 +58,40 @@ template <typename T>
 void scramble(queue<T>& q)
 {
     stack<T> s;
-    // optional: queue<T> q2;
+    queue<T> q2;
 
     // Your code here
+    int i=1;
+    while (!q.empty()) {
+        if (i%2==0) {
+            // Use stack to help reverse the elements
+            for (int j=0; j<i; j++) {
+                s.push(q.front());
+                q.pop();
+                if (q.empty()) break;
+            }
+            while (!s.empty()) {
+                q2.push(s.top());
+                s.pop();
+            }
+        }
+        else {
+            // Just move the elements directly without changing the order
+            for (int j=0; j<i; j++) {
+                q2.push(q.front());
+                q.pop();
+                if (q.empty()) break;
+            }
+        }
+        i++;
+        // cout << "yo" << endl;
+    }
+    // Move elements from q2 back to q
+    while (!q2.empty()) {
+        q.push(q2.front());
+        q2.pop();
+        // cout << "ha" << endl;
+    }
 }
 
 /**
@@ -69,11 +111,44 @@ void scramble(queue<T>& q)
 template <typename T>
 bool verifySame(stack<T>& s, queue<T>& q)
 {
+    // bool retval = true; // optional
+    // if (s.size()<=0) return true;
+    // if (s.size()==1) return s.top()==q.front();
+    // else {
+    //     T tempS = s.top();
+    //     s.pop();
+    //     for (int i=0; i<(int)(q.size()-1); i++) {
+    //         q.push(q.front());
+    //         q.pop();
+    //     }
+    //     T tempQ = q.front();
+    //     q.pop();
+    //     retval = verifySame(s, q);
+    //     s.push(tempS);
+    //     q.push(tempQ);
+    // }
+    // return retval;
     bool retval = true; // optional
-    //T temp1; // rename me
-    //T temp2; // rename :)
+    // Base case
+    if (s.size()<=0) return true;
+    else if (s.size()==1) return s.top()==q.front();
 
-    return retval;
+    else {
+        T tempS = s.top();
+        s.pop();
+        retval = verifySame(s,q);
+        // Make stack and queue unchanged
+        q.push(q.front());
+        q.pop();
+        s.push(tempS);
+
+        if (retval) retval = (s.top()==q.front());
+        if (s.size()==q.size()) {
+            q.push(q.front());
+            q.pop();
+        }
+        return retval;
+    }
 }
 
 }
