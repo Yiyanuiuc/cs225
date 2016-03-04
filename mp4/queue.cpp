@@ -17,6 +17,12 @@ void Queue<T>::enqueue(T const& newItem)
     /**
      * @todo Your code here!
      */
+    while (!inStack.isEmpty()) 
+        outStack.push(inStack.pop());
+    // add new item
+    inStack.push(newItem);
+    while (!outStack.isEmpty()) 
+        inStack.push(outStack.pop());
 }
 
 /**
@@ -31,7 +37,7 @@ T Queue<T>::dequeue()
     /**
      * @todo Your code here! You will need to replace the following line.
      */
-    return T();
+    return inStack.pop();
 }
 
 /**
@@ -46,6 +52,7 @@ void Queue<T>::add(const T& theItem)
      * @todo Your code here! Hint: this function should call a Queue
      *  function to add the element to the Queue.
      */
+     this->enqueue(theItem);
 }
 
 /**
@@ -61,7 +68,7 @@ T Queue<T>::remove()
      *  function to remove an element from the Queue and return it. You will
      *  need to replace the following line.
      */
-    return T();
+    return this->dequeue();
 }
 
 /**
@@ -76,7 +83,7 @@ T Queue<T>::peek()
     /**
      * @todo Your code here! You will need to replace the following line.
      */
-    return T();
+    return inStack.peek();
 }
 
 /**
@@ -90,5 +97,5 @@ bool Queue<T>::isEmpty() const
     /**
      * @todo Your code here! You will need to replace the following line.
      */
-    return true;
+    return inStack.isEmpty();
 }
