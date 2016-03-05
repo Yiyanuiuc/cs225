@@ -5,11 +5,12 @@
  *
  * @param fillColor The color for this color picker.
  */
-solidColorPicker::solidColorPicker(RGBAPixel fillColor)
+solidColorPicker::solidColorPicker(RGBAPixel fillColor) 
 {
     /**
      * @todo Initialize a new solidColorPicker here!
      */
+    color = fillColor;
 }
 
 /**
@@ -24,5 +25,5 @@ RGBAPixel solidColorPicker::operator()(int x, int y)
      * @todo Return the appropriate color here! You will have to replace
      *	the following line.
      */
-    return RGBAPixel();
+    return color;
 }

@@ -42,7 +42,7 @@ class solidColorPicker : public colorPicker
      * @todo Define any additional private member variables or helper
      *	functions here as you see fit.
      */
-
+    RGBAPixel color; 
 };
 
 #endif
