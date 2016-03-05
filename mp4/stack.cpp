@@ -115,5 +115,5 @@ bool Stack<T>::isEmpty() const
     /**
      * @todo Your code here! You will need to replace the following line.
      */
-    return myStack.front()==T();
+    return myStack.empty();
 }

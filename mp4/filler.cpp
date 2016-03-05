@@ -15,7 +15,21 @@ animation filler::dfs::fillSolid(PNG& img, int x, int y, RGBAPixel fillColor,
      * @todo Your code here! You should replace the following line with a
      * correct call to fill with the correct colorPicker parameter.
      */
-    return animation();
+    int diff = (img(x,y)->red-fillColor.red)*(img(x,y)->red-fillColor.red) 
+                + (img(x,y)->green-fillColor.green)*(img(x,y)->green-fillColor.green)
+                + (img(x,y)->blue-fillColor.blue)*(img(x,y)->blue-fillColor.blue);
+    if (diff<tolerance) {
+        img(x,y)->red = fillColor.red;
+        img(x,y)->green = fillColor.green;
+        img(x,y)->blue = fillColor.blue;
+        if (frameFreq==1) {
+            this->addFrame(img);
+        }
+        fillSolid(img, x+1, y, fillColor, tolerance, frameFreq-1);
+        fillSolid(img, x-1, y, fillColor, tolerance, frameFreq-1);
+        fillSolid(img, x, y+1, fillColor, tolerance, frameFreq-1);
+        fillSolid(img, x, y-1, fillColor, tolerance, frameFreq-1);
+    }
 }
 
 animation filler::dfs::fillGrid(PNG& img, int x, int y, RGBAPixel gridColor,
@@ -57,7 +71,21 @@ animation filler::bfs::fillSolid(PNG& img, int x, int y, RGBAPixel fillColor,
      * @todo Your code here! You should replace the following line with a
      * correct call to fill with the correct colorPicker parameter.
      */
-    return animation();
+    int diff = (img(x,y)->red-fillColor.red)*(img(x,y)->red-fillColor.red) 
+                + (img(x,y)->green-fillColor.green)*(img(x,y)->green-fillColor.green)
+                + (img(x,y)->blue-fillColor.blue)*(img(x,y)->blue-fillColor.blue);
+    if (diff<tolerance) {
+        img(x,y)->red = fillColor.red;
+        img(x,y)->green = fillColor.green;
+        img(x,y)->blue = fillColor.blue;
+        if (frameFreq==1) {
+            this->addFrame(img);
+        }
+        fillSolid(img, x+1, y, fillColor, tolerance, frameFreq-1);
+        fillSolid(img, x-1, y, fillColor, tolerance, frameFreq-1);
+        fillSolid(img, x, y+1, fillColor, tolerance, frameFreq-1);
+        fillSolid(img, x, y-1, fillColor, tolerance, frameFreq-1);
+    }
 }
 
 animation filler::bfs::fillGrid(PNG& img, int x, int y, RGBAPixel gridColor,
