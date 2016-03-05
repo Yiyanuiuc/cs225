@@ -169,7 +169,7 @@ animation filler::fill(PNG& img, int x, int y, colorPicker& fillColor,
                 xCoords.add(tempX);
                 yCoords.add(tempY+1);
             }
-            if (tempY-1>=0) {
+            if (tempX-1>=0) {
                 xCoords.add(tempX-1);
                 yCoords.add(tempY);
             }
@@ -185,8 +185,8 @@ animation filler::fill(PNG& img, int x, int y, colorPicker& fillColor,
         }
     }
     for (int i=0; i<imgW; i++)
-        delete processed[i];
-    delete processed;
+        delete [] processed[i];
+    delete [] processed;
     return result;
      /**
      * 1.     Remove a point from the ordering structure.
