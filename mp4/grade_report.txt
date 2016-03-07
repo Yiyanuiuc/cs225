@@ -1,8 +1,8 @@
-Grading r22781 by qilezhi2 committed on Sat Mar  5 14:54:26 CST 2016
+Grading r22834 by tolar2 committed on Sun Mar  6 01:19:05 CST 2016
 Monad Autograder
-Testing mp4 at 2016-03-06 00:55:53
+Testing mp4 at 2016-03-07 00:57:01
 
-"I hope this code makes sense when I wake up." ~ Jason Cho
+"It is practically impossible to teach good programming to students that have had a prior exposure to BASIC: as potential programmers they are mentally mutilated beyond hope of regeneration." ~ Edsger Dijkstra
 
 Setting up test environment...
 Compiling...
