@@ -1,8 +1,8 @@
-Grading r22834 by tolar2 committed on Sun Mar  6 01:19:05 CST 2016
+Grading r22986 by tolar2 committed on Mon Mar  7 01:20:20 CST 2016
 Monad Autograder
-Testing mp4 at 2016-03-07 00:57:01
+Testing mp4 at 2016-03-08 00:53:30
 
-"It is practically impossible to teach good programming to students that have had a prior exposure to BASIC: as potential programmers they are mentally mutilated beyond hope of regeneration." ~ Edsger Dijkstra
+"Be careful about using the following code -- I've only proven that it works, I haven't tested it." ~ Donald Knuth
 
 Setting up test environment...
 Compiling...
