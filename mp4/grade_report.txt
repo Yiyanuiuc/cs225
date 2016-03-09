@@ -1,8 +1,8 @@
-Grading r22986 by tolar2 committed on Mon Mar  7 01:20:20 CST 2016
+Grading r23146 by tolar2 committed on Tue Mar  8 01:17:52 CST 2016
 Monad Autograder
-Testing mp4 at 2016-03-08 00:53:30
+Testing mp4 at 2016-03-09 00:57:49
 
-"Be careful about using the following code -- I've only proven that it works, I haven't tested it." ~ Donald Knuth
+"I like it because it feels like I'm drinking something special." ~ Sean Massung
 
 Setting up test environment...
 Compiling...
