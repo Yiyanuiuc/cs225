@@ -166,31 +166,37 @@ class BinaryTree
     /**
      * Private helper function for the public isOrdered function.
      * @param subRoot
+     * @return True if an in-order traversal of the subtree would produce a
+     *  nondecreasing list output values, and false otherwise. 
      */
     bool isOrdered(const Node* subRoot) const;
 
     /**
      * Private helper function for the public isOrdered function.
      * @param subRoot
+     * @return the right most Node
      */
     Node * findRightMost(Node* subRoot) const; 
 
     /**
      * Private helper function for the public isOrdered function.
      * @param subRoot
+     * @return the left most Node
      */
     Node * findLeftMost(Node* subRoot) const;
-
 
     /**
      * Private helper function for the public printPaths function.
      * @param subRoot
+     * @param v a vector storing vectices in a path
      */
     void printPaths(const Node* subRoot, vector<T> v) const;
 
     /**
      * Private helper function for the public sumDistances function.
-     * @param subRoot
+     * @param subRoot 
+     * @param accumulated The current distance
+     * @return The sum of the distances of all nodes to the subroot
      */
     int sumDistances(const Node* subRoot, int accumulated) const;
 

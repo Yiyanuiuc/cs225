@@ -81,9 +81,6 @@ void BinaryTree<T>::mirror()
     // your code here
     // Call recursive helper function on the root
     mirror(root);
-
-    // Finish the line
-    cout << endl;
 }
 
 /**
@@ -121,6 +118,8 @@ bool BinaryTree<T>::isOrdered() const
 /**
  * Private helper function for the public isOrdered function.
  * @param subRoot
+ * @return True if an in-order traversal of the subtree would produce a
+ *  nondecreasing list output values, and false otherwise. 
  */
 template <typename T>
 bool BinaryTree<T>::isOrdered(const Node* subRoot) const
@@ -134,6 +133,7 @@ bool BinaryTree<T>::isOrdered(const Node* subRoot) const
         if (subRoot->elem < findRightMost(subRoot->left)->elem) return false;
         else return isOrdered(subRoot->left);
     }
+    // right!=NULL
     else if (subRoot->left==NULL && subRoot->right!=NULL) {
         if (findLeftMost(subRoot->right)->elem < subRoot->elem) return false;
         else return isOrdered(subRoot->right);
@@ -149,11 +149,12 @@ bool BinaryTree<T>::isOrdered(const Node* subRoot) const
 /**
  * Private helper function for the public isOrdered function.
  * @param subRoot
+ * @return the right most Node
  */
 template <typename T>
 typename BinaryTree<T>::Node * BinaryTree<T>::findRightMost(Node* subRoot) const
 {
-    // Base case - null node
+    // Base case
     if (subRoot == NULL || subRoot->right == NULL) return subRoot;
     else return findRightMost(subRoot->right);
 }
@@ -161,11 +162,12 @@ typename BinaryTree<T>::Node * BinaryTree<T>::findRightMost(Node* subRoot) const
 /**
  * Private helper function for the public isOrdered function.
  * @param subRoot
+ * @return the left most Node
  */
 template <typename T>
 typename BinaryTree<T>::Node * BinaryTree<T>::findLeftMost(Node* subRoot) const
 {
-    // Base case - null node
+    // Base case
     if (subRoot == NULL || subRoot->left == NULL) return subRoot;
     else return findLeftMost(subRoot->left);
 }
@@ -182,15 +184,16 @@ void BinaryTree<T>::printPaths() const
     // your code here
     // Call recursive helper function on the root
     vector<T> v = {};
+    // use rightMost to track whether the path is the last one. 
+    // if so, we don't need "cout << endl"
+    // Node * rightMostPathLeaf = findRightMostPathLeaf(root);
     printPaths(root, v);
-
-    // Finish the line
-    cout << endl;
 }
 
 /**
  * Private helper function for the public printPaths function.
  * @param subRoot
+ * @param v a vector storing vectices in a path
  */
 template <typename T>
 void BinaryTree<T>::printPaths(const Node* subRoot, vector<T> v) const
@@ -206,7 +209,7 @@ void BinaryTree<T>::printPaths(const Node* subRoot, vector<T> v) const
         // leaf node, print the vector
         if (subRoot->left==NULL && subRoot->right==NULL) {
             cout << "Path:";
-            for (typename vector<T>::iterator it = v.begin() ; it != v.end(); ++it)
+            for (typename vector<T>::iterator it = v.begin() ; it != v.end(); ++it) 
                 cout << " " << *it;
             cout << endl;
         }
@@ -244,7 +247,9 @@ int BinaryTree<T>::sumDistances() const
 
 /**
  * Private helper function for the public sumDistances function.
- * @param subRoot
+ * @param subRoot 
+ * @param accumulated The current distance
+ * @return The sum of the distances of all nodes to the subroot
  */
 template <typename T>
 int BinaryTree<T>::sumDistances(const Node* subRoot, int accumulated) const
