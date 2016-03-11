@@ -157,6 +157,42 @@ class BinaryTree
      */
     void printLeftToRight(const Node* subRoot) const;
 
+    /**
+     * Private helper function for the public mirror function.
+     * @param subRoot
+     */
+    void mirror(Node* subRoot);
+
+    /**
+     * Private helper function for the public isOrdered function.
+     * @param subRoot
+     */
+    bool isOrdered(const Node* subRoot) const;
+
+    /**
+     * Private helper function for the public isOrdered function.
+     * @param subRoot
+     */
+    Node * findRightMost(Node* subRoot) const; 
+
+    /**
+     * Private helper function for the public isOrdered function.
+     * @param subRoot
+     */
+    Node * findLeftMost(Node* subRoot) const;
+
+
+    /**
+     * Private helper function for the public printPaths function.
+     * @param subRoot
+     */
+    void printPaths(const Node* subRoot, vector<T> v) const;
+
+    /**
+     * Private helper function for the public sumDistances function.
+     * @param subRoot
+     */
+    int sumDistances(const Node* subRoot, int accumulated) const;
 
     /**
      * Private helper function for the public insert function.

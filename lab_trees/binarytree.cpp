@@ -3,7 +3,9 @@
  * Definitions of the binary tree functions you'll be writing for this lab.
  * You'll need to modify this file.
  */
-
+#include <vector>
+#include <iostream>
+using namespace std;
 /**
  * @return The height of the binary tree. Recall that the height of a binary
  *  tree is just the length of the longest path from the root to a leaf, and
@@ -77,8 +79,31 @@ template <typename T>
 void BinaryTree<T>::mirror()
 {
     // your code here
+    // Call recursive helper function on the root
+    mirror(root);
+
+    // Finish the line
+    cout << endl;
 }
 
+/**
+ * Private helper function for the public mirror function.
+ * @param subRoot
+ */
+template <typename T>
+void BinaryTree<T>::mirror(Node* subRoot) 
+{
+    // Base case - null node
+    if (subRoot == NULL)
+        return;
+    // Swap
+    Node * temp = subRoot->left;
+    subRoot->left = subRoot->right;
+    subRoot->right = temp;
+
+    mirror(subRoot->left);
+    mirror(subRoot->right);
+}
 
 /**
  * @return True if an in-order traversal of the tree would produce a
@@ -89,9 +114,61 @@ template <typename T>
 bool BinaryTree<T>::isOrdered() const
 {
     // your code here
-    return false;
+    // Call recursive helper function on the root
+    return isOrdered(root);
 }
 
+/**
+ * Private helper function for the public isOrdered function.
+ * @param subRoot
+ */
+template <typename T>
+bool BinaryTree<T>::isOrdered(const Node* subRoot) const
+{
+    // Base case - null node
+    if (subRoot==NULL || (subRoot->left==NULL && subRoot->right==NULL))
+        return true;
+
+    // left!=NULL
+    else if (subRoot->left!=NULL && subRoot->right==NULL) {
+        if (subRoot->elem < findRightMost(subRoot->left)->elem) return false;
+        else return isOrdered(subRoot->left);
+    }
+    else if (subRoot->left==NULL && subRoot->right!=NULL) {
+        if (findLeftMost(subRoot->right)->elem < subRoot->elem) return false;
+        else return isOrdered(subRoot->right);
+    }
+    // subRoot!=NULL && left!=NULL && right!=NULL
+    else {
+        if (subRoot->elem < findRightMost(subRoot->left)->elem 
+            || findLeftMost(subRoot->right)->elem < subRoot->elem) return false;
+        else return isOrdered(subRoot->left) && isOrdered(subRoot->right);
+    }
+}
+
+/**
+ * Private helper function for the public isOrdered function.
+ * @param subRoot
+ */
+template <typename T>
+typename BinaryTree<T>::Node * BinaryTree<T>::findRightMost(Node* subRoot) const
+{
+    // Base case - null node
+    if (subRoot == NULL || subRoot->right == NULL) return subRoot;
+    else return findRightMost(subRoot->right);
+}
+
+/**
+ * Private helper function for the public isOrdered function.
+ * @param subRoot
+ */
+template <typename T>
+typename BinaryTree<T>::Node * BinaryTree<T>::findLeftMost(Node* subRoot) const
+{
+    // Base case - null node
+    if (subRoot == NULL || subRoot->left == NULL) return subRoot;
+    else return findLeftMost(subRoot->left);
+}
 
 /**
  * Prints out all the possible paths from the root of the tree to any leaf node.
@@ -103,8 +180,51 @@ template <typename T>
 void BinaryTree<T>::printPaths() const
 {
     // your code here
+    // Call recursive helper function on the root
+    vector<T> v = {};
+    printPaths(root, v);
+
+    // Finish the line
+    cout << endl;
 }
 
+/**
+ * Private helper function for the public printPaths function.
+ * @param subRoot
+ */
+template <typename T>
+void BinaryTree<T>::printPaths(const Node* subRoot, vector<T> v) const
+{
+    // Base case - null node
+    if (subRoot==NULL)
+        cout << "Path:" << endl;
+
+    else {
+        // add to the vector
+        v.push_back(subRoot->elem);
+
+        // leaf node, print the vector
+        if (subRoot->left==NULL && subRoot->right==NULL) {
+            cout << "Path:";
+            for (typename vector<T>::iterator it = v.begin() ; it != v.end(); ++it)
+                cout << " " << *it;
+            cout << endl;
+        }
+
+        else if (subRoot->left!=NULL && subRoot->right==NULL) {
+            printPaths(subRoot->left, v);
+        }
+
+        else if (subRoot->left==NULL && subRoot->right!=NULL) {
+            printPaths(subRoot->right, v);
+        }
+
+        else {
+            printPaths(subRoot->left, v);
+            printPaths(subRoot->right, v);
+        }
+    }
+}
 
 /**
  * Each node in a tree has a distance from the root node - the depth of that
@@ -118,6 +238,30 @@ template <typename T>
 int BinaryTree<T>::sumDistances() const
 {
     // your code here
-    return -1;
+    // Call recursive helper function on the root
+    return sumDistances(root,0);
 }
 
+/**
+ * Private helper function for the public sumDistances function.
+ * @param subRoot
+ */
+template <typename T>
+int BinaryTree<T>::sumDistances(const Node* subRoot, int accumulated) const
+{
+    // Base case - null node
+    if (subRoot==NULL) 
+        return accumulated;
+
+    // leaf node
+    if (subRoot->left==NULL && subRoot->right==NULL) 
+        return accumulated;
+    
+    else if (subRoot->left!=NULL && subRoot->right==NULL) 
+        return accumulated + sumDistances(subRoot->left, accumulated+1);
+    else if (subRoot->left==NULL && subRoot->right!=NULL) 
+        return accumulated + sumDistances(subRoot->right, accumulated+1);
+    else 
+        return accumulated + sumDistances(subRoot->left, accumulated+1)
+                           + sumDistances(subRoot->right, accumulated+1);
+}
