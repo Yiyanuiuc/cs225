@@ -1,8 +1,8 @@
-Grading r23361 by tolar2 committed on Wed Mar  9 01:22:10 CST 2016
+Grading r23724 by tolar2 committed on Thu Mar 10 01:24:43 CST 2016
 Monad Autograder
-Testing mp4 at 2016-03-10 00:59:38
+Testing mp4 at 2016-03-11 00:56:38
 
-"One day I will shoot you with this bullet. Can you still say that you love me?" ~ Re-l Mayer
+"C++ : Where friends have access to your private members." ~ Gavin Russell Baker
 
 Setting up test environment...
 Compiling...
