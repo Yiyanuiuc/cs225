@@ -184,9 +184,12 @@ animation filler::fill(PNG& img, int x, int y, colorPicker& fillColor,
             count = frameFreq;
         }
     }
-    for (int i=0; i<imgW; i++)
+    for (int i=0; i<imgW; i++) {
         delete [] processed[i];
+        processed[i] = NULL;
+    }
     delete [] processed;
+    processed = NULL;
     return result;
      /**
      * 1.     Remove a point from the ordering structure.
