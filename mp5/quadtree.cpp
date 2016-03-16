@@ -43,9 +43,11 @@ Quadtree::Quadtree () {
  */
 Quadtree::Quadtree (PNG const & source, int resolution) {
 	// initialize
-	root = NULL;
-	this->resolution = resolution;
-	buildTree (source, resolution);
+	if ((int)source.width()>=resolution && (int)source.height()>=resolution) {
+		root = NULL;
+		this->resolution = resolution;
+		buildTree (source, resolution);
+	}
 }	
 
 /*
@@ -67,7 +69,7 @@ Quadtree::Quadtree (const Quadtree & other) {
  * @param sourceRoot the QuadtreeNOde * to make a copy of
  */
 void Quadtree::copy (QuadtreeNode * & subRoot, QuadtreeNode * sourceRoot) {
-	if (sourceRoot==NULL||subRoot==NULL);
+	if (sourceRoot==NULL||subRoot==NULL) return;
 	subRoot->element = sourceRoot->element;
 	// base case: no children, four points are NULL by default;
 	if (sourceRoot->nwChild==NULL);
@@ -139,14 +141,16 @@ const Quadtree & Quadtree::operator = (const Quadtree & other) {
  */
 void Quadtree::buildTree (PNG const & source, int resolution) {
 	// Deletes the current contents of this Quadtree object
-	if (root!=NULL) {
-		clear(root);
+	if ((int)source.width()>=resolution && (int)source.height()>=resolution) {
+		if (root!=NULL) {
+			clear(root);
+		}
+		// initialize root
+		root = new QuadtreeNode;
+		this->resolution = resolution;
+		// build tree
+		assignPixel (source, root, 0, 0, resolution);
 	}
-	// initialize root
-	root = new QuadtreeNode;
-	this->resolution = resolution;
-	// build tree
-	assignPixel (source, root, 0, 0, resolution);
 }
 
 
@@ -207,6 +211,7 @@ void Quadtree::assignPixel (PNG const & source, QuadtreeNode * & subRoot, int xC
  * @return The pixel at the given (x, y) location
  */
 RGBAPixel Quadtree::getPixel (int x, int y)	const {
+	if (root==NULL || x<0 || x>=resolution || y<0 || y>=resolution) return RGBAPixel();
 	return getPixel (root, x, y, resolution);
 }
 
@@ -241,8 +246,8 @@ RGBAPixel Quadtree::getPixel (QuadtreeNode * subRoot, int xCoord, int yCoord, in
 			return getPixel(subRoot->neChild, xCoord-resolution, yCoord, resolution);
 		else if (xCoord<resolution && yCoord>=resolution) 
 			return getPixel(subRoot->swChild, xCoord, yCoord-resolution, resolution);
-		else return 
-			getPixel(subRoot->seChild, xCoord-resolution, yCoord-resolution, resolution);
+		else 
+			return getPixel(subRoot->seChild, xCoord-resolution, yCoord-resolution, resolution);
 	}
 }
 
@@ -258,46 +263,38 @@ PNG Quadtree::decompress() const {
 		// declare a PNG
 		PNG img(resolution, resolution);
 		// set initialized coordinates to (0,0)
-		decompress(img, root, 0, 0, resolution);
+		// decompress(img, root, 0, 0, resolution);
+		for (int i=0; i<resolution; i++) {
+			for (int j=0; j<resolution; j++)
+				*img(i,j) = getPixel(i,j);
+		}
 		return img;
 	}
 }
 
-/* 
- * a helper function to get the pixel
- * @param img The reference of image to paint
- * @param subRoot
- * @param xCoord
- * @param yCoord
- * @param resolution The remaining size
- */
-void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const {
-	// base case
-	if (subRoot==NULL) ;
-	// base case 2
-	else if (resolution<=2) {
-		// nw
-		img(2*xCoord, 2*yCoord)->red = subRoot->nwChild->element.red;
-		img(2*xCoord, 2*yCoord)->green = subRoot->nwChild->element.green;
-		img(2*xCoord, 2*yCoord)->blue = subRoot->nwChild->element.blue;
-		// ne
-		img(2*xCoord+1, 2*yCoord)->red = subRoot->neChild->element.red;
-		img(2*xCoord+1, 2*yCoord)->green = subRoot->neChild->element.green;
-		img(2*xCoord+1, 2*yCoord)->blue = subRoot->neChild->element.blue;
-		// sw
-		img(2*xCoord, 2*yCoord+1)->red = subRoot->swChild->element.red;
-		img(2*xCoord, 2*yCoord+1)->green = subRoot->swChild->element.green;
-		img(2*xCoord, 2*yCoord+1)->blue = subRoot->swChild->element.blue;
-		// se
-		img(2*xCoord+1, 2*yCoord+1)->red = subRoot->seChild->element.red;
-		img(2*xCoord+1, 2*yCoord+1)->green = subRoot->seChild->element.green;
-		img(2*xCoord+1, 2*yCoord+1)->blue = subRoot->seChild->element.blue;
-	}
-	// recursive case: decompress children
-	else {
-		decompress(img, subRoot->nwChild, 2*xCoord, 2*yCoord, resolution/2);
-		decompress(img, subRoot->neChild, 2*xCoord+1, 2*yCoord, resolution/2);
-		decompress(img, subRoot->swChild, 2*xCoord, 2*yCoord+1, resolution/2);
-		decompress(img, subRoot->seChild, 2*xCoord+1, 2*yCoord+1, resolution/2);
-	}
-}
+// /* 
+//  * a alternative helper function to get the pixel
+//  * @param img The reference of image to paint
+//  * @param subRoot
+//  * @param xCoord
+//  * @param yCoord
+//  * @param resolution The remaining size
+//  */
+// void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const {
+// 	// base case
+// 	if (subRoot==NULL) ;
+// 	// base case 2
+// 	else if (resolution<=2) {
+// 		*img(2*xCoord, 2*yCoord) = subRoot->nwChild->element;
+// 		*img(2*xCoord+1, 2*yCoord) = subRoot->neChild->element;
+// 		*img(2*xCoord, 2*yCoord+1) = subRoot->swChild->element;
+// 		*img(2*xCoord+1, 2*yCoord+1) = subRoot->seChild->element;
+// 	}
+// 	// recursive case: decompress children
+// 	else {
+// 		decompress(img, subRoot->nwChild, 2*xCoord, 2*yCoord, resolution/2);
+// 		decompress(img, subRoot->neChild, 2*xCoord+1, 2*yCoord, resolution/2);
+// 		decompress(img, subRoot->swChild, 2*xCoord, 2*yCoord+1, resolution/2);
+// 		decompress(img, subRoot->seChild, 2*xCoord+1, 2*yCoord+1, resolution/2);
+// 	}
+// }
