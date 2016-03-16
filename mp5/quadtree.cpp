@@ -280,11 +280,8 @@ void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCo
 	// base case
 	if (subRoot==NULL) ;
 	// base case 2
-	else if (resolution<=2) {
-		*img(2*xCoord, 2*yCoord) = subRoot->nwChild->element;
-		*img(2*xCoord+1, 2*yCoord) = subRoot->neChild->element;
-		*img(2*xCoord, 2*yCoord+1) = subRoot->swChild->element;
-		*img(2*xCoord+1, 2*yCoord+1) = subRoot->seChild->element;
+	else if (resolution<=1) {
+		*img(xCoord, yCoord) = subRoot->element;
 	}
 	// recursive case: decompress children
 	else {

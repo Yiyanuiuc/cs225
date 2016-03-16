@@ -10,6 +10,18 @@
 using std::cout;
 using std::endl;
 
+// test get pixel
+// void testGetPixel (PNG & input) {
+//     int width = (int) input.width();
+//     Quadtree tree(input, width);
+//     PNG output(width, width);
+//     for (int i=0; i<width; i++) {
+//         for (int j=0; j<width; j++) 
+//             *output(i,j) = tree.getPixel(i,j);
+//     }
+//     output.writeToFile("testGetPixel.png");
+// }
+
 int main()
 {
 
@@ -20,6 +32,9 @@ int main()
     Quadtree halfTree(imgIn, 128);
     imgOut = halfTree.decompress();
     imgOut.writeToFile("outHalf.png");
+
+    // test getpixel by SuY
+    // testGetPixel (imgIn);
 
     // now for the real tests
     Quadtree fullTree;
