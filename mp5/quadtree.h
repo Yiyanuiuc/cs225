@@ -146,14 +146,14 @@ class Quadtree
     RGBAPixel getPixel (QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const; 
 
     /* 
-     * a alternative helper function to get the pixel
+     * a helper function to get the pixel
      * @param img The reference of image to paint
      * @param subRoot
      * @param xCoord
      * @param yCoord
      * @param resolution The remaining size
      */
-    // void decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const;
+    void decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const;
 
 /**** Functions for testing/grading                      ****/
 /**** Do not remove this line or copy its contents here! ****/

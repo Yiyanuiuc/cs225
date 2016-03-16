@@ -263,38 +263,34 @@ PNG Quadtree::decompress() const {
 		// declare a PNG
 		PNG img(resolution, resolution);
 		// set initialized coordinates to (0,0)
-		// decompress(img, root, 0, 0, resolution);
-		for (int i=0; i<resolution; i++) {
-			for (int j=0; j<resolution; j++)
-				*img(i,j) = getPixel(i,j);
-		}
+		decompress(img, root, 0, 0, resolution);
 		return img;
 	}
 }
 
-// /* 
-//  * a alternative helper function to get the pixel
-//  * @param img The reference of image to paint
-//  * @param subRoot
-//  * @param xCoord
-//  * @param yCoord
-//  * @param resolution The remaining size
-//  */
-// void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const {
-// 	// base case
-// 	if (subRoot==NULL) ;
-// 	// base case 2
-// 	else if (resolution<=2) {
-// 		*img(2*xCoord, 2*yCoord) = subRoot->nwChild->element;
-// 		*img(2*xCoord+1, 2*yCoord) = subRoot->neChild->element;
-// 		*img(2*xCoord, 2*yCoord+1) = subRoot->swChild->element;
-// 		*img(2*xCoord+1, 2*yCoord+1) = subRoot->seChild->element;
-// 	}
-// 	// recursive case: decompress children
-// 	else {
-// 		decompress(img, subRoot->nwChild, 2*xCoord, 2*yCoord, resolution/2);
-// 		decompress(img, subRoot->neChild, 2*xCoord+1, 2*yCoord, resolution/2);
-// 		decompress(img, subRoot->swChild, 2*xCoord, 2*yCoord+1, resolution/2);
-// 		decompress(img, subRoot->seChild, 2*xCoord+1, 2*yCoord+1, resolution/2);
-// 	}
-// }
+/* 
+ * a helper function to get the pixel
+ * @param img The reference of image to paint
+ * @param subRoot
+ * @param xCoord
+ * @param yCoord
+ * @param resolution The remaining size
+ */
+void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const {
+	// base case
+	if (subRoot==NULL) ;
+	// base case 2
+	else if (resolution<=2) {
+		*img(2*xCoord, 2*yCoord) = subRoot->nwChild->element;
+		*img(2*xCoord+1, 2*yCoord) = subRoot->neChild->element;
+		*img(2*xCoord, 2*yCoord+1) = subRoot->swChild->element;
+		*img(2*xCoord+1, 2*yCoord+1) = subRoot->seChild->element;
+	}
+	// recursive case: decompress children
+	else {
+		decompress(img, subRoot->nwChild, 2*xCoord, 2*yCoord, resolution/2);
+		decompress(img, subRoot->neChild, 2*xCoord+1, 2*yCoord, resolution/2);
+		decompress(img, subRoot->swChild, 2*xCoord, 2*yCoord+1, resolution/2);
+		decompress(img, subRoot->seChild, 2*xCoord+1, 2*yCoord+1, resolution/2);
+	}
+}
