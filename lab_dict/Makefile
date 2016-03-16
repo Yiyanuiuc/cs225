@@ -32,7 +32,7 @@ all: $(EXE_ANAGRAM) $(EXE_ANAGRAM)-asan \
 	$(EXE_COMMON_WORDS) $(EXE_COMMON_WORDS)-asan
 
 data:
-	svn export https://subversion.ews.illinois.edu/svn/fa15-cs225/_shared/lab_dict_data data
+	svn export https://subversion.ews.illinois.edu/svn/sp16-cs225/_shared/lab_dict_data data
 
 # Pattern rules for object files
 $(OBJS_DIR)/%.o: %.cpp | $(OBJS_DIR)
