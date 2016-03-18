@@ -7,6 +7,7 @@
  */
 
 #include <fstream>
+#include <iostream>
 
 #include "cartalk_puzzle.h"
 
@@ -23,6 +24,24 @@ using namespace std;
 vector<StringTriple> cartalk_puzzle(PronounceDict d,
                                     const string& word_list_fname)
 {
-    /* Your code goes here! */
-    return vector<StringTriple>();
+	/* Your code goes here! */	
+    	vector<StringTriple> v;
+
+	ifstream wordsFile(word_list_fname);
+	string word;
+	if (wordsFile.is_open()) {
+		/* Reads a line from `wordsFile` into `word` until the file ends. */
+		while (getline(wordsFile, word)) {
+			if (word.size()==5) {
+				string s1 = word.substr(1);
+				string s2 = word.substr(0,1).append(word.substr(2));
+				if (s1!=s2) {
+					if (d.PronounceDict::homophones(word, s1)
+							&& d.PronounceDict::homophones(word, s2))
+						v.push_back(make_tuple(word,s1,s2));
+				}
+			}
+		}
+	}
+	return v;
 }

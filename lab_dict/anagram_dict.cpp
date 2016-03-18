@@ -22,7 +22,22 @@ using std::ifstream;
  */
 AnagramDict::AnagramDict(const string& filename)
 {
-    /* Your code goes here! */
+	/* Your code goes here! */
+	ifstream wordsFile(filename);
+	string word;
+	if (wordsFile.is_open()) {
+		/* Reads a line from `wordsFile` into `word` until the file ends. */
+		while (getline(wordsFile, word)) {
+			string wordNew = word;
+			// sort the word
+			std::sort(wordNew.begin(),wordNew.end());
+			auto lookup = dict.find(wordNew);
+			// if the key DNE, 
+			if (lookup==dict.end()) 
+				dict[wordNew] = vector<string>();
+			dict[wordNew].push_back(word);
+		}
+	}
 }
 
 /**
@@ -31,7 +46,17 @@ AnagramDict::AnagramDict(const string& filename)
  */
 AnagramDict::AnagramDict(const vector<string>& words)
 {
-    /* Your code goes here! */
+	/* Your code goes here! */
+	for (size_t i=0; i<words.size(); i++) {
+		string wordNew = words[i];
+		// sort the word
+		std::sort(wordNew.begin(),wordNew.end());
+		auto lookup = dict.find(wordNew);
+		// if the key DNE, 
+		if (lookup==dict.end()) 
+			dict[wordNew] = vector<string>();
+		dict[wordNew].push_back(words[i]);
+	}
 }
 
 /**
@@ -42,8 +67,12 @@ AnagramDict::AnagramDict(const vector<string>& words)
  */
 vector<string> AnagramDict::get_anagrams(const string& word) const
 {
-    /* Your code goes here! */
-    return vector<string>();
+ 	/* Your code goes here! */
+ 	string wordNew = word;
+	std::sort(wordNew.begin(),wordNew.end());
+	for (auto & key_val : dict)
+		if (key_val.first==wordNew) return key_val.second;
+	return vector<string>();
 }
 
 /**
@@ -54,6 +83,11 @@ vector<string> AnagramDict::get_anagrams(const string& word) const
  */
 vector<vector<string>> AnagramDict::get_all_anagrams() const
 {
-    /* Your code goes here! */
-    return vector<vector<string>>();
+	/* Your code goes here! */
+	vector<vector<string>> temp;
+	for (auto & key_val : dict) 
+		// omit the case with size==1
+		if (key_val.second.size()>=2)
+			temp.push_back(key_val.second);
+	return temp;
 }

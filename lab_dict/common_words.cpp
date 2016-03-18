@@ -37,6 +37,10 @@ CommonWords::CommonWords(const vector<string>& filenames)
     init_common();
 }
 
+/**
+ * Initializes #file_word_maps.
+ * @param filenames The vector of names of the files that will be used
+ */
 void CommonWords::init_file_word_maps(const vector<string>& filenames)
 {
     // make the length of file_word_maps the same as the length of filenames
@@ -48,12 +52,36 @@ void CommonWords::init_file_word_maps(const vector<string>& filenames)
         // file
         vector<string> words = file_to_vector(filenames[i]);
         /* Your code goes here! */
+        // declare a map
+        for (size_t j=0; j<words.size(); j++) {
+            string word = words[j];
+            auto lookup = file_word_maps[i].find(word);
+            // if the word has already existed, count++
+            if (lookup != file_word_maps[i].end()) 
+                lookup->second++;
+            // if not, make a new count
+            else 
+                file_word_maps[i][word] = 1;
+        }
     }
 }
 
 void CommonWords::init_common()
 {
     /* Your code goes here! */
+    for (size_t i=0; i<file_word_maps.size(); i++) {
+        // keep track of count
+        // keep track of the count of files
+        for (auto & key_val : file_word_maps[i]) {
+            auto lookup = common.find(key_val.first);
+            // if the word has been included
+            if (lookup != common.end()) 
+                lookup->second++;
+            // if not, make a new count
+            else 
+                common[key_val.first] = 1;
+        }
+    }
 }
 
 /**
@@ -65,6 +93,19 @@ vector<string> CommonWords::get_common_words(unsigned int n) const
 {
     vector<string> out;
     /* Your code goes here! */
+    for (auto & key_val : common) {
+        if (key_val.second==file_word_maps.size()) {
+            bool isCommonWord = true;
+            for (size_t j=0; j<file_word_maps.size(); j++) {
+                auto lookup = file_word_maps[j].find(key_val.first);
+                if (lookup->second<n) {
+                    isCommonWord = false;
+                    break;
+                }
+            }
+            if (isCommonWord) out.push_back(key_val.first);
+        }
+    }
     return out;
 }
 
