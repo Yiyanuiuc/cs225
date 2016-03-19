@@ -142,9 +142,8 @@ const Quadtree & Quadtree::operator = (const Quadtree & other) {
 void Quadtree::buildTree (PNG const & source, int resolution) {
 	// Deletes the current contents of this Quadtree object
 	if ((int)source.width()>=resolution && (int)source.height()>=resolution) {
-		if (root!=NULL) {
+		if (root!=NULL) 
 			clear(root);
-		}
 		// initialize root
 		root = new QuadtreeNode;
 		this->resolution = resolution;
@@ -210,8 +209,7 @@ void Quadtree::assignPixel (PNG const & source, QuadtreeNode * & subRoot, int xC
  * @param y	The y coordinate of the pixel to be retrieved
  * @return The pixel at the given (x, y) location
  */
-RGBAPixel Quadtree::getPixel (int x, int y)	const {
-	if (root==NULL || x<0 || x>=resolution || y<0 || y>=resolution) return RGBAPixel();
+RGBAPixel Quadtree::getPixel (int x, int y) const {
 	return getPixel (root, x, y, resolution);
 }
 
@@ -237,9 +235,10 @@ RGBAPixel Quadtree::getPixel (QuadtreeNode * subRoot, int xCoord, int yCoord, in
 			return subRoot->seChild->element;
 		else return RGBAPixel();
 	}
-	// recursive case: 
+	// recursive case: resolution>=4
 	else {
 		resolution/=2;
+		if (subRoot->nwChild==NULL) return subRoot->element;
 		if (xCoord<resolution && yCoord<resolution) 
 			return getPixel(subRoot->nwChild, xCoord, yCoord, resolution);
 		else if (xCoord>=resolution && yCoord<resolution) 
