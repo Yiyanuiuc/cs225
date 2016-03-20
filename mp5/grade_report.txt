@@ -1,0 +1,333 @@
+Grading r28141 by tolar2 committed on Sat Mar 19 00:35:29 CDT 2016
+Monad Autograder
+Testing mp5 at 2016-03-20 00:36:26
+
+"**** ******** **** nickels!!!" ~ Chase Geigle
+
+Setting up test environment...
+Compiling...
+================================================================
+unit_tests.cpp:322:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:330:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:340:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:350:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:351:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:360:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(13);
+        ~~~~~ ^
+unit_tests.cpp:368:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(200000);
+        ~~~~~ ^
+unit_tests.cpp:376:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(0);
+        ~~~~~ ^
+unit_tests.cpp:384:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:394:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:403:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:404:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:414:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:422:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(0, first.pruneSize(13));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:429:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(4, first.pruneSize(1));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:436:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(1, first.pruneSize(200000));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:443:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(1, first.pruneSize(0));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:450:29: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(37324, first.pruneSize(1000));
+                             ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:457:29: error: no member named 'idealPrune' in 'Quadtree'
+        ASSERT_EQUALS(44802, first.idealPrune(1));
+                             ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+unit_tests.cpp:322:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:330:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:340:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:350:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:351:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:360:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(13);
+        ~~~~~ ^
+unit_tests.cpp:368:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(200000);
+        ~~~~~ ^
+unit_tests.cpp:376:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(0);
+        ~~~~~ ^
+unit_tests.cpp:384:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:394:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:403:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:404:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:414:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:422:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(0, first.pruneSize(13));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:429:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(4, first.pruneSize(1));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:436:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(1, first.pruneSize(200000));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:443:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(1, first.pruneSize(0));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:450:29: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(37324, first.pruneSize(1000));
+                             ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:457:29: error: no member named 'idealPrune' in 'Quadtree'
+        ASSERT_EQUALS(44802, first.idealPrune(1));
+                             ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+ld: no input files
+unit_tests.cpp:322:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:330:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:340:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:350:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:351:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:360:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(13);
+        ~~~~~ ^
+unit_tests.cpp:368:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(200000);
+        ~~~~~ ^
+unit_tests.cpp:376:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(0);
+        ~~~~~ ^
+unit_tests.cpp:384:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:394:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:403:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:404:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:414:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:422:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(0, first.pruneSize(13));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:429:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(4, first.pruneSize(1));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:436:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(1, first.pruneSize(200000));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:443:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(1, first.pruneSize(0));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:450:29: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(37324, first.pruneSize(1000));
+                             ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:457:29: error: no member named 'idealPrune' in 'Quadtree'
+        ASSERT_EQUALS(44802, first.idealPrune(1));
+                             ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+unit_tests.cpp:322:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:330:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:340:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:350:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:351:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:360:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(13);
+        ~~~~~ ^
+unit_tests.cpp:368:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(200000);
+        ~~~~~ ^
+unit_tests.cpp:376:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(0);
+        ~~~~~ ^
+unit_tests.cpp:384:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:394:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:403:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:404:8: error: no member named 'clockwiseRotate' in 'Quadtree'
+        first.clockwiseRotate();
+        ~~~~~ ^
+unit_tests.cpp:414:8: error: no member named 'prune' in 'Quadtree'
+        first.prune(10000);
+        ~~~~~ ^
+unit_tests.cpp:422:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(0, first.pruneSize(13));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:429:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(4, first.pruneSize(1));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:436:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(1, first.pruneSize(200000));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:443:25: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(1, first.pruneSize(0));
+                         ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:450:29: error: no member named 'pruneSize' in 'Quadtree'
+        ASSERT_EQUALS(37324, first.pruneSize(1000));
+                             ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+unit_tests.cpp:457:29: error: no member named 'idealPrune' in 'Quadtree'
+        ASSERT_EQUALS(44802, first.idealPrune(1));
+                             ~~~~~ ^
+./proxy.h:319:62: note: expanded from macro 'ASSERT_EQUALS'
+                std::string errormsg = proxy::assert_equals_help(expected, actual, #expected, #actual);  \
+                                                                           ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+ld: no input files
+clang-3.5: error: no such file or directory: 'unit_tests.o'
+make: *** [proxy] Error 1
+make: *** Waiting for unfinished jobs....
+
+
+Running tests...
+================================================================
+Could not execute test cases
+
+
+Total score...
+================================================================
+TOTAL SCORE: 0
+
