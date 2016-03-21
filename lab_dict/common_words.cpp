@@ -52,7 +52,6 @@ void CommonWords::init_file_word_maps(const vector<string>& filenames)
         // file
         vector<string> words = file_to_vector(filenames[i]);
         /* Your code goes here! */
-        // declare a map
         for (size_t j=0; j<words.size(); j++) {
             string word = words[j];
             auto lookup = file_word_maps[i].find(word);
@@ -70,8 +69,6 @@ void CommonWords::init_common()
 {
     /* Your code goes here! */
     for (size_t i=0; i<file_word_maps.size(); i++) {
-        // keep track of count
-        // keep track of the count of files
         for (auto & key_val : file_word_maps[i]) {
             auto lookup = common.find(key_val.first);
             // if the word has been included
