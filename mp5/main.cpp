@@ -59,15 +59,15 @@ int main()
     imgOut.writeToFile("outCopy.png");
 
     // // test clockwiseRotate
-    // fullTree.clockwiseRotate();
-    // imgOut = fullTree.decompress();
-    // imgOut.writeToFile("outRotated.png");
+    fullTree.clockwiseRotate();
+    imgOut = fullTree.decompress();
+    imgOut.writeToFile("outRotated.png");
 
     // // test prune
-    // fullTree = fullTree2;
-    // fullTree.prune(1000);
-    // imgOut = fullTree.decompress();
-    // imgOut.writeToFile("outPruned.png");
+    fullTree = fullTree2;
+    fullTree.prune(1000);
+    imgOut = fullTree.decompress();
+    imgOut.writeToFile("outPruned.png");
 
     // // test several functions in succession
     // Quadtree fullTree3(fullTree2);

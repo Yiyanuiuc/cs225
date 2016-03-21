@@ -81,6 +81,32 @@ class Quadtree
      */
     PNG decompress() const; 
 
+    /**
+     * Rotates the Quadtree object's underlying image clockwise by 90 degrees.
+     */
+    void clockwiseRotate ();
+
+    /**
+     * Compresses the image this Quadtree represents.
+     * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+     */
+    void prune (int tolerance);   
+
+    /**
+     * This function is similar to prune; however, it does not actually prune the Quadtree.
+     * Rather, it returns a count of the total number of leaves the Quadtree would have if it were pruned as in the prune function.
+     * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+     * @return How many leaves this Quadtree would have if it were pruned with the given tolerance.
+     */
+    int pruneSize (int tolerance) const;
+
+    /**
+     * Calculates and returns the minimum tolerance necessary to guarantee that upon pruning the tree, no more than numLeaves leaves remain in the Quadtree.
+     * @param numLeaves The number of leaves you want to remain in the tree after prune is called.
+     * @returns The minimum tolerance needed to guarantee that there are no more than numLeaves remaining in the tree.
+     */
+    int idealPrune (int numLeaves) const;
+
   private:
     /**
      * A simple class representing a single node of a Quadtree.
@@ -102,7 +128,6 @@ class Quadtree
          */
         QuadtreeNode() ;
     };
-
 
     QuadtreeNode* root; /**< pointer to root of quadtree */
 
@@ -154,6 +179,44 @@ class Quadtree
      * @param resolution The remaining size
      */
     void decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const;
+
+    /**
+     * helper function for clockwiseRotate
+     * @param subRoot
+     */
+    void clockwiseRotate (QuadtreeNode * subRoot);
+
+    /**
+     * helper function for prune
+     * @param subRoot
+     * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+     * @return bool
+     */
+    bool toBePruned (QuadtreeNode * & subRoot, int tolerance) const;
+
+    /**
+     * helper function for prune
+     * @param subRoot
+     * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+     */
+    void prune (QuadtreeNode * & subRoot, int tolerance);
+
+    /**
+     * helper function for pruneSIze
+     * @param subRoot
+     * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+     * @return How many leaves this Quadtree would have if it were pruned with the given tolerance below the subRoot.
+     */
+    int pruneSize (QuadtreeNode * subRoot, int tolerance) const;
+
+    /**
+     * helper function for idealPrune
+     * @param start
+     * @param end 
+     * @param numLeaves The number of leaves you want to remain in the tree after prune is called.
+     * @returns The minimum tolerance needed to guarantee that there are no more than numLeaves remaining in the tree.
+     */
+    int idealPrune (int startP, int endP, int numLeaves) const;
 
 /**** Functions for testing/grading                      ****/
 /**** Do not remove this line or copy its contents here! ****/

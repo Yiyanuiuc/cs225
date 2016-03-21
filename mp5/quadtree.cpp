@@ -56,10 +56,14 @@ Quadtree::Quadtree (PNG const & source, int resolution) {
  * @param other The Quadtree to make a copy of
  */
 Quadtree::Quadtree (const Quadtree & other) {
-	// initialize root
-	root = new QuadtreeNode;
-	resolution = other.resolution;
-	copy(root,other.root);
+	// revise after ec: add a base case
+	if (other.root==NULL) root = NULL;
+	else {
+		// initialize root
+		root = new QuadtreeNode;
+		resolution = other.resolution;
+		copy(root,other.root);
+	}
 } 
 
 /*
@@ -289,4 +293,148 @@ void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCo
 		decompress(img, subRoot->swChild, 2*xCoord, 2*yCoord+1, resolution/2);
 		decompress(img, subRoot->seChild, 2*xCoord+1, 2*yCoord+1, resolution/2);
 	}
+}
+
+/*
+=======================
+	Further Functions in 5.2
+=======================
+*/
+
+/**
+ * Rotates the Quadtree object's underlying image clockwise by 90 degrees.
+ */
+void Quadtree::clockwiseRotate () {
+	clockwiseRotate(root);
+}	
+
+/**
+ * helper function for clockwiseRotate
+ * @param subRoot
+ */
+void Quadtree::clockwiseRotate (QuadtreeNode * subRoot) {
+	if (subRoot==NULL || subRoot->nwChild==NULL) return;
+	QuadtreeNode * tempNW = subRoot->nwChild;
+	QuadtreeNode * tempNE = subRoot->neChild;
+	QuadtreeNode * tempSW = subRoot->swChild;
+	QuadtreeNode * tempSE = subRoot->seChild;
+	subRoot->nwChild = tempSW;
+	subRoot->neChild = tempNW;
+	subRoot->swChild = tempSE;
+	subRoot->seChild = tempNE;
+	tempNW = tempNE = tempSW = tempSE = NULL;
+	clockwiseRotate (subRoot->nwChild);
+	clockwiseRotate (subRoot->neChild);
+	clockwiseRotate (subRoot->swChild);
+	clockwiseRotate (subRoot->seChild);
+}
+
+/**
+ * Compresses the image this Quadtree represents.
+ * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+ */
+void Quadtree::prune (int tolerance) {
+	prune(root, tolerance);
+}	
+
+/**
+ * helper function for prune
+ * @param subRoot
+ * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+ * @return bool
+ */
+bool Quadtree::toBePruned (QuadtreeNode * & subRoot, int tolerance)  const{
+	if (subRoot==NULL || subRoot->nwChild==NULL) return false;
+	// if it has children
+	int diff = pow(subRoot->element.red - subRoot->nwChild->element.red, 2) 
+		+ pow(subRoot->element.green - subRoot->nwChild->element.green, 2) 
+		+ pow(subRoot->element.blue - subRoot->nwChild->element.blue, 2);
+	if (diff>tolerance) return false;
+	diff = pow(subRoot->element.red - subRoot->neChild->element.red, 2) 
+		+ pow(subRoot->element.green - subRoot->neChild->element.green, 2) 
+		+ pow(subRoot->element.blue - subRoot->neChild->element.blue, 2);
+	if (diff>tolerance) return false;
+	diff = pow(subRoot->element.red - subRoot->swChild->element.red, 2) 
+		+ pow(subRoot->element.green - subRoot->swChild->element.green, 2) 
+		+ pow(subRoot->element.blue - subRoot->swChild->element.blue, 2);
+	if (diff>tolerance) return false;
+	diff = pow(subRoot->element.red - subRoot->seChild->element.red, 2) 
+		+ pow(subRoot->element.green - subRoot->seChild->element.green, 2) 
+		+ pow(subRoot->element.blue - subRoot->seChild->element.blue, 2);
+	if (diff>tolerance) return false;
+	return true;
+}
+
+/**
+ * helper function for prune
+ * @param subRoot
+ * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+ */
+void Quadtree::prune (QuadtreeNode * & subRoot, int tolerance) {
+	if (subRoot==NULL || subRoot->nwChild==NULL) return;
+	// if it has children
+	if (toBePruned(subRoot, tolerance)) {
+		clear(subRoot->nwChild);
+		clear(subRoot->neChild);
+		clear(subRoot->swChild);
+		clear(subRoot->seChild);
+	}
+	else {
+		prune (subRoot->nwChild, tolerance);
+		prune (subRoot->neChild, tolerance);
+		prune (subRoot->swChild, tolerance);
+		prune (subRoot->seChild, tolerance);
+	}
+}
+
+/**
+ * This function is similar to prune; however, it does not actually prune the Quadtree.
+ * Rather, it returns a count of the total number of leaves the Quadtree would have if it were pruned as in the prune function.
+ * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+ * @return How many leaves this Quadtree would have if it were pruned with the given tolerance.
+ */
+int Quadtree::pruneSize (int tolerance) const {
+	return pruneSize(root, tolerance);
+}
+
+/**
+ * helper function for pruneSIze
+ * @param subRoot
+ * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+ * @return How many leaves this Quadtree would have if it were pruned with the given tolerance below the subRoot.
+ */
+int Quadtree::pruneSize (QuadtreeNode * subRoot, int tolerance) const {
+	if (subRoot==NULL) return 0;
+	if (subRoot->nwChild==NULL) return 1;
+	// if it has children
+	if (toBePruned(subRoot, tolerance)) return 1;
+	else 
+		return pruneSize(subRoot->nwChild,tolerance) + pruneSize(subRoot->neChild,tolerance)
+			+ pruneSize(subRoot->swChild,tolerance) + pruneSize(subRoot->seChild,tolerance);
+}
+
+/**
+ * Calculates and returns the minimum tolerance necessary to guarantee that upon pruning the tree, no more than numLeaves leaves remain in the Quadtree.
+ * @param numLeaves The number of leaves you want to remain in the tree after prune is called.
+ * @returns The minimum tolerance needed to guarantee that there are no more than numLeaves remaining in the tree.
+ */
+int Quadtree::idealPrune (int numLeaves) const {
+	return idealPrune(0, 3*pow(225,2), numLeaves);
+}
+
+/**
+ * helper function for idealPrune
+ * @param start
+ * @param end 
+ * @param numLeaves The number of leaves you want to remain in the tree after prune is called.
+ * @returns The minimum tolerance needed to guarantee that there are no more than numLeaves remaining in the tree.
+ */
+int Quadtree::idealPrune (int startP, int endP, int numLeaves) const{
+	if (startP==endP) {
+		if (pruneSize(startP)>numLeaves) return startP+1;
+		else return startP;
+	}
+	int midP = (startP + endP)/2;
+	if (pruneSize(midP)>numLeaves) return idealPrune(midP, endP, numLeaves);
+	else return idealPrune(startP, midP, numLeaves); 
 }
