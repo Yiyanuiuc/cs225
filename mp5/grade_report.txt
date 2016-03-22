@@ -1,8 +1,8 @@
-Grading r28367 by qilezhi2 committed on Sun Mar 20 20:16:24 CDT 2016
+Grading r28585 by qilezhi2 committed on Mon Mar 21 23:09:19 CDT 2016
 Monad Autograder
-Testing mp5 at 2016-03-21 00:38:39
+Testing mp5 at 2016-03-22 00:39:05
 
-"If I had a 3D Reese's chocolate printer I would use that thing all the time always." ~ Chase Geigle
+"Should array indices start at 0 or 1? My compromise of 0.5 was rejected without, I thought, proper consideration." ~ Stan Kelly-Bootle
 
 Setting up test environment...
 Compiling...
@@ -29,7 +29,7 @@ test_getPixel_1  . . . . . [1 pts] - passed
 test_getPixel_2  . . . . . [2 pts] - passed
 test_getPixel_3  . . . . . [2 pts] - passed
 test_getPixel_4  . . . . . [2 pts] - passed
-test_decompress_unpruned_1 [1 pts] - passed
+test_decompress_unpruned_1 [1 pts] - FAILED
 test_decompress_unpruned_2 [1 pts] - passed
 test_decompress_unpruned_3 [1 pts] - passed
 test_decompress_unpruned_4 [1 pts] - passed
@@ -43,26 +43,26 @@ test_clockwiseRotate_4 . . [2 pts] - passed
 test_prune_1 . . . . . . . [2 pts] - passed
 test_prune_2 . . . . . . . [3 pts] - passed
 test_prune_3 . . . . . . . [2 pts] - passed
-test_prune_4 . . . . . . . [5 pts] - FAILED
+test_prune_4 . . . . . . . [5 pts] - passed
 test_prune_copy  . . . . . [2 pts] - passed
-test_prune_rotate  . . . . [2 pts] - FAILED
-test_prune_getPixel  . . . [3 pts] - FAILED
+test_prune_rotate  . . . . [2 pts] - passed
+test_prune_getPixel  . . . [3 pts] - passed
 test_pruneSize_1 . . . . . [2 pts] - passed
 test_pruneSize_2 . . . . . [2 pts] - passed
 test_pruneSize_3 . . . . . [2 pts] - passed
 test_pruneSize_4 . . . . . [2 pts] - passed
-test_pruneSize_5 . . . . . [2 pts] - FAILED
+test_pruneSize_5 . . . . . [2 pts] - passed
 test_idealPrune_1  . . . . [2 pts] - FAILED
 test_idealPrune_2  . . . . [3 pts] - FAILED
 test_idealPrune_3  . . . . [2 pts] - passed
 test_idealPrune_4  . . . . [5 pts] - FAILED
 val_clockwiseRotate (asan) [2 pts] - passed
-val_prune (asan) . . . . . [4 pts] - FAILED
+val_prune (asan) . . . . . [4 pts] - passed
 val_idealPrune (asan)  . . [3 pts] - FAILED
 test_const_correctness . . [4 pts] - passed
 
 
 Total score...
 ================================================================
-TOTAL SCORE: 70
+TOTAL SCORE: 85
 
