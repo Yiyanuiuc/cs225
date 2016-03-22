@@ -281,10 +281,12 @@ PNG Quadtree::decompress() const {
  */
 void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const {
 	// base case
-	if (subRoot==NULL) ;
-	// base case 2
-	else if (resolution<=1) {
-		*img(xCoord, yCoord) = subRoot->element;
+	if (subRoot==NULL);
+	// base case 2. resolution>=1, =1 when nwChild==NULL
+	else if (subRoot->nwChild==NULL) {
+		for (int i=0; i<resolution; i++)
+			for (int j=0; j<resolution; j++) 
+				*img(xCoord+i,yCoord+j) = subRoot->element;
 	}
 	// recursive case: decompress children
 	else {
@@ -340,29 +342,33 @@ void Quadtree::prune (int tolerance) {
 /**
  * helper function for prune
  * @param subRoot
+ * @param temp
  * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
- * @return bool
+ * @return bool whether the node should be pruned
  */
-bool Quadtree::toBePruned (QuadtreeNode * & subRoot, int tolerance)  const{
-	if (subRoot==NULL || subRoot->nwChild==NULL) return false;
-	// if it has children
-	int diff = pow(subRoot->element.red - subRoot->nwChild->element.red, 2) 
-		+ pow(subRoot->element.green - subRoot->nwChild->element.green, 2) 
-		+ pow(subRoot->element.blue - subRoot->nwChild->element.blue, 2);
-	if (diff>tolerance) return false;
-	diff = pow(subRoot->element.red - subRoot->neChild->element.red, 2) 
-		+ pow(subRoot->element.green - subRoot->neChild->element.green, 2) 
-		+ pow(subRoot->element.blue - subRoot->neChild->element.blue, 2);
-	if (diff>tolerance) return false;
-	diff = pow(subRoot->element.red - subRoot->swChild->element.red, 2) 
-		+ pow(subRoot->element.green - subRoot->swChild->element.green, 2) 
-		+ pow(subRoot->element.blue - subRoot->swChild->element.blue, 2);
-	if (diff>tolerance) return false;
-	diff = pow(subRoot->element.red - subRoot->seChild->element.red, 2) 
-		+ pow(subRoot->element.green - subRoot->seChild->element.green, 2) 
-		+ pow(subRoot->element.blue - subRoot->seChild->element.blue, 2);
-	if (diff>tolerance) return false;
-	return true;
+bool Quadtree::toBePruned (QuadtreeNode * & subRoot, QuadtreeNode * & temp, int tolerance) const {
+	if (subRoot==NULL) return false;
+	else if (temp->nwChild==NULL) return diff(subRoot,temp,tolerance);
+	// if temp has children
+	else return toBePruned(subRoot,temp->nwChild,tolerance)
+		&& toBePruned(subRoot,temp->neChild,tolerance)
+		&& toBePruned(subRoot,temp->swChild,tolerance)
+		&& toBePruned(subRoot,temp->seChild,tolerance);
+}
+ 
+/**
+ * helper function for prune
+ * @param root1
+ * @param root2
+ * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
+ * @return bool whether diff is bigger than tolerance
+ */
+bool Quadtree::diff (QuadtreeNode * & root1, QuadtreeNode * & root2, int tolerance) const{
+	if (root1==NULL || root2==NULL) return false;
+	int diff = pow(root1->element.red - root2->element.red, 2) 
+		+ pow(root1->element.green - root2->element.green, 2) 
+		+ pow(root1->element.blue - root2->element.blue, 2);
+	return diff<=tolerance;
 }
 
 /**
@@ -373,11 +379,12 @@ bool Quadtree::toBePruned (QuadtreeNode * & subRoot, int tolerance)  const{
 void Quadtree::prune (QuadtreeNode * & subRoot, int tolerance) {
 	if (subRoot==NULL || subRoot->nwChild==NULL) return;
 	// if it has children
-	if (toBePruned(subRoot, tolerance)) {
+	if (toBePruned(subRoot, subRoot, tolerance)) {
 		clear(subRoot->nwChild);
 		clear(subRoot->neChild);
 		clear(subRoot->swChild);
 		clear(subRoot->seChild);
+		subRoot->nwChild = subRoot->neChild = subRoot->swChild = subRoot->seChild = NULL;
 	}
 	else {
 		prune (subRoot->nwChild, tolerance);
@@ -407,10 +414,12 @@ int Quadtree::pruneSize (QuadtreeNode * subRoot, int tolerance) const {
 	if (subRoot==NULL) return 0;
 	if (subRoot->nwChild==NULL) return 1;
 	// if it has children
-	if (toBePruned(subRoot, tolerance)) return 1;
+	if (toBePruned(subRoot, subRoot, tolerance)) return 1;
 	else 
-		return pruneSize(subRoot->nwChild,tolerance) + pruneSize(subRoot->neChild,tolerance)
-			+ pruneSize(subRoot->swChild,tolerance) + pruneSize(subRoot->seChild,tolerance);
+		return pruneSize(subRoot->nwChild,tolerance) 
+			+ pruneSize(subRoot->neChild,tolerance)
+			+ pruneSize(subRoot->swChild,tolerance) 
+			+ pruneSize(subRoot->seChild,tolerance);
 }
 
 /**
