@@ -286,7 +286,7 @@ void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCo
 	else if (subRoot->nwChild==NULL) {
 		for (int i=0; i<resolution; i++)
 			for (int j=0; j<resolution; j++) 
-				*img(xCoord+i,yCoord+j) = subRoot->element;
+				*img(xCoord*resolution+i,yCoord*resolution+j) = subRoot->element;
 	}
 	// recursive case: decompress children
 	else {
@@ -316,6 +316,7 @@ void Quadtree::clockwiseRotate () {
  */
 void Quadtree::clockwiseRotate (QuadtreeNode * subRoot) {
 	if (subRoot==NULL || subRoot->nwChild==NULL) return;
+	// swap children
 	QuadtreeNode * tempNW = subRoot->nwChild;
 	QuadtreeNode * tempNE = subRoot->neChild;
 	QuadtreeNode * tempSW = subRoot->swChild;
@@ -347,28 +348,19 @@ void Quadtree::prune (int tolerance) {
  * @return bool whether the node should be pruned
  */
 bool Quadtree::toBePruned (QuadtreeNode * & subRoot, QuadtreeNode * & temp, int tolerance) const {
-	if (subRoot==NULL) return false;
-	else if (temp->nwChild==NULL) return diff(subRoot,temp,tolerance);
+	if (subRoot==NULL || temp==NULL) return false;
+	// reach leaves
+	else if (temp->nwChild==NULL) {
+		int diff = pow(subRoot->element.red - temp->element.red, 2) 
+			+ pow(subRoot->element.green - temp->element.green, 2) 
+			+ pow(subRoot->element.blue - temp->element.blue, 2);
+		return diff<=tolerance;
+	}
 	// if temp has children
 	else return toBePruned(subRoot,temp->nwChild,tolerance)
 		&& toBePruned(subRoot,temp->neChild,tolerance)
 		&& toBePruned(subRoot,temp->swChild,tolerance)
 		&& toBePruned(subRoot,temp->seChild,tolerance);
-}
- 
-/**
- * helper function for prune
- * @param root1
- * @param root2
- * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
- * @return bool whether diff is bigger than tolerance
- */
-bool Quadtree::diff (QuadtreeNode * & root1, QuadtreeNode * & root2, int tolerance) const{
-	if (root1==NULL || root2==NULL) return false;
-	int diff = pow(root1->element.red - root2->element.red, 2) 
-		+ pow(root1->element.green - root2->element.green, 2) 
-		+ pow(root1->element.blue - root2->element.blue, 2);
-	return diff<=tolerance;
 }
 
 /**
@@ -384,6 +376,7 @@ void Quadtree::prune (QuadtreeNode * & subRoot, int tolerance) {
 		clear(subRoot->neChild);
 		clear(subRoot->swChild);
 		clear(subRoot->seChild);
+		// set children to NULL
 		subRoot->nwChild = subRoot->neChild = subRoot->swChild = subRoot->seChild = NULL;
 	}
 	else {

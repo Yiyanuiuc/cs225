@@ -194,15 +194,6 @@ class Quadtree
      * @return bool whether the node should be pruned
      */
     bool toBePruned (QuadtreeNode * & subRoot, QuadtreeNode * & temp, int tolerance) const;
- 
-    /**
-     * helper function for prune
-     * @param root1
-     * @param root2
-     * @param tolerance The integer tolerance between two nodes that determines whether the subtree can be pruned.
-     * @return bool whether diff is bigger than tolerance
-     */
-    bool diff (QuadtreeNode * & root1, QuadtreeNode * & root2, int tolerance) const;
 
     /**
      * helper function for prune
