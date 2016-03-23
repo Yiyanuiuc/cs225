@@ -442,8 +442,8 @@ int Quadtree::idealPrune (int startP, int endP, int numLeaves) const{
 		else return startP;
  	}
 	else {
-	int midP = (startP + endP)/2;
-	if (pruneSize(midP)>numLeaves) return idealPrune(midP, endP, numLeaves);
-	else return idealPrune(startP, midP, numLeaves); 
-}
+		int midP = (startP + endP)/2;
+		if (pruneSize(midP)>numLeaves) return idealPrune(midP, endP, numLeaves);
+		else return idealPrune(startP, midP, numLeaves); 
+}	
 }
