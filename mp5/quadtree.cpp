@@ -290,7 +290,7 @@ void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCo
 	// base case
 	if (subRoot==NULL);
 	// base case 2. Here resolution>=1, and =1 shen nwChild==NULL
-	else if (subRoot->nwChild==NULL) {
+	else if (subRoot->nwChild==NULL || resolution<=1) {
 		for (int i=0; i<resolution; i++)
 			for (int j=0; j<resolution; j++) 
 				*img(xCoord*resolution+i,yCoord*resolution+j) = subRoot->element;
@@ -440,12 +440,12 @@ int Quadtree::idealPrune (int numLeaves) const {
 int Quadtree::idealPrune (int startP, int endP, int numLeaves) const{
 	if (startP>=endP-1) {
 		if (pruneSize(startP)>numLeaves) 
-return idealPrune (startP+1, endP+1, numLeaves);
+			return idealPrune (startP+1, endP+1, numLeaves);
 		else return startP;
  	}
 	else {
-	int midP = (startP + endP)/2;
-	if (pruneSize(midP)>numLeaves) return idealPrune(midP, endP, numLeaves);
-	else return idealPrune(startP, midP, numLeaves); 
+		int midP = (startP + endP)/2;
+		if (pruneSize(midP)>numLeaves) return idealPrune(midP, endP, numLeaves);
+		else return idealPrune(startP, midP, numLeaves); 
 	}
 }
