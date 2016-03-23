@@ -56,7 +56,7 @@ Quadtree::Quadtree (PNG const & source, int resolution) {
  * @param other The Quadtree to make a copy of
  */
 Quadtree::Quadtree (const Quadtree & other) {
-	// revise after ec: add a base case
+	// base case: nothing to copy
 	if (other.root==NULL) root = NULL;
 	else {
 		// initialize root
@@ -122,11 +122,16 @@ void Quadtree::clear(QuadtreeNode * & subRoot) {
  * @return A constant reference to the Quadtree value that was copied
  */
 const Quadtree & Quadtree::operator = (const Quadtree & other) { 
+	// base case: nothing to copy
+	if (other.root==NULL) {
+clear(root);
+root = NULL;
+	}
 	if (this != &other) { 
 		clear(root); 
 		root = new QuadtreeNode;
 		copy(root, other.root); 
-		resolution=other.resolution;
+		resolution = other.resolution;
 	} 
 	return *this; 
 }
@@ -282,7 +287,7 @@ PNG Quadtree::decompress() const {
 void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const {
 	// base case
 	if (subRoot==NULL);
-	// base case 2. resolution>=1, =1 when nwChild==NULL
+	// base case 2. Here resolution>=1, and =1 shen nwChild==NULL
 	else if (subRoot->nwChild==NULL) {
 		for (int i=0; i<resolution; i++)
 			for (int j=0; j<resolution; j++) 
@@ -348,21 +353,21 @@ void Quadtree::prune (int tolerance) {
  * @return bool whether the node should be pruned
  */
 bool Quadtree::toBePruned (QuadtreeNode * & subRoot, QuadtreeNode * & temp, int tolerance) const {
-	if (subRoot==NULL || temp==NULL) return false;
+	if (subRoot==NULL||temp==NULL) return false;
 	// reach leaves
 	else if (temp->nwChild==NULL) {
-		int diff = pow(subRoot->element.red - temp->element.red, 2) 
+int diff = pow(subRoot->element.red - temp->element.red, 2) 
 			+ pow(subRoot->element.green - temp->element.green, 2) 
 			+ pow(subRoot->element.blue - temp->element.blue, 2);
-		return diff<=tolerance;
-	}
+return diff<=tolerance;
+}
 	// if temp has children
 	else return toBePruned(subRoot,temp->nwChild,tolerance)
 		&& toBePruned(subRoot,temp->neChild,tolerance)
 		&& toBePruned(subRoot,temp->swChild,tolerance)
 		&& toBePruned(subRoot,temp->seChild,tolerance);
 }
-
+ 
 /**
  * helper function for prune
  * @param subRoot
@@ -376,7 +381,6 @@ void Quadtree::prune (QuadtreeNode * & subRoot, int tolerance) {
 		clear(subRoot->neChild);
 		clear(subRoot->swChild);
 		clear(subRoot->seChild);
-		// set children to NULL
 		subRoot->nwChild = subRoot->neChild = subRoot->swChild = subRoot->seChild = NULL;
 	}
 	else {
@@ -410,9 +414,9 @@ int Quadtree::pruneSize (QuadtreeNode * subRoot, int tolerance) const {
 	if (toBePruned(subRoot, subRoot, tolerance)) return 1;
 	else 
 		return pruneSize(subRoot->nwChild,tolerance) 
-			+ pruneSize(subRoot->neChild,tolerance)
++ pruneSize(subRoot->neChild,tolerance)
 			+ pruneSize(subRoot->swChild,tolerance) 
-			+ pruneSize(subRoot->seChild,tolerance);
++ pruneSize(subRoot->seChild,tolerance);
 }
 
 /**
@@ -421,7 +425,7 @@ int Quadtree::pruneSize (QuadtreeNode * subRoot, int tolerance) const {
  * @returns The minimum tolerance needed to guarantee that there are no more than numLeaves remaining in the tree.
  */
 int Quadtree::idealPrune (int numLeaves) const {
-	return idealPrune(0, 3*pow(225,2), numLeaves);
+	return idealPrune(0, 3*pow(255,2), numLeaves);
 }
 
 /**
@@ -432,11 +436,14 @@ int Quadtree::idealPrune (int numLeaves) const {
  * @returns The minimum tolerance needed to guarantee that there are no more than numLeaves remaining in the tree.
  */
 int Quadtree::idealPrune (int startP, int endP, int numLeaves) const{
-	if (startP==endP) {
-		if (pruneSize(startP)>numLeaves) return startP+1;
+	if (startP>=endP-1) {
+		if (pruneSize(startP)>numLeaves) 
+			return idealPrune (startP+1, endP+1, numLeaves);
 		else return startP;
-	}
+ 	}
+	else {
 	int midP = (startP + endP)/2;
 	if (pruneSize(midP)>numLeaves) return idealPrune(midP, endP, numLeaves);
 	else return idealPrune(startP, midP, numLeaves); 
+}
 }
