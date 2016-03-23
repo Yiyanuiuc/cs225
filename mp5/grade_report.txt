@@ -1,8 +1,8 @@
-Grading r28585 by qilezhi2 committed on Mon Mar 21 23:09:19 CDT 2016
+Grading r28772 by qilezhi2 committed on Tue Mar 22 23:50:50 CDT 2016
 Monad Autograder
-Testing mp5 at 2016-03-22 00:39:05
+Testing mp5 at 2016-03-23 00:37:54
 
-"Should array indices start at 0 or 1? My compromise of 0.5 was rejected without, I thought, proper consideration." ~ Stan Kelly-Bootle
+"Fish are meat, they're like water poultry." ~ Chase Geigle
 
 Setting up test environment...
 Compiling...
@@ -52,17 +52,17 @@ test_pruneSize_2 . . . . . [2 pts] - passed
 test_pruneSize_3 . . . . . [2 pts] - passed
 test_pruneSize_4 . . . . . [2 pts] - passed
 test_pruneSize_5 . . . . . [2 pts] - passed
-test_idealPrune_1  . . . . [2 pts] - FAILED
-test_idealPrune_2  . . . . [3 pts] - FAILED
+test_idealPrune_1  . . . . [2 pts] - passed
+test_idealPrune_2  . . . . [3 pts] - passed
 test_idealPrune_3  . . . . [2 pts] - passed
-test_idealPrune_4  . . . . [5 pts] - FAILED
+test_idealPrune_4  . . . . [5 pts] - passed
 val_clockwiseRotate (asan) [2 pts] - passed
 val_prune (asan) . . . . . [4 pts] - passed
-val_idealPrune (asan)  . . [3 pts] - FAILED
+val_idealPrune (asan)  . . [3 pts] - passed
 test_const_correctness . . [4 pts] - passed
 
 
 Total score...
 ================================================================
-TOTAL SCORE: 85
+TOTAL SCORE: 98
 
