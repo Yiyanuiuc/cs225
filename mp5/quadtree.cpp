@@ -1,3 +1,5 @@
+quadtree.cpp
+
 /**
  * @file quadtree.cpp
  * Quadtree class implementation.
@@ -11,7 +13,7 @@ using namespace std;
 
 /*
 ================================
-	Constructors & Big Three
+Constructors & Big Three
 ================================
 */
 
@@ -127,7 +129,7 @@ const Quadtree & Quadtree::operator = (const Quadtree & other) {
 clear(root);
 root = NULL;
 	}
-	if (this != &other) { 
+	else if (this != &other) { 
 		clear(root); 
 		root = new QuadtreeNode;
 		copy(root, other.root); 
@@ -138,7 +140,7 @@ root = NULL;
 
 /*
 =======================
-	Other Functions
+Other Functions
 =======================
 */
 
@@ -304,7 +306,7 @@ void Quadtree::decompress(PNG & img, QuadtreeNode * subRoot, int xCoord, int yCo
 
 /*
 =======================
-	Further Functions in 5.2
+Further Functions in 5.2
 =======================
 */
 
@@ -438,12 +440,12 @@ int Quadtree::idealPrune (int numLeaves) const {
 int Quadtree::idealPrune (int startP, int endP, int numLeaves) const{
 	if (startP>=endP-1) {
 		if (pruneSize(startP)>numLeaves) 
-			return idealPrune (startP+1, endP+1, numLeaves);
+return idealPrune (startP+1, endP+1, numLeaves);
 		else return startP;
  	}
 	else {
-		int midP = (startP + endP)/2;
-		if (pruneSize(midP)>numLeaves) return idealPrune(midP, endP, numLeaves);
-		else return idealPrune(startP, midP, numLeaves); 
-}	
+	int midP = (startP + endP)/2;
+	if (pruneSize(midP)>numLeaves) return idealPrune(midP, endP, numLeaves);
+	else return idealPrune(startP, midP, numLeaves); 
+	}
 }
