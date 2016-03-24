@@ -219,7 +219,7 @@ class Quadtree
      */
     int idealPrune (int startP, int endP, int numLeaves) const;
 
-/**** Functions for testing/grading                      ****/
+/**** Functions for testing/grading ****/
 /**** Do not remove this line or copy its contents here! ****/
 #include "quadtree_given.h"
 };
