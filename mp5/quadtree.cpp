@@ -1,5 +1,3 @@
-quadtree.cpp
-
 /**
  * @file quadtree.cpp
  * Quadtree class implementation.
@@ -126,8 +124,8 @@ void Quadtree::clear(QuadtreeNode * & subRoot) {
 const Quadtree & Quadtree::operator = (const Quadtree & other) { 
 	// base case: nothing to copy
 	if (other.root==NULL) {
-clear(root);
-root = NULL;
+		clear(root);
+		root = NULL;
 	}
 	else if (this != &other) { 
 		clear(root); 
@@ -200,12 +198,18 @@ void Quadtree::assignPixel (PNG const & source, QuadtreeNode * & subRoot, int xC
 	}
 	// assign pixels for subRoot
 	// The element field of each interior node stores the average of its children’s elements.
-	subRoot->element.red = (subRoot->nwChild->element.red + subRoot->neChild->element.red
-							+ subRoot->swChild->element.red + subRoot->seChild->element.red)/4;
-	subRoot->element.green = (subRoot->nwChild->element.green + subRoot->neChild->element.green
-							+ subRoot->swChild->element.green + subRoot->seChild->element.green)/4;
-	subRoot->element.blue = (subRoot->nwChild->element.blue + subRoot->neChild->element.blue
-							+ subRoot->swChild->element.blue + subRoot->seChild->element.blue)/4;
+	subRoot->element.red = (subRoot->nwChild->element.red 
+					+ subRoot->neChild->element.red
+					+ subRoot->swChild->element.red
+					+ subRoot->seChild->element.red)/4;
+	subRoot->element.green = (subRoot->nwChild->element.green 
+					+ subRoot->neChild->element.green
+					+ subRoot->swChild->element.green 
+					+ subRoot->seChild->element.green)/4;
+	subRoot->element.blue = (subRoot->nwChild->element.blue 
+					+ subRoot->neChild->element.blue
+					+ subRoot->swChild->element.blue 
+					+ subRoot->seChild->element.blue)/4;
 }
 
 /*
@@ -358,11 +362,11 @@ bool Quadtree::toBePruned (QuadtreeNode * & subRoot, QuadtreeNode * & temp, int 
 	if (subRoot==NULL||temp==NULL) return false;
 	// reach leaves
 	else if (temp->nwChild==NULL) {
-int diff = pow(subRoot->element.red - temp->element.red, 2) 
+		int diff = pow(subRoot->element.red - temp->element.red, 2) 
 			+ pow(subRoot->element.green - temp->element.green, 2) 
 			+ pow(subRoot->element.blue - temp->element.blue, 2);
-return diff<=tolerance;
-}
+		return diff<=tolerance;
+	}
 	// if temp has children
 	else return toBePruned(subRoot,temp->nwChild,tolerance)
 		&& toBePruned(subRoot,temp->neChild,tolerance)
@@ -416,9 +420,9 @@ int Quadtree::pruneSize (QuadtreeNode * subRoot, int tolerance) const {
 	if (toBePruned(subRoot, subRoot, tolerance)) return 1;
 	else 
 		return pruneSize(subRoot->nwChild,tolerance) 
-+ pruneSize(subRoot->neChild,tolerance)
+			+ pruneSize(subRoot->neChild,tolerance)
 			+ pruneSize(subRoot->swChild,tolerance) 
-+ pruneSize(subRoot->seChild,tolerance);
+			+ pruneSize(subRoot->seChild,tolerance);
 }
 
 /**
