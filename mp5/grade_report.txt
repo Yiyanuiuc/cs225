@@ -1,8 +1,8 @@
-Grading r28946 by qilezhi2 committed on Wed Mar 23 20:30:05 CDT 2016
+Grading r29008 by tolar2 committed on Thu Mar 24 00:52:45 CDT 2016
 Monad Autograder
-Testing mp5 at 2016-03-24 00:38:09
+Testing mp5 at 2016-03-25 00:35:58
 
-"Recursion is magic. " ~ Prof. Jeff Erickson | "Recursion is NOT magic." ~ Prof. Craig Zilles 
+"The most exciting phrase to hear in science - the one that heralds new discoveries - is not 'Eureka!' but 'That's funny....'" ~ Isaac Asimov
 
 Setting up test environment...
 Compiling...
