@@ -1,8 +1,8 @@
-Grading r29008 by tolar2 committed on Thu Mar 24 00:52:45 CDT 2016
+Grading r29278 by tolar2 committed on Fri Mar 25 00:50:08 CDT 2016
 Monad Autograder
-Testing mp5 at 2016-03-25 00:35:58
+Testing mp5 at 2016-03-26 00:35:51
 
-"The most exciting phrase to hear in science - the one that heralds new discoveries - is not 'Eureka!' but 'That's funny....'" ~ Isaac Asimov
+"Java is, in many ways, C++-." ~ Michael Feldman
 
 Setting up test environment...
 Compiling...
