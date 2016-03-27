@@ -1,8 +1,8 @@
-Grading r29278 by tolar2 committed on Fri Mar 25 00:50:08 CDT 2016
+Grading r29568 by tolar2 committed on Sat Mar 26 00:49:46 CDT 2016
 Monad Autograder
-Testing mp5 at 2016-03-26 00:35:51
+Testing mp5 at 2016-03-27 00:41:45
 
-"Java is, in many ways, C++-." ~ Michael Feldman
+"The primary purpose of the DATA statement is to give names to constants; instead of referring to pi as 3.141592653589793 at every appearance, the variable PI can be given that value with a DATA statement and used instead of the longer form of the constant. This also simplifies modifying the program, should the value of pi change." ~ FORTRAN manual for Xerox computers
 
 Setting up test environment...
 Compiling...
