@@ -1,0 +1,246 @@
+Exam 2 Multiple Choice Questions
+
+- These questions may not be in the same order as what you saw on the exam.
+- Your answer is indicated by a '->'
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider the following class definitions:
+
+    class Season{
+        public:
+            virtual void adjustTemp(int change);
+        private:
+            int temp;
+    };
+
+    class Winter: public Season {
+        public:
+            void makeColder(int change);
+    };
+
+Where could the assignment `temp += change;` appear for the private
+variable `temp`?
+
+Choices:
+   a. Both `adjustTemp` and `makeColder` can make the assignment.
+-> b. `adjustTemp` can make the assignment, but `makeColder` cannot.
+   c. `makeColder` can make the assignment, but `adjustTemp` cannot.
+   d. The answer to this question cannot be determined from the given code.
+   e. Neither `makeColder` nor `adjustTemp` can make the assignment.
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+What will be the output of the following program?
+
+    class Base
+    {
+        public:
+            ~Base() {cout << "Destructing Base"; }
+    };
+
+    class Derived:public Base
+    {
+        public:
+            ~Derived() { cout<< "Destructing Derived"; }
+    }; 
+
+    int main()
+    {
+        Base* b = new Derived;     
+        delete b;
+    }
+
+Choices:
+   a. `"Destructing Derived"`
+   b. None of the above
+   c. Compiler error
+   d. `"Destructing BaseDestructing Derived"`
+-> e. `"Destructing Base"`
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Using the templatized `MyPair` class defined in lecture, and the
+standard `string` class, which of the following correctly declares a
+variable called `closet` which is a dynamic array of `MyPairs` whose
+parameterized type is a `string` pointer?
+
+Choices:
+   a. None of the other options is correct.
+-> b. ```
+      MyPair<string> * closet;
+      ```
+   c. ```
+      MyPair<string *> * closet;
+      ```
+   d. ```
+      MyPair * closet = new string[size]
+      ```
+   e. More than one of the other options are correct.
+Your answer was incorrect.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+In implementing Stack ADT, using which of the following data structure
+gives best asymptotic runtime for `push` and `pop`? (Assume best
+possible implementation for stack using provided data structure)
+
+Choices:
+-> a. Array (size of array larger than possible elements in stack).
+   b. Singly linked list with head and tail pointer.
+   c. Singly linked list with head pointer only.
+   d. All options provide the same runtime.
+Your answer was incorrect.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose a `std::queue<int> q` contains 6 elements `1, 2, 3, 4, 5, 6`
+(pushed in that order). What is the result of executing the following
+code snippet, assuming all required libraries are included?
+
+    for(int i = 1; i<7; i++){
+        if(i%2==0) {
+            q.push(q.front());
+            q.pop();
+        }
+    }
+
+Choices:
+   a. The odd numbers in `q` are reversed.
+   b. The elements `q` are reversed.
+   c. The even numbers in `q` are reversed.
+   d. The front half of `q` contains odd numbers and the back half of `q`
+      contains even numbers.
+-> e. The front half of the original `q` is now at the back half.
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider this simple example.
+
+    int * p;
+    int i;
+    i = 37;
+    *p = i;
+    *p = 99;
+    cout << i << endl;
+
+What is the result of executing these statements, assuming that
+`iostream` is included?
+
+Choices:
+-> a. This code results in undefined runtime behavior.
+   b. This code has a memory leak.,
+   c. None of the other options describes the behavior of this code.
+   d. `99` is sent to standard out.
+   e. This code does not compile.
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider this simple example
+
+    class Pumpkin {
+        public:
+            Pumpkin(const Pumpkin & other);
+            ~Pumpkin();
+            // more public member functions
+
+        private:
+            double radius;
+            int *seeds;
+            // more private member variables
+    };
+
+Which of the following functions must also be implemented for the
+`Pumpkin` class for it to function correctly?
+
+Choices:
+   a. `operator()`
+   b. `operator delete`
+-> c. `operator=`
+   d. No Parameter Constructor
+   e. `setRadius()`
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose we have implemented the Queue ADT as a singly-linked-list with
+only `head` pointer and no sentinels. Which of the following best
+describe the running times for the functions `enqueue` and `dequeue`,
+assuming there are $O(n)$ items in the list, and that the front of the
+queue is at the `head` of the list?
+
+Choices:
+   a. $O(1)$ for `enqueue` and $O(n)$ for `dequeue`.
+   b. None of the options is correct
+-> c. $O(1)$ for both.
+   d. $O(n)$ for both.
+   e. $O(n)$ for `enqueue` and $O(1)$ for `dequeue`.
+Your answer was incorrect.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+We have implemented the Stack ADT as an array. Every time the array is
+full, you resize the array creating a new array that can hold four times
+as many elements as the previous array and copy values over from the old
+array. What is the total running time for $n$ pushes to the stack.
+
+Choices:
+   a. $O(n \log n)$.
+   b. $O(\log n)$.
+   c. $O(1)$.
+   d. $O(n^2)$.
+-> e. $O(n)$.
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Let `P` be a singly linked list. Let `Q` be the pointer to an arbitrary
+node `x` in the list. What is the tightest worst-case time complexity of
+the best known algorithm to delete the node `x` from the list, assuming
+that the list has sentinels?
+
+Choices:
+   a. $O(\log\log n)$
+   b. $O(n \log n)$
+   c. $O(n)$
+   d. $O(\log n)$
+-> e. $O(1)$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Give the tightest running time for a function with declaration as
+follows:
+
+    InsertItem(item * newItem, item * afterItem)
+
+`newItem` is the item that you are trying to insert in the list.  
+`afterItem` is the item after which you want to insert the `newItem`
+
+Choices:
+   a. $O(n)$
+   b. $O(\log\log n)$
+   c. $O(n \log n)$
+   d. $O(\log n)$
+-> e. $O(1)$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+In a sorted doubly linked list of size $n^2$, time taken to calculate
+the sum of all elements in the list is
+
+Choices:
+   a. $O(n \log n)$.
+-> b. $O(n^2)$.
+   c. $O(1)$.
+   d. $O(\log n)$.
+   e. $O(n)$.
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
