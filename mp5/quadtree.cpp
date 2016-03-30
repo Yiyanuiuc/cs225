@@ -150,11 +150,19 @@ Other Functions
  */
 void Quadtree::buildTree (PNG const & source, int resolution) {
 	// Deletes the current contents of this Quadtree object
+	// if ((int)source.width()>=resolution && (int)source.height()>=resolution) {
+	// 	if (root!=NULL) 
+	// 		clear(root);
+	// 	// initialize root
+	// 	root = new QuadtreeNode;
+	// 	this->resolution = resolution;
+	// 	// build tree
+	// 	assignPixel (source, root, 0, 0, resolution);
+	// }
 	if ((int)source.width()>=resolution && (int)source.height()>=resolution) {
 		if (root!=NULL) 
 			clear(root);
-		// initialize root
-		root = new QuadtreeNode;
+		root = NULL;
 		this->resolution = resolution;
 		// build tree
 		assignPixel (source, root, 0, 0, resolution);
@@ -171,45 +179,72 @@ void Quadtree::buildTree (PNG const & source, int resolution) {
  * @param resolution The remaining size
  */
 void Quadtree::assignPixel (PNG const & source, QuadtreeNode * & subRoot, int xCoord, int yCoord, int resolution) {
-	// base case
-	if (subRoot==NULL) return;
-	// base case 2: reach the node before leaves
-	else if (resolution<=2) {
-		// allocate new memory for children and assign pixels
-		subRoot->nwChild = new QuadtreeNode;
-		subRoot->nwChild->element = *source(2*xCoord, 2*yCoord);
-		subRoot->neChild = new QuadtreeNode;
-		subRoot->neChild->element = *source(2*xCoord+1, 2*yCoord);
-		subRoot->swChild = new QuadtreeNode;
-		subRoot->swChild->element = *source(2*xCoord, 2*yCoord+1);
-		subRoot->seChild = new QuadtreeNode;
-		subRoot->seChild->element = *source(2*xCoord+1, 2*yCoord+1);
+	// // base case
+	// if (subRoot==NULL) return;
+	// // base case 2: reach the node before leaves
+	// else if (resolution<=2) {
+	// 	// allocate new memory for children and assign pixels
+	// 	subRoot->nwChild = new QuadtreeNode;
+	// 	subRoot->nwChild->element = *source(2*xCoord, 2*yCoord);
+	// 	subRoot->neChild = new QuadtreeNode;
+	// 	subRoot->neChild->element = *source(2*xCoord+1, 2*yCoord);
+	// 	subRoot->swChild = new QuadtreeNode;
+	// 	subRoot->swChild->element = *source(2*xCoord, 2*yCoord+1);
+	// 	subRoot->seChild = new QuadtreeNode;
+	// 	subRoot->seChild->element = *source(2*xCoord+1, 2*yCoord+1);
+	// }
+	// // recursive case: assignPixel to children
+	// else {
+	// 	subRoot->nwChild = new QuadtreeNode;
+	// 	assignPixel (source, subRoot->nwChild, 2*xCoord, 2*yCoord, resolution/2);
+	// 	subRoot->neChild = new QuadtreeNode;
+	// 	assignPixel (source, subRoot->neChild, 2*xCoord+1, 2*yCoord, resolution/2);
+	// 	subRoot->swChild = new QuadtreeNode;
+	// 	assignPixel (source, subRoot->swChild, 2*xCoord, 2*yCoord+1, resolution/2);
+	// 	subRoot->seChild = new QuadtreeNode;
+	// 	assignPixel (source, subRoot->seChild, 2*xCoord+1, 2*yCoord+1, resolution/2);
+	// }
+	// // assign pixels for subRoot
+	// // The element field of each interior node stores the average of its children’s elements.
+	// subRoot->element.red = (subRoot->nwChild->element.red 
+	// 				+ subRoot->neChild->element.red
+	// 				+ subRoot->swChild->element.red
+	// 				+ subRoot->seChild->element.red)/4;
+	// subRoot->element.green = (subRoot->nwChild->element.green 
+	// 				+ subRoot->neChild->element.green
+	// 				+ subRoot->swChild->element.green 
+	// 				+ subRoot->seChild->element.green)/4;
+	// subRoot->element.blue = (subRoot->nwChild->element.blue 
+	// 				+ subRoot->neChild->element.blue
+	// 				+ subRoot->swChild->element.blue 
+	// 				+ subRoot->seChild->element.blue)/4;
+	if (subRoot==NULL) subRoot = new QuadtreeNode;
+	// base case: reach leaves
+	if (resolution<=1) {
+		// assign pixels
+		subRoot->element = *source(xCoord, yCoord);
 	}
 	// recursive case: assignPixel to children
 	else {
-		subRoot->nwChild = new QuadtreeNode;
 		assignPixel (source, subRoot->nwChild, 2*xCoord, 2*yCoord, resolution/2);
-		subRoot->neChild = new QuadtreeNode;
 		assignPixel (source, subRoot->neChild, 2*xCoord+1, 2*yCoord, resolution/2);
-		subRoot->swChild = new QuadtreeNode;
 		assignPixel (source, subRoot->swChild, 2*xCoord, 2*yCoord+1, resolution/2);
-		subRoot->seChild = new QuadtreeNode;
 		assignPixel (source, subRoot->seChild, 2*xCoord+1, 2*yCoord+1, resolution/2);
+		// assign pixels for subRoot
+		// The element field of each interior node stores the average of its children’s elements.
+		subRoot->element.red = (subRoot->nwChild->element.red 
+						+ subRoot->neChild->element.red
+						+ subRoot->swChild->element.red
+						+ subRoot->seChild->element.red)/4;
+		subRoot->element.green = (subRoot->nwChild->element.green 
+						+ subRoot->neChild->element.green
+						+ subRoot->swChild->element.green 
+						+ subRoot->seChild->element.green)/4;
+		subRoot->element.blue = (subRoot->nwChild->element.blue 
+						+ subRoot->neChild->element.blue
+						+ subRoot->swChild->element.blue 
+						+ subRoot->seChild->element.blue)/4;
 	}
-	// assign pixels for subRoot
-	// The element field of each interior node stores the average of its children’s elements.
-	subRoot->element.red = (subRoot->nwChild->element.red 
-					+ subRoot->neChild->element.red
-					+ subRoot->swChild->element.red
-					+ subRoot->seChild->element.red)/4;
-	subRoot->element.green = (subRoot->nwChild->element.green 
-					+ subRoot->neChild->element.green
-					+ subRoot->swChild->element.green 
-					+ subRoot->seChild->element.green)/4;
-	subRoot->element.blue = (subRoot->nwChild->element.blue 
-					+ subRoot->neChild->element.blue
-					+ subRoot->swChild->element.blue 
-					+ subRoot->seChild->element.blue)/4;
 }
 
 /*
