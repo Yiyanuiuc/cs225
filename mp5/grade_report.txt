@@ -1,8 +1,8 @@
-Grading r31428 by qilezhi2 committed on Tue Mar 29 19:08:11 CDT 2016
+Grading r31673 by qilezhi2 committed on Wed Mar 30 20:22:34 CDT 2016
 Monad Autograder
-Testing mp5 at 2016-03-30 00:42:07
+Testing mp5 at 2016-03-31 00:39:22
 
-"There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies." ~ C.A.R. Hoare
+"The first 90% of the code accounts for the first 90% of the development time. The remaining 10% of the code accounts for the other 90% of the development time." ~ Tom Cargill
 
 Setting up test environment...
 Compiling...
@@ -25,7 +25,7 @@ test_assign_op_1 . . . . . [1 pts] - passed
 test_assign_op_2 . . . . . [1 pts] - passed
 test_assign_op_3 . . . . . [1 pts] - passed
 test_assign_op_4 . . . . . [1 pts] - passed
-test_getPixel_1  . . . . . [1 pts] - FAILED
+test_getPixel_1  . . . . . [1 pts] - passed
 test_getPixel_2  . . . . . [2 pts] - passed
 test_getPixel_3  . . . . . [2 pts] - passed
 test_getPixel_4  . . . . . [2 pts] - passed
@@ -33,7 +33,7 @@ test_decompress_unpruned_1 [1 pts] - passed
 test_decompress_unpruned_2 [1 pts] - passed
 test_decompress_unpruned_3 [1 pts] - passed
 test_decompress_unpruned_4 [1 pts] - passed
-time_getPixel_logn . . . . [4 pts] - FAILED
+time_getPixel_logn . . . . [4 pts] - passed
 time_decompress_n (asan) . [4 pts] - passed
 valgrind_big3 (asan) . . . [4 pts] - passed
 test_clockwiseRotate_1 . . [1 pts] - passed
@@ -64,5 +64,5 @@ test_const_correctness . . [4 pts] - passed
 
 Total score...
 ================================================================
-TOTAL SCORE: 95
+TOTAL SCORE: 100
 
