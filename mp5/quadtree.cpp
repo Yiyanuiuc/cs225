@@ -260,7 +260,8 @@ void Quadtree::assignPixel (PNG const & source, QuadtreeNode * & subRoot, int xC
  * @return The pixel at the given (x, y) location
  */
 RGBAPixel Quadtree::getPixel (int x, int y) const {
-	return getPixel (root, x, y, resolution);
+	if (x<0 || x>=resolution || y<0 || y>=resolution) return RGBAPixel();
+	else return getPixel (root, x, y, resolution);
 }
 
 /* 
@@ -271,18 +272,38 @@ RGBAPixel Quadtree::getPixel (int x, int y) const {
  * @param resolution The remaining size
  */
 RGBAPixel Quadtree::getPixel (QuadtreeNode * subRoot, int xCoord, int yCoord, int resolution) const {
+	// // base case
+	// if (subRoot==NULL) return RGBAPixel();
+	// // base case 2: almost the node before leaves
+	// else if (resolution<=2) {
+	// 	if (xCoord==0 && yCoord==0) 
+	// 		return subRoot->nwChild->element;
+	// 	else if (xCoord==1 && yCoord==0) 
+	// 		return subRoot->neChild->element;
+	// 	else if (xCoord==0 && yCoord==1) 
+	// 		return subRoot->swChild->element;
+	// 	else if (xCoord==1 && yCoord==1) 
+	// 		return subRoot->seChild->element;
+	// 	else return RGBAPixel();
+	// }
+	// // recursive case: resolution>=4
+	// else {
+	// 	resolution/=2;
+	// 	if (subRoot->nwChild==NULL) return subRoot->element;
+	// 	if (xCoord<resolution && yCoord<resolution) 
+	// 		return getPixel(subRoot->nwChild, xCoord, yCoord, resolution);
+	// 	else if (xCoord>=resolution && yCoord<resolution) 
+	// 		return getPixel(subRoot->neChild, xCoord-resolution, yCoord, resolution);
+	// 	else if (xCoord<resolution && yCoord>=resolution) 
+	// 		return getPixel(subRoot->swChild, xCoord, yCoord-resolution, resolution);
+	// 	else 
+	// 		return getPixel(subRoot->seChild, xCoord-resolution, yCoord-resolution, resolution);
+	// }
 	// base case
 	if (subRoot==NULL) return RGBAPixel();
-	// base case 2: almost the node before leaves
-	else if (resolution<=2) {
-		if (xCoord==0 && yCoord==0) 
-			return subRoot->nwChild->element;
-		else if (xCoord==1 && yCoord==0) 
-			return subRoot->neChild->element;
-		else if (xCoord==0 && yCoord==1) 
-			return subRoot->swChild->element;
-		else if (xCoord==1 && yCoord==1) 
-			return subRoot->seChild->element;
+	// base case 2: leaves
+	else if (resolution<=1) {
+		if (xCoord==0 && yCoord==0) return subRoot->element;
 		else return RGBAPixel();
 	}
 	// recursive case: resolution>=4
