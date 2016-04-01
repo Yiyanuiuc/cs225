@@ -1,8 +1,8 @@
-Grading r31673 by qilezhi2 committed on Wed Mar 30 20:22:34 CDT 2016
+Grading r31741 by tolar2 committed on Thu Mar 31 00:54:11 CDT 2016
 Monad Autograder
-Testing mp5 at 2016-03-31 00:39:22
+Testing mp5 at 2016-04-01 00:42:19
 
-"The first 90% of the code accounts for the first 90% of the development time. The remaining 10% of the code accounts for the other 90% of the development time." ~ Tom Cargill
+"What is written without effort is, in general, read without pleasure." ~ Samuel Johnson
 
 Setting up test environment...
 Compiling...
