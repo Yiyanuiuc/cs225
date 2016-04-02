@@ -1,8 +1,8 @@
-Grading r31741 by tolar2 committed on Thu Mar 31 00:54:11 CDT 2016
+Grading r31886 by tolar2 committed on Fri Apr  1 00:56:47 CDT 2016
 Monad Autograder
-Testing mp5 at 2016-04-01 00:42:19
+Testing mp5 at 2016-04-02 00:39:35
 
-"What is written without effort is, in general, read without pleasure." ~ Samuel Johnson
+"The most exciting phrase to hear in science - the one that heralds new discoveries - is not 'Eureka!' but 'That's funny....'" ~ Isaac Asimov
 
 Setting up test environment...
 Compiling...
