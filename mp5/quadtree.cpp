@@ -306,7 +306,7 @@ RGBAPixel Quadtree::getPixel (QuadtreeNode * subRoot, int xCoord, int yCoord, in
 		if (xCoord==0 && yCoord==0) return subRoot->element;
 		else return RGBAPixel();
 	}
-	// recursive case: resolution>=4
+	// recursive case: resolution>=2
 	else {
 		resolution/=2;
 		if (subRoot->nwChild==NULL) return subRoot->element;
