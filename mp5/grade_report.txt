@@ -1,8 +1,8 @@
-Grading r32287 by qilezhi2 committed on Sat Apr  2 19:41:23 CDT 2016
+Grading r32415 by tolar2 committed on Sun Apr  3 00:59:21 CDT 2016
 Monad Autograder
-Testing mp5 at 2016-04-03 00:43:32
+Testing mp5 at 2016-04-04 00:44:09
 
-"A computer lets you make more mistakes faster than any invention in human history–with the possible exceptions of handguns and tequila." ~ Mitch Radcliffe
+"Worry loudly now or scream louder later." ~ Michael Lopp
 
 Setting up test environment...
 Compiling...
