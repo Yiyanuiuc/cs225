@@ -146,53 +146,6 @@ Point<Dim> KDTree<Dim>::findNearestNeighbor(const Point<Dim>& query) const
     return points[result];
 }
 
-// template <int Dim>
-// int KDTree<Dim>::findMatch (const Point<Dim>& query, 
-//         const std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension) const{
-//     // assume points is not empty and indices are within the range
-//     // base case
-//     if (startPoint>=endPoint) return startPoint;
-//     else {
-//         int midPoint = (startPoint+endPoint)/2;
-//         if (points[midPoint][dimension]==query[dimension]) return midPoint;
-//         else if (points[midPoint][dimension]<query[dimension]) 
-//             return findMatch (query, points, startPoint, midPoint-1, (dimension+1)%Dim);
-//         else 
-//             return findMatch (query, points, midPoint+1, endPoint, (dimension+1)%Dim);
-//     }
-// }
-
-// template <int Dim>
-// int KDTree<Dim>::findNearest (const Point<Dim> & query, 
-//         const std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension) const{
-//     if (startPoint>=endPoint) return startPoint;
-//     int temp = findMatch (query, points, startPoint, endPoint, dimension);
-//     // find the parent
-//     int midPoint = (startPoint+endPoint)/2;
-//     if (shouldReplace(query, points[temp], points[midPoint])) {
-//         temp = midPoint;
-//     }
-//     else {
-//         int radius = distance(points[temp], query);
-//         // if within radius
-//         if (std::abs(points[midPoint][dimension]-points[temp][dimension])<radius) {
-//             if (temp<=midPoint) {
-//                 int temp1 =  findNearest (query, points, midPoint+1, endPoint, (dimension+1)%Dim);
-//                 // update temp, if needed
-//                 if (shouldReplace(query, points[temp], points[temp1])) 
-//                     temp = temp1;
-//             }
-//             if (temp>=midPoint) {
-//                 int temp2 = findNearest (query, points, startPoint, midPoint-1, (dimension+1)%Dim);
-//                 // update temp, if needed
-//                 if (shouldReplace(query, points[temp], points[temp2])) 
-//                     temp = temp2;
-//             }
-//         }
-//     }
-//     return temp;
-// }
-
 template <int Dim>
 int KDTree<Dim>::findNearest (const Point<Dim> & query, 
         const std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension) const{

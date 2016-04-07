@@ -267,9 +267,6 @@ class KDTree
     /** sort the vector */
     void sortPoints (std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension);
 
-    // int findMatch (const Point<Dim>& query, 
-    //     const std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension) const;
-
     int findNearest (const Point<Dim>& query, 
         const std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension) const;
 };
