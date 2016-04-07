@@ -248,6 +248,30 @@ class KDTree
      * @todo Add your helper functions here.
      */
 
+    int distance (const Point<Dim> & first, const Point<Dim> & second) const;
+
+    /** Helper function for constructor */
+
+    /** return the median location among the three */
+    int medianLocation (vector<Point<Dim>> & points, int a, int b, int c, int dimension);
+    
+    /** swap two elements in the vector */
+    void swap (std::vector<Point<Dim>> & points, int a, int b);
+
+    /** split the vector base on whether it is smaller than the pivotValue  */
+    int partition (vector<Point<Dim>> & points, int startPoint, int endPoint, int pivotIndex, int dimension);
+
+    /** sort the vector base on the fixed dimension */
+    void sortPointsFixDim (std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension);
+
+    /** sort the vector */
+    void sortPoints (std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension);
+
+    // int findMatch (const Point<Dim>& query, 
+    //     const std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension) const;
+
+    int findNearest (const Point<Dim>& query, 
+        const std::vector<Point<Dim>> & points, int startPoint, int endPoint, int dimension) const;
 };
 
 #include "kdtree.cpp"
