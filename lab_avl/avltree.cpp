@@ -78,7 +78,6 @@ void AVLTree<K, V>::rebalance(Node * & subtree)
         // if == -1
         else 
             rotateRightLeft (subtree);
-        resetHeight (subtree);
     }
     if (heightOrNeg1(subtree->right) - heightOrNeg1(subtree->left)==-2) {
         // if == -1
@@ -167,31 +166,7 @@ void AVLTree<K, V>::remove(Node*& subtree, const K& key)
     } 
     // if key==subtree->key
     else {
-        if (subtree->left == NULL && subtree->right == NULL) {
-            /* no-child remove */
-            // your code here
-            delete subtree;
-            subtree = NULL;
-        } 
-        else if (subtree->left != NULL && subtree->right != NULL) {
-            /* two-child remove */
-            // your code here
-            // iop does exist
-            Node * & iop = rightMostNode (subtree->left);
-            swap (iop, subtree);
-            remove(iop, iop->key);
-        } 
-        else {
-            /* one-child remove */
-            // your code here
-            Node * temp = subtree;
-            if (subtree->left!=NULL) 
-                subtree = subtree->left;
-            else 
-                subtree = subtree->right;
-            delete temp;
-            temp = NULL;
-        }
+        doRemoval (subtree);
         // your code here
         rebalance (subtree);
     }
@@ -203,4 +178,33 @@ typename AVLTree<K, V>::Node * & AVLTree<K, V>::rightMostNode(Node * & subtree) 
         return subtree;
     else 
         return rightMostNode(subtree->right);
+}
+
+template <class K, class V>
+void AVLTree<K, V>::doRemoval (Node * & subtree) {
+    if (subtree->left == NULL && subtree->right == NULL) {
+        /* no-child remove */
+        // your code here
+        delete subtree;
+        subtree = NULL;
+    } 
+    else if (subtree->left != NULL && subtree->right != NULL) {
+        /* two-child remove */
+        // your code here
+        // iop does exist
+        Node * & iop = rightMostNode (subtree->left);
+        swap (iop, subtree);
+        doRemoval (iop);
+    } 
+    else {
+        /* one-child remove */
+        // your code here
+        Node * temp = subtree;
+        if (subtree->left!=NULL) 
+            subtree = subtree->left;
+        else 
+            subtree = subtree->right;
+        delete temp;
+        temp = NULL;
+    }
 }
