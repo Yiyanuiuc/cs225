@@ -75,7 +75,8 @@ template <class K, class V>
 void AVLTree<K, V>::rebalance(Node * & subtree)
 {
     // your code here
-    if (heightOrNeg1(subtree->right) - heightOrNeg1(subtree->left)==2) {
+    if (subtree==NULL);
+    else if (heightOrNeg1(subtree->right) - heightOrNeg1(subtree->left)==2) {
         if (subtree->right==NULL);
         // if == 1
         else if (heightOrNeg1(subtree->right->right) - heightOrNeg1(subtree->right->left)==1) 
@@ -174,7 +175,7 @@ void AVLTree<K, V>::remove(Node*& subtree, const K& key)
             // iop does exist
             Node * & iop = rightMostNode (subtree->left);
             swap (iop, subtree);
-            remove (subtree->left, key);
+            remove (iop, key);
         } 
         else {
             /* one-child remove */
@@ -188,8 +189,9 @@ void AVLTree<K, V>::remove(Node*& subtree, const K& key)
             temp = NULL;
         }
         // your code here
-        rebalance (subtree);
     }
+    resetHeight (subtree);
+    rebalance (subtree);
 }
 
 template <class K, class V>
