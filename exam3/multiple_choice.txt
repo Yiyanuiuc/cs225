@@ -1,0 +1,249 @@
+Exam 3 Multiple Choice Questions
+
+- These questions may not be in the same order as what you saw on the exam.
+- Your answer is indicated by a '->'
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider the following partial C++ code:
+
+    #include <iostream>
+    #include <list>
+    using namespace std;
+
+    template<class Iter, class Formatter>
+    bool mystery(Iter first, Iter second, Formatter runit) {
+        Iter temp = first;
+        bool p = true;
+        while (!(second == temp)) {
+            p = (p && runit(*first, *second));
+            first++;
+            second--;
+        }
+        return p;
+    }
+
+    class noClue {
+
+        public:
+
+        bool operator()(int a, int b) {
+            return (a==b);
+        }
+    };
+
+    int main() {
+        list<int> s;
+        // list insertions here
+        list<int>::iterator it1 = s.begin();
+        list<int>::iterator it2 = s.end();
+        it2--;
+        noClue nc;
+
+        if ( mystery<list<int>::iterator, noClue>(it1, it2, nc))
+            cout << "yes" << endl;
+        else
+            cout << "no" << endl;
+        return 0;
+    }
+
+Which of the following statements is true?
+
+Choices:
+   a. None of these options describes the behavior of this code.
+   b. This code does not compile because of a syntax error in the template
+      instantiation for mystery.
+   c. If the list consists of the integers 1, 2, 3, 2, 1, 4 in that order,
+      with the first item on the left, then the output is "yes".
+   d. This code does not compile because of a type mismatch in the mystery
+      parameter list.
+-> e. If the list consists of the integers 1, 2, 3, 2, 1 in that order, with
+      the first item on the left, then the output is "yes".
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider the following code:
+
+    #include <iostream>
+    using namespace std;
+
+    class dunno
+    {
+        public:
+
+        int operator()(int f){
+            return f>0 ? f : -f;
+        }
+    };
+
+    void main()
+    {
+        float f = -123.45;
+        dunno aObj;
+        int something_f = aObj(f);
+        cout << "f = " << f << " something_f = " << something_f << endl;
+    }
+
+What happens when you run the above code?
+
+Choices:
+   a. Runtime error
+   b. None of these is the correct output.
+   c. `f = 123.45 something_f = -123.45`
+-> d. Compilation error
+   e. `f = -123.45 something_f = 123.45`
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fill in the blanks so that the following sentence is true: If you have a
+complete tree with 17 nodes, the maximum height ($h$) of the tree is
+\_\_\_\_\_\_ and there are \_\_\_\_\_\_ nodes on level $h$.
+
+Choices:
+   a. First blank is 5, second is 2.
+   b. First blank is 8, second is 9.
+-> c. None of the other options makes the sentence true.
+   d. First blank is 4, second is 1.
+   e. First blank is 8, second is 2.
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider a complete BST with $n$ nodes. What is the minimum and maximum
+number of comparisons that you need to make in order to search for a
+key?
+
+A complete BST is a BST in which every level, except possibly the last,
+is completely filled, and all nodes are as far left as possible.
+
+Choices:
+   a. $1$ and $n$
+   b. $\log n$ and $\log n$
+   c. We do not have enough information to answer the question.
+-> d. $1$ and $\log n$
+   e. $\log n$ and $n$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider the AVL Tree built by inserting the following sequence of
+integers, one at a time:
+
+    5, 8, 9, 7, 6, 3
+
+What is the element in root node?
+
+Choices:
+   a. 5
+   b. 7
+   c. 8
+   d. None of these answers is correct.
+-> e. 6.
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose we would like to build a dictionary that maps a set of student
+names (short strings) to a study group identifier. Which of the
+following would work as a key function for our dictionary?
+
+*Hint: the ordering of the students in the original set should not
+matter.*
+
+Choices:
+   a. Sort and then concatenate the first letters of the students' names.
+   b. Sort the students' names and then sum the values of the characters in
+      their names.
+-> c. None of the other answers are correct.
+   d. Concatenate the names.
+   e. Sort each name by character, then form a concatenation of all the sorted
+      names.
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Choose the appropriate running time from the list below.
+
+The variable $n$ represents the number of items (keys, data, or key/data
+pairs) in the structure. In answering this question you should assume
+the best possible implementation given the constraints, and also assume
+that every array is sufficiently large to handle all items (unless
+otherwise stated).
+
+Worst case time to find the In Order Predecessor of a given key in a
+Binary Search Tree (if it exists).
+
+Choices:
+   a. $O(1)$
+   b. $O(\log n)$
+   c. $O(n^2)$
+   d. $O(n\log n)$
+-> e. $O(n)$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Choose the appropriate running time from the list below.
+
+The variable $n$ represents the number of items (keys, data, or key/data
+pairs) in the structure. In answering this question you should assume
+the best possible implementation given the constraints, and also assume
+that every array is sufficiently large to handle all items (unless
+otherwise stated).
+
+Count the number of nodes that are between 2 given keys in a Binary
+Search Tree.
+
+Choices:
+-> a. $O(n)$
+   b. $O(n^2)$
+   c. $O(n\log n)$
+   d. $O(1)$
+   e. $O(\log n)$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Choose the appropriate running time from the list below.
+
+The variable $n$ represents the number of items (keys, data, or key/data
+pairs) in the structure. In answering this question you should assume
+the best possible implementation given the constraints, and also assume
+that every array is sufficiently large to handle all items (unless
+otherwise stated).
+
+Worst case time to find the In Order Predecessor of a given key in a AVL
+Tree (if it exists).
+
+Choices:
+-> a. $O(\log n)$
+   b. $O(n^2)$
+   c. $O(n\log n)$
+   d. $O(n)$
+   e. $O(1)$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Choose the appropriate running time from the list below.
+
+The variable $n$ represents the number of items (keys, data, or key/data
+pairs) in the structure. In answering this question you should assume
+the best possible implementation given the constraints, and also assume
+that every array is sufficiently large to handle all items (unless
+otherwise stated).
+
+Determine if a Binary Tree is a Binary Search Tree
+
+Choices:
+   a. $O(n^2)$
+-> b. $O(n)$
+   c. $O(\log n)$
+   d. $O(1)$
+   e. $O(n\log n)$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
