@@ -176,6 +176,10 @@ class AVLTree
      */
     void rebalance(Node*& node);
 
+    void resetHeight(Node * & subtree);
+
+    Node * & rightMostNode(Node * & subtree);
+
     /**
      * @param node The node's height to check
      * @return The height of the node if it's non-`NULL` or -1 if it is `NULL`
