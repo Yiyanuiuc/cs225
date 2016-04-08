@@ -32,6 +32,7 @@ void AVLTree<K, V>::rotateLeft(Node * & t)
 {
     *_out << __func__ << endl; // Outputs the rotation name (don't remove this)
     // your code here
+    if (t==NULL) return;
     Node * newRoot = t->right;
     t->right = newRoot->left;
     newRoot->left = t;
@@ -43,6 +44,7 @@ void AVLTree<K, V>::rotateLeftRight(Node*& t)
 {
     *_out << __func__ << endl; // Outputs the rotation name (don't remove this)
     // Implemented for you:
+    if (t==NULL) return;
     rotateLeft(t->left);
     rotateRight(t);
 }
@@ -52,6 +54,7 @@ void AVLTree<K, V>::rotateRight(Node * & t)
 {
     *_out << __func__ << endl; // Outputs the rotation name (don't remove this)
     // your code here
+    if (t==NULL) return;
     Node * newRoot = t->left;
     t->left = newRoot->right;
     newRoot->right = t;
@@ -63,6 +66,7 @@ void AVLTree<K, V>::rotateRightLeft(Node*& t)
 {
     *_out << __func__ << endl; // Outputs the rotation name (don't remove this)
     // your code here
+    if (t==NULL) return;
     rotateRight(t->right);
     rotateLeft(t);
 }
@@ -72,16 +76,18 @@ void AVLTree<K, V>::rebalance(Node * & subtree)
 {
     // your code here
     if (heightOrNeg1(subtree->right) - heightOrNeg1(subtree->left)==2) {
+        if (subtree->right==NULL);
         // if == 1
-        if (heightOrNeg1(subtree->right->right) - heightOrNeg1(subtree->right->left)==1) 
+        else if (heightOrNeg1(subtree->right->right) - heightOrNeg1(subtree->right->left)==1) 
             rotateLeft (subtree);
         // if == -1
         else 
             rotateRightLeft (subtree);
     }
-    if (heightOrNeg1(subtree->right) - heightOrNeg1(subtree->left)==-2) {
+    else if (heightOrNeg1(subtree->right) - heightOrNeg1(subtree->left)==-2) {
+        if (subtree->left==NULL);
         // if == -1
-        if (heightOrNeg1(subtree->left->right) - heightOrNeg1(subtree->left->left)==-1) 
+        else if (heightOrNeg1(subtree->left->right) - heightOrNeg1(subtree->left->left)==-1) 
             rotateRight (subtree);
         // if == 1
         else 
@@ -89,16 +95,6 @@ void AVLTree<K, V>::rebalance(Node * & subtree)
     }
     resetHeight (subtree);
 }
-
-// template <class K, class V>
-// void AVLTree<K, V>::changeHeight(Node * & subtree, int a) {
-//     if (subtree==NULL);
-//     else {
-//         subtree->height += a;
-//         changeHeight (subtree->left, a);
-//         changeHeight (subtree->right, a);
-//     }
-// }
 
 template <class K, class V>
 void AVLTree<K, V>::resetHeight(Node * & subtree) {
@@ -166,7 +162,31 @@ void AVLTree<K, V>::remove(Node*& subtree, const K& key)
     } 
     // if key==subtree->key
     else {
-        doRemoval (subtree);
+        if (subtree->left == NULL && subtree->right == NULL) {
+            /* no-child remove */
+            // your code here
+            delete subtree;
+            subtree = NULL;
+        } 
+        else if (subtree->left != NULL && subtree->right != NULL) {
+            /* two-child remove */
+            // your code here
+            // iop does exist
+            Node * & iop = rightMostNode (subtree->left);
+            swap (iop, subtree);
+            remove (subtree->left, key);
+        } 
+        else {
+            /* one-child remove */
+            // your code here
+            Node * temp = subtree;
+            if (subtree->left!=NULL) 
+                subtree = subtree->left;
+            else 
+                subtree = subtree->right;
+            delete temp;
+            temp = NULL;
+        }
         // your code here
         rebalance (subtree);
     }
@@ -178,33 +198,4 @@ typename AVLTree<K, V>::Node * & AVLTree<K, V>::rightMostNode(Node * & subtree) 
         return subtree;
     else 
         return rightMostNode(subtree->right);
-}
-
-template <class K, class V>
-void AVLTree<K, V>::doRemoval (Node * & subtree) {
-    if (subtree->left == NULL && subtree->right == NULL) {
-        /* no-child remove */
-        // your code here
-        delete subtree;
-        subtree = NULL;
-    } 
-    else if (subtree->left != NULL && subtree->right != NULL) {
-        /* two-child remove */
-        // your code here
-        // iop does exist
-        Node * & iop = rightMostNode (subtree->left);
-        swap (iop, subtree);
-        doRemoval (iop);
-    } 
-    else {
-        /* one-child remove */
-        // your code here
-        Node * temp = subtree;
-        if (subtree->left!=NULL) 
-            subtree = subtree->left;
-        else 
-            subtree = subtree->right;
-        delete temp;
-        temp = NULL;
-    }
 }

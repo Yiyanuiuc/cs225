@@ -180,8 +180,6 @@ class AVLTree
 
     Node * & rightMostNode(Node * & subtree);
 
-    void doRemoval(Node * & subtree);
-
     /**
      * @param node The node's height to check
      * @return The height of the node if it's non-`NULL` or -1 if it is `NULL`
