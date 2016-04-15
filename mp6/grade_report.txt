@@ -1,8 +1,8 @@
-Grading r38314 by tolar2 committed on Wed Apr 13 00:27:37 CDT 2016
+Grading r38472 by tolar2 committed on Thu Apr 14 00:27:45 CDT 2016
 Monad Autograder
-Testing mp6 at 2016-04-14 00:22:05
+Testing mp6 at 2016-04-15 00:24:07
 
-"Anti-intellectualism has been a constant thread winding its way through our political and cultural life, nurtured by the false notion that democracy means that 'my ignorance is just as good as your knowledge.'" ~ Isaac Asimov
+"Anything that can go wrong will go wrong." ~ Murphy's Law
 
 Setting up test environment...
 Compiling...
