@@ -9,6 +9,7 @@
 
 #include "logfile_parser.h"
 #include <iostream>
+#include <map>
 
 using std::string;
 using std::vector;
@@ -52,6 +53,7 @@ LogfileParser::LogfileParser(const string& fname) : whenVisitedTable(256)
     SCHashTable<string, bool> pageVisitedTable(256);
     ifstream infile(fname.c_str());
     string line;
+    std::map<string, bool> maps;
     while (infile.good()) {
         getline(infile, line);
 
@@ -69,6 +71,14 @@ LogfileParser::LogfileParser(const string& fname) : whenVisitedTable(256)
          * this problem. This should also build the uniqueURLs member
          * vector as well.
          */
+        if (maps.find(ll.url)==maps.end()) {
+            maps[ll.url] = true;
+            uniqueURLs.push_back(ll.url);
+        }
+        string temp = ll.customer + ": " + ll.url;
+        if (!whenVisitedTable.keyExists(temp) 
+                || whenVisitedTable.find(temp) < ll.date) 
+            whenVisitedTable[temp] = ll.date;
     }
     infile.close();
 }
@@ -85,11 +95,10 @@ bool LogfileParser::hasVisited(const string& customer, const string& url) const
     /**
      * @todo Implement this function.
      */
-
-    (void) customer; // prevent warnings... When you implement this function, remove this line.
-    (void) url;      // prevent warnings... When you implement this function, remove this line.
-
-    return true; // replaceme
+    string temp = customer + ": " + url;
+    if (whenVisitedTable.keyExists(temp))
+        return true;
+    else return false;
 }
 
 /**
@@ -109,10 +118,10 @@ time_t LogfileParser::dateVisited(const string& customer,
      * @todo Implement this function.
      */
 
-    (void) customer; // prevent warnings... When you implement this function, remove this line.
-    (void) url;      // prevent warnings... When you implement this function, remove this line.
-
-    return time_t(); // replaceme
+    // (void) customer; // prevent warnings... When you implement this function, remove this line.
+    // (void) url;      // prevent warnings... When you implement this function, remove this line.
+    string temp = customer + ": " + url;
+    return whenVisitedTable.find(temp);
 }
 
 /**
