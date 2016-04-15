@@ -89,6 +89,8 @@ class heap
      */
     std::vector<T> _elems;
 
+    size_t size;
+
     /**
      * Comparison functor. This functor takes two parameters and returns true
      * if the first parameter has a higher priority than the second.
