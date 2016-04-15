@@ -85,6 +85,7 @@ void LPHashTable<K, V>::insert(K const& key, V const& value)
      *  0.7). **Do this check *after* increasing elems!!** Also, don't
      *  forget to mark the cell for probing with should_probe!
      */
+    // update elems
     elems++;
     // find the index to insert
     size_t idx = hash(key,size);

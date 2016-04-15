@@ -71,10 +71,12 @@ LogfileParser::LogfileParser(const string& fname) : whenVisitedTable(256)
          * this problem. This should also build the uniqueURLs member
          * vector as well.
          */
+        // update uniqueURLs
         if (maps.find(ll.url)==maps.end()) {
             maps[ll.url] = true;
             uniqueURLs.push_back(ll.url);
         }
+        // build a string
         string temp = ll.customer + ": " + ll.url;
         if (!whenVisitedTable.keyExists(temp) 
                 || whenVisitedTable.find(temp) < ll.date) 

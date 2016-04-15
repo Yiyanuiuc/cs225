@@ -76,6 +76,7 @@ void SCHashTable<K, V>::remove(K const& key)
      * erase() function on std::list!
      */
     size_t idx = hash(key, size);
+    // remove the item
     for (it = table[idx].begin(); it!=table[idx].end(); it++) {
         if (it->first==key) {
             table[idx].erase(it);

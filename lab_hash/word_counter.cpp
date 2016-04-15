@@ -32,6 +32,7 @@ vector<pair<string, int>> WordFreq<Dict>::getWords(int threshold) const
      * @see char_counter.cpp if you're having trouble.
      */
     Dict<string, int> hashTable(256);
+    // get every word
     while (infile.good()) {
         string word = infile.getNextWord();
         hashTable[word]++;

@@ -55,12 +55,14 @@ bool AnagramFinder<Dict>::checkWord(const string& word, const string& test)
      * templated hashtable class Dict.
      */
     if (word.length()!=test.length()) return false;
+    // build two hashtables
     Dict<char, int> hashTable1(256);
     Dict<char, int> hashTable2(256);
     for (size_t i=0; i<word.length(); i++) {
         hashTable1[word[i]]++;
         hashTable2[test[i]]++;
     }
+    // check if they are equal
     typename Dict<char, int>::iterator it;
     for (it=hashTable1.begin(); it!=hashTable1.end(); it++) {
         if (hashTable2.find(it->first) != it->second) return false;
