@@ -1,8 +1,8 @@
-Grading r38472 by tolar2 committed on Thu Apr 14 00:27:45 CDT 2016
+Grading r38847 by tolar2 committed on Fri Apr 15 00:30:05 CDT 2016
 Monad Autograder
-Testing mp6 at 2016-04-15 00:24:07
+Testing mp6 at 2016-04-16 01:21:37
 
-"Anything that can go wrong will go wrong." ~ Murphy's Law
+"C++ : Where friends have access to your private members." ~ Gavin Russell Baker
 
 Setting up test environment...
 Compiling...
