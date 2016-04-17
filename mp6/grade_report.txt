@@ -1,8 +1,8 @@
-Grading r38847 by tolar2 committed on Fri Apr 15 00:30:05 CDT 2016
+Grading r39193 by tolar2 committed on Sat Apr 16 01:27:39 CDT 2016
 Monad Autograder
-Testing mp6 at 2016-04-16 01:21:37
+Testing mp6 at 2016-04-17 00:22:09
 
-"C++ : Where friends have access to your private members." ~ Gavin Russell Baker
+"One day I will shoot you with this bullet. Can you still say that you love me?" ~ Re-l Mayer
 
 Setting up test environment...
 Compiling...
