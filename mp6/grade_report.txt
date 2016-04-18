@@ -1,8 +1,8 @@
-Grading r39193 by tolar2 committed on Sat Apr 16 01:27:39 CDT 2016
+Grading r39532 by tolar2 committed on Sun Apr 17 00:28:07 CDT 2016
 Monad Autograder
-Testing mp6 at 2016-04-17 00:22:09
+Testing mp6 at 2016-04-18 00:35:10
 
-"One day I will shoot you with this bullet. Can you still say that you love me?" ~ Re-l Mayer
+"It may look like I'm doing nothing, but I'm actively waiting for my problems to go away." ~ Scott Adams
 
 Setting up test environment...
 Compiling...
