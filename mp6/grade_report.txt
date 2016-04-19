@@ -1,8 +1,8 @@
-Grading r39532 by tolar2 committed on Sun Apr 17 00:28:07 CDT 2016
+Grading r40553 by tolar2 committed on Mon Apr 18 00:41:06 CDT 2016
 Monad Autograder
-Testing mp6 at 2016-04-18 00:35:10
+Testing mp6 at 2016-04-19 00:20:48
 
-"It may look like I'm doing nothing, but I'm actively waiting for my problems to go away." ~ Scott Adams
+"Any sufficiently advanced bug is indistinguishable from a feature." ~ Rich Kulawiec
 
 Setting up test environment...
 Compiling...
