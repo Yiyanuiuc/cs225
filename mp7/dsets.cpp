@@ -41,13 +41,6 @@ void DisjointSets::setunion (int a, int b) {
 	if (root1==root2) return;
 	int index1 = elems[root1];
 	int index2 = elems[root2];
-	//  count the sizes
-	// int sizeA = 0;
-	// int sizeB = 0;
-	// for (size_t i=0; i<elems.size(); i++) {
-	// 	if (find(i)==root1) sizeA++;
-	// 	else if (find(i)==root2) sizeB++;
-	// }
 	if (index1>index2) {
 		elems[root1] = root2;
 		elems[root2] = index1 + index2;
