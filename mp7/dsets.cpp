@@ -35,6 +35,7 @@ int DisjointSets::find (int elem) {
  * b Index of the second element to union
  */
 void DisjointSets::setunion (int a, int b) {
+	if (a<0 || a>=(int)elems.size() || b<0 || b>=(int)elems.size()) return;
 	int root1 = find(a);
 	int root2 = find(b);
 	// if they are already in a union, do nothing
