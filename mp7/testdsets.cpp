@@ -35,5 +35,8 @@ int main()
     cout << s.find(50) << endl;
     cout << "Disjoint Sets test complete" << endl;
 
+    // for (int i=0; i<51; i++)
+    //     cout << s.find(i) << endl;
+
     return 0;
 }
