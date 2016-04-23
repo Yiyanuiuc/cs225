@@ -10,6 +10,7 @@ using namespace std;
  * Parameters num The number of nodes to create
  */
 void DisjointSets::addelements (int num) {
+	// set all indices to -1
 	for (size_t i=0; i<(size_t)num; i++) {
 		elems.push_back(-1);
 	}
@@ -23,7 +24,7 @@ int DisjointSets::find (int elem) {
 	if (elem<0 || elem>=(int)elems.size()) return -1;
 	// base case: reach root
 	else if (elems[elem]<0) return elem;
-	// recursive case
+	// recursive case: find & path compression
 	else return elems[elem] = find(elems[elem]);
 }
 
@@ -36,7 +37,9 @@ int DisjointSets::find (int elem) {
 void DisjointSets::setunion (int a, int b) {
 	int root1 = find(a);
 	int root2 = find(b);
+	// if they are already in a union, do nothing
 	if (root1==root2) return;
+	//  count the sizes
 	int sizeA = 0;
 	int sizeB = 0;
 	for (size_t i=0; i<elems.size(); i++) {
