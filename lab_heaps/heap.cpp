@@ -175,6 +175,8 @@ heap<T, Compare>::heap(const std::vector<T>& elems)
     // add items to _elems
     for (size_t i=0; i<size; i++) 
         _elems.push_back(elems[i]);
+    //std::cout << "size= " << size << " ";
+    //std::cout << "_elems.size()= " << _elems.size() << std::endl;
     for (size_t i=parent(size); i>0; i--)
         heapifyDown(i);
 }
