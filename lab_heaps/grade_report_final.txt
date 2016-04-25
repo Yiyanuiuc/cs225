@@ -1,0 +1,31 @@
+Grading r42629 by qilezhi2 committed on Sun Apr 24 22:02:51 CDT 2016
+Monad Autograder
+Testing lab_heaps at 2016-04-25 00:18:48
+
+"I've seen it on Google Maps; I think I know what I'm talking about" ~ Kyle Johnson
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+peek1  . . . [5 pts] - passed
+peek2  . . . [5 pts] - passed
+heapifyDown1 [9 pts] - passed
+heapifyDown2 [9 pts] - passed
+heapifyDown3 [9 pts] - passed
+heapifyDown4 [9 pts] - passed
+heapifyDown5 [9 pts] - passed
+buildHeap1 . [9 pts] - passed
+buildHeap2 . [9 pts] - passed
+buildHeap3 . [9 pts] - passed
+buildHeap4 . [9 pts] - passed
+buildHeap5 . [9 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 100
+
