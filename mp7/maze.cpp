@@ -9,7 +9,8 @@
 #include "maze.h"
 #include "dsets.h"
 
-#include <stdlib.h>  
+#include <ctime>
+#include <iostream>
 
 /**
  * No-parameter constructor.
@@ -18,8 +19,6 @@
 SquareMaze::SquareMaze () {
 	width = 0;
 	height = 0;
-	right = vector<int>();
-	height = vector<int>();
 }
 
 /** 
@@ -32,87 +31,60 @@ SquareMaze::SquareMaze () {
  * Hints: You only need to store 2 bits per square: the "down" and "right" walls. 
  * 	The finished maze is always a tree of corridors.
  * Parameters
- * width The width of the SquareMaze (number of cells)
- * height The height of the SquareMaze (number of cells)
+ * 	width The width of the SquareMaze (number of cells)
+ * 	height The height of the SquareMaze (number of cells)
  */
 void SquareMaze::makeMaze (int width, int height) {
 	// If this object already represents a maze it will clear all the existing data
-	while (!right.empty())
-		right.pop();
-	while (!height.empty())
-		height.pop();
+	if (!right.empty())
+		right.clear();
+	if (!down.empty())
+		down.clear();
 	// Makes a new SquareMaze of the given height and width with all walls
 	for (int i=0; i<width*height; i++) {
+		// -1 represents walls
 		right.push_back(-1);
 		down.push_back(-1);
 	}
-	this.width = width;
-	this.height = height;
-	bool pathDNE = true;
-	while (keep) {
-		int x = rand()%width;
-		int y = rand()%height;
-		int dir = rand()%4;
-		setWall (x, y, dir, false);
-		pathDNE = true;
-		for (int i=0; i<width; i++) {
-			for (int j=0; j<height; j++) {
-				if (pathExist(i,j,i,j)) pathDNE = true;
+	this->width = width;
+	this->height = height;
+	s.addelements(width*height);
+	// generate random numbers
+	srand(time(NULL));
+	int x, y, dir;
+	bool satisfied = false;
+	while (!satisfied) {
+		while (true) {
+			// You will select random walls to delete without creating a cycle
+			x = rand()%width;
+			y = rand()%height;
+			dir = rand()%2;
+			// if the wall exist
+			if (!canTravel(x,y,dir)) {
+				// if a cycle will generated
+				if (dir==0 && s.find(y*width+x)==s.find(y*width+x+1)) 
+					break;
+				else if (dir==1 && s.find(y*width+x)==s.find((y+1)*width+x)) 
+					break;
+				// if not, delete the wall
+				setWall (x, y, dir, false);
+			}
+		}
+		// check connection
+		satisfied = true;
+		for (int i=0; i<width*height; i++) {
+			// if there is a square not connected to 0,0
+			if (s.find(0)!=s.find(i)) {
+				satisfied = false;
 				break;
 			}
 		}
 	}
-
 } 
 
-bool SquareMaze::pathExist (int x, int y, int finalX, int finalY) {
-	if (x<0||x>width-1 || y<0||y>height-1 || finalX<0||finalX>width-1 || finalY<0||finalY>height-1) 
-		return false;
-	if (x==finalX && y==finalY) return false;
-	vector<vector<bool>> processed;
-	for (int i=0; i<width; i++) {
-		processed.push_back(vector<bool>());
-		for (int j=0; j<height; j++)
-			processed[i].push_back(false);
-	}
-	queue<int> xCoord;
-	queue<int> yCoord;
-	xCoord.push(x);
-	yCoord.push(y);
-	while (!xCoord.empty()) {
-		int tempX = xCoord.front();
-		xCoord.pop();
-		int tempY = yCoord.front();
-		yCoord.pop();
-		if (tempX==finalX-1 && tempY==finalY && canTravel(tempX,tempY,0)) return true;
-		else if (tempX==finalX && tempY==finalY-1 && canTravel(tempX,tempY,1)) return true;
-		else if (tempX==finalX+1 && tempY==finalY && canTravel(tempX,tempY,2)) return true;
-		else if (tempX==finalX && tempY==finalY+1 && canTravel(tempX,tempY,3)) return true;
-		else if (!processed[tempX][tempY]) {
-			processed[tempX][tempY] = true;
-			if (canTravel(tempX, tempY, 0)) {
-				xCoord.push(tempX+1);
-				yCoord.push(tempY);
-			}
-			if (canTravel(tempX, tempY, 1)) {
-				xCoord.push(tempX);
-				yCoord.push(tempY+1);
-			}
-			if (canTravel(tempX, tempY, 2)) {
-				xCoord.push(tempX-1);
-				yCoord.push(tempY);
-			}
-			if (canTravel(tempX, tempY, 3)) {
-				xCoord.push(tempX);
-				yCoord.push(tempY-1);
-			}
-		}
-	}
-	return false;
-}
-
 /**
- * This uses your representation of the maze to determine whether it is possible to travel in the given direction from the square at coordinates (x,y).
+ * This uses your representation of the maze to determine 
+ * whether it is possible to travel in the given direction from the square at coordinates (x,y).
  * For example, after makeMaze(2,2), the possible input coordinates will be (0,0), (0,1), (1,0), and (1,1).
  * 	dir = 0 represents a rightward step (+1 to the x coordinate)
  * 	dir = 1 represents a downward step (+1 to the y coordinate)
@@ -120,7 +92,8 @@ bool SquareMaze::pathExist (int x, int y, int finalX, int finalY) {
  * 	dir = 3 represents an upward step (-1 to the y coordinate)
  * You can not step off of the maze or through a wall.
  * This function will be very helpful in solving the maze. 
- * It will also be used by the grading program to verify that your maze is a tree that occupies the whole grid, and to verify your maze solution. 
+ * It will also be used by the grading program to verify that your maze is a tree that occupies the whole grid, 
+ * and to verify your maze solution. 
  * So make sure that this function works!
  * Parameters
  * 	x The x coordinate of the current cell
@@ -129,22 +102,26 @@ bool SquareMaze::pathExist (int x, int y, int finalX, int finalY) {
  */
 bool SquareMaze::canTravel (int x, int y, int dir) const {
 	if (dir<0||dir>3 || x<0||x>width-1 || y<0||y>height-1) return false;
-	if (d==0) {
+	// dir = 0 represents a rightward step (+1 to the x coordinate)
+	if (dir==0) {
 		if (x==width-1) return false;
-		else return right[y*width+x]==y*width+(x+1);
-	}
-	else if (d==1) {
+ 		else return right[y*width+x]==y*width+(x+1);
+ 	}
+	// dir = 1 represents a downward step (+1 to the y coordinate)
+	else if (dir==1) {
 		if (y==height-1) return false;
 		else return down[y*width+x]==(y+1)*width+x;
 	}
-	else if (d==2) {
+	// dir = 2 represents a leftward step (-1 to the x coordinate)
+	else if (dir==2) {
 		if (x==0) return false;
 		else return right[y*width+(x-1)]==y*width+x;
 	}
+	// dir = 3 represents an upward step (-1 to the y coordinate)
 	else {
 		if (y==0) return false;
 		else return down[(y-1)*width+x]==y*width+x;
-	}	
+	}
 }
 
 /** 
@@ -162,15 +139,26 @@ bool SquareMaze::canTravel (int x, int y, int dir) const {
  */
 void SquareMaze::setWall (int x, int y, int dir, bool exists){
 	if (x<0||x>width-1 || y<0||y>height-1) return;
+	// reach the margin
 	if (dir==0 && x==width-1) return;
-	if (dir==1 && y==height-1) return;
-	if (exists) {
-		if (dir==0) right[y*width+x] = -1;
-		if (dir==1) down[y*width+x] = -1;
+	else if (dir==1 && y==height-1) return;
+	// if true, set the wall to exist
+	else if (exists) {
+		if (dir==0) 
+			right[y*width+x] = -1;
+		else if (dir==1) 
+			down[y*width+x] = -1;
 	}
+	// if false, delete the wall
 	else {
-		if (dir==0) right[y*width+x] = y*width+(x+1);
-		if (dir==1) down[y*width+x] = (y+1)*width+x;
+		if (dir==0) {
+			right[y*width+x] = y*width+(x+1);
+			s.setunion(y*width+x,y*width+(x+1));
+		}
+		else if (dir==1) {
+			down[y*width+x] = (y+1)*width+x;
+			s.setunion(y*width+x,(y+1)*width+x);
+		}
 	}
 }
 
@@ -185,12 +173,156 @@ void SquareMaze::setWall (int x, int y, int dir, bool exists){
  * Hint: this function should run in time linear in the number of cells in the maze.
  * Returns a vector of directions taken to solve the maze
  */
-vector<int> solveMaze () 
+vector<int> SquareMaze::solveMaze () {
+	vector<int> path;
+	for (int k=0; k<width; k++) {
+		// if they are connected
+		if (s.find(0) == s.find(width*(height-1)+k)) {
+			vector<vector<bool>> processed;
+			for (int i=0; i<width; i++) {
+				processed.push_back(vector<bool>());
+				for (int j=0; j<height; j++)
+					processed[i].push_back(false);
+			}
+		 	vector<int> tempPath;
+		 	int yFinal = findPath(0,0,k,height-1,tempPath,processed);
+		 	// update the longest path
+		 	if (yFinal==height-1 && path.size()<tempPath.size()) path = tempPath;
+		}
+	}
+	return path;
+}
 
-void 
+// return the y-coordinate of destination
+int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & path, vector<vector<bool>> processed) {
+	// when reach the destination
+	if (x==finalX && y==finalY) return y;
+	// if it is out of bound but not reach destination, it is not a good path
+	if (x<0||x>width-1 || y<0||y>height-1 || finalX<0||finalX>width-1 || finalY<0||finalY>height-1) 
+		return y;
+	// if it has been processed but not reach destination, it is not a good path
+	if (processed[x][y]) return y;
+	// otherwise,
+	processed[x][y] = true;
+	int yFinal = 0; 
+	vector<int> largest;
+	if (canTravel(x, y, 0)) {
+		vector<int> tempPath = path;
+		tempPath.push_back(0);
+		int tempY = findPath (x+1,y,finalX,finalY,tempPath,processed);
+		if (tempY==finalY && largest.size()<tempPath.size()) {
+			largest = tempPath;
+			yFinal = tempY;
+		}
+	}
+	if (canTravel(x, y, 1)) {
+		vector<int> tempPath = path;
+		tempPath.push_back(1);
+		int tempY = findPath (x,y+1,finalX,finalY,tempPath,processed);
+		if (tempY==finalY && largest.size()<tempPath.size()) {
+			largest = tempPath;
+			yFinal = tempY;
+		}
+	}
+	if (canTravel(x, y, 2)) {
+		vector<int> tempPath = path;
+		tempPath.push_back(2);
+		int tempY = findPath (x-1,y,finalX,finalY,tempPath,processed);
+		if (tempY==finalY && largest.size()<tempPath.size()) {
+			largest = tempPath;
+			yFinal = tempY;
+		}
+	}
+	if (canTravel(x, y, 3)) {
+		vector<int> tempPath = path;
+		tempPath.push_back(3);
+		int tempY = findPath (x,y-1,finalX,finalY,tempPath,processed);
+		if (tempY==finalY && largest.size()<tempPath.size()) {
+			largest = tempPath;
+			yFinal = tempY;
+		}
+	}
+	if (path.size()<largest.size()) {
+		path = largest;
+		return yFinal;
+	}
+	else return y;
+}
+
+/**  
+ * Draws the maze without the solution.
+ * First, create a new PNG. Set the dimensions of the PNG to (width*10+1,height*10+1). 
+ * where height and width were the arguments to makeMaze. 
+ * Blacken the entire topmost row and leftmost column of pixels, except the entrance (1,0) through (9,0). 
+ * For each square in the maze, call its maze coordinates (x,y). 
+ * If the right wall exists, then blacken the pixels with coordinates ((x+1)*10,y*10+k) for k from 0 to 10. 
+ * If the bottom wall exists, then blacken the pixels with coordinates (x*10+k, (y+1)*10) for k from 0 to 10.
+ * The resulting PNG will look like the sample image, except there will be no exit from the maze and the red line will be missing.
+ * Returns a PNG of the unsolved SquareMaze
+ */
+PNG * SquareMaze::drawMaze () const {
+	PNG * result = new PNG(width*10+1,height*10+1);
+	// Blacken the entire topmost row and leftmost column of pixels, except the entrance (1,0) through (9,0). 
+	*((*result)(0,0)) = RGBAPixel(0,0,0);
+	*((*result)(width*10,height*10)) = RGBAPixel(0,0,0);
+	for (int i=10; i<width*10+1; i++)
+		*((*result)(i,0)) = RGBAPixel(0,0,0);
+	for (int i=0; i<height*10+1; i++)
+		*((*result)(0,i)) = RGBAPixel(0,0,0);
+	for (int i=0; i<width; i++) {
+		for (int j=0; j<height; j++) {
+			if (!canTravel(i,j,0)) 
+				for (int k=0; k<10; k++)
+					*((*result)((i+1)*10,j*10+k)) = RGBAPixel(0,0,0);
+			if (!canTravel(i,j,1)) 
+				for (int k=0; k<10; k++)
+					*((*result)(i*10+k,(j+1)*10)) = RGBAPixel(0,0,0);
+		}
+	}
+	return result;
+}
  
-PNG * 	drawMaze () const
- 	Draws the maze without the solution. More...
- 
-PNG * 	drawMazeWithSolution ()
- 	This function calls drawMaze, then solveMaze; it modifies the PNG from drawMaze to show the solution vector and the exit. More...
+/**
+ *This function calls drawMaze, then solveMaze; 
+ * it modifies the PNG from drawMaze to show the solution vector and the exit.
+ * Start at pixel (5,5). Each direction in the solution vector corresponds to a trail of 11 red pixels in the given direction. 
+ * If the first step is downward, color pixels (5,5) through (5,15) red. (Red is 255,0,0 in RGB). 
+ * Then if the second step is right, color pixels (5,15) through (15,15) red. 
+ * Then if the third step is up, color pixels (15,15) through (15,5) red. 
+ * Continue in this manner until you get to the end of the solution vector, so that your output looks analogous the above picture.
+ * Make the exit by undoing the bottom wall of the destination square: 
+ * call the destination maze coordinates (x,y), and whiten the pixels with coordinates (x*10+k, (y+1)*10) for k from 1 to 9.
+ * Returns a PNG of the solved SquareMaze
+ */
+PNG * SquareMaze::drawMazeWithSolution () {
+	PNG * result = drawMaze();
+	vector<int> path = solveMaze();
+	int currentX = 5;
+	int currentY = 5;
+	for (size_t i=0; i<path.size(); i++) {
+		if (path[i]==0) {
+			for (int j=0; j<=10; j++) 
+				*((*result)(currentX+j, currentY)) = RGBAPixel(255,0,0);
+			currentX += 10;
+		}
+		else if (path[i]==1) {
+			for (int j=0; j<=10; j++) 
+				*((*result)(currentX, currentY+j)) = RGBAPixel(255,0,0);
+			currentY += 10;
+		}
+		else if (path[i]==2) {
+			for (int j=0; j<=10; j++) 
+				*((*result)(currentX-j, currentY)) = RGBAPixel(255,0,0);
+			currentX -= 10;
+		}		
+		else {
+			for (int j=0; j<=10; j++) 
+				*((*result)(currentX, currentY-j)) = RGBAPixel(255,0,0);
+			currentY -= 10;
+		}	
+	}
+	// mark the exit
+	for (int i=1; i<10; i++)
+		*((*result)(currentX-5+i,height*10)) = RGBAPixel(255,255,255);
+	return result;
+}
