@@ -1,0 +1,24 @@
+Grading r42922 by qilezhi2 committed on Mon Apr 25 16:32:25 CDT 2016
+Monad Autograder
+Testing mp7.1 at 2016-04-27 00:22:22
+
+"If you can't remember a formula during the exam it's probably not important." ~ Prof. Chengxiang Zhai
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+addElements1 . . . . [20 pts] - passed
+addElements2 . . . . [20 pts] - passed
+testFindAndSetUnion1 [20 pts] - passed
+testFindAndSetUnion2 [20 pts] - passed
+testFindAndSetUnion3 [20 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 100
+
