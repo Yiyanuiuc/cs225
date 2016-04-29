@@ -76,7 +76,7 @@ int GraphTools::findMinWeight(Graph& graph)
 					min2 = temp;
 				}
 			}
-			else if (graph.getEdgeLabel(nextV, temp)!="UNEXPLORED") {
+			else if (graph.getEdgeLabel(nextV, temp)=="UNEXPLORED") {
 				graph.setEdgeLabel(nextV, temp, "CROSS");
 				if (graph.getEdgeWeight(nextV, temp) < graph.getEdgeWeight(min1, min2)) {
 					min1 = nextV;
@@ -140,7 +140,6 @@ int GraphTools::findShortestPath(Graph& graph, Vertex start, Vertex end)
 		graph.setVertexLabel(vertexList[i], "UNEXPLORED");
 	while (!q.empty()) q.pop(); 
 
-
 	graph.setVertexLabel(start, "VISITED");
 	q.push(start);
 	std::map<Vertex, int> dis;
@@ -189,5 +188,14 @@ int GraphTools::findShortestPath(Graph& graph, Vertex start, Vertex end)
 void GraphTools::findMST(Graph& graph)
 {
 	/* Your code here! */
+	// Get a list of all edges in the graph and sort them by increasing weight.
+	vector<Edge> edgeList = graph.getEdges();
+	std::sort(edgeList.begin(), edgeList.end());
+	// Create a disjoint sets structure where each vertex is represented by a set.
+	// Traverse the list from the start (i.e., from lightest weight to heaviest).
+	// Inspect the current edge. If that edge connects two vertices from different sets, 
+	// union their respective sets and mark the edge as part of the MST. 
+	// Otherwise there would be a cycle, so do nothing.
+	// Repeat this until n−1n−1 edges have been added, where nn is the number of vertices in the graph.
 }
 
