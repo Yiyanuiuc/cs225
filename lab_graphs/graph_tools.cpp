@@ -6,6 +6,8 @@
  */
 
 #include "graph_tools.h"
+#include <vector>
+#include <map>
 
 /**
  * Finds the minimum edge weight in the Graph graph.
@@ -25,8 +27,66 @@
  */
 int GraphTools::findMinWeight(Graph& graph)
 {
-    /* Your code here! */
-    return -1;
+	/* Your code here! */
+
+	// Initially label vertices and edges as unvisited.
+	vector<Vertex> vertexList = graph.getVertices();
+	for (size_t i=0; i<vertexList.size(); i++)
+		graph.setVertexLabel(vertexList[i], "UNEXPLORED");
+	queue<Vertex> q;
+	Vertex v = graph.getStartingVertex();
+	graph.setVertexLabel(v, "VISITED");
+	q.push(v);
+	while (!q.empty()) {
+		Vertex nextV = q.front();
+		q.pop();
+		vector<Vertex> adj = graph.getAdjacent(nextV);
+		for (size_t i=0; i<adj.size(); i++) {
+			Vertex temp = adj[i];
+			if (graph.getVertexLabel(temp)=="UNEXPLORED") {
+				graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
+				graph.setVertexLabel(temp, "VISITED");
+				q.push(temp);
+			}
+			else if (graph.getEdgeLabel(nextV, temp)!="UNEXPLORED") {
+				graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
+			}
+		}
+	}
+	for (size_t i=0; i<vertexList.size(); i++)
+		graph.setVertexLabel(vertexList[i], "UNEXPLORED");
+	while (!q.empty()) q.pop();
+
+	graph.setVertexLabel(v, "VISITED");
+	q.push(v);
+	Vertex min1 = v;
+	Vertex min2 = graph.getAdjacent(v)[0];
+	while (!q.empty()) {
+		Vertex nextV = q.front();
+		q.pop();
+		vector<Vertex> adj = graph.getAdjacent(nextV);
+		for (size_t i=0; i<adj.size(); i++) {
+			Vertex temp = adj[i];
+			if (graph.getVertexLabel(temp)=="UNEXPLORED") {
+				graph.setEdgeLabel(nextV, temp, "DISCOVERY");
+				graph.setVertexLabel(temp, "VISITED");
+				q.push(temp);
+				if (graph.getEdgeWeight(nextV, temp) < graph.getEdgeWeight(min1, min2)) {
+					min1 = nextV;
+					min2 = temp;
+				}
+			}
+			else if (graph.getEdgeLabel(nextV, temp)!="UNEXPLORED") {
+				graph.setEdgeLabel(nextV, temp, "CROSS");
+				if (graph.getEdgeWeight(nextV, temp) < graph.getEdgeWeight(min1, min2)) {
+					min1 = nextV;
+					min2 = temp;
+				}
+			}
+		}
+	}
+	graph.setEdgeLabel(min1,min2,"MIN");
+	return graph.getEdgeWeight(min1,min2);
 }
 
 /**
@@ -52,8 +112,65 @@ int GraphTools::findMinWeight(Graph& graph)
  */
 int GraphTools::findShortestPath(Graph& graph, Vertex start, Vertex end)
 {
-    /* Your code here! */
-    return -1;
+	/* Your code here! */
+	// Initially label vertices and edges as unvisited.
+	vector<Vertex> vertexList = graph.getVertices();
+	for (size_t i=0; i<vertexList.size(); i++)
+		graph.setVertexLabel(vertexList[i], "UNEXPLORED");
+	queue<Vertex> q;
+	graph.setVertexLabel(start, "VISITED");
+	q.push(start);
+	while (!q.empty()) {
+		Vertex nextV = q.front();
+		q.pop();
+		vector<Vertex> adj = graph.getAdjacent(nextV);
+		for (size_t i=0; i<adj.size(); i++) {
+			Vertex temp = adj[i];
+			if (graph.getVertexLabel(temp)=="UNEXPLORED") {
+				graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
+				graph.setVertexLabel(temp, "VISITED");
+				q.push(temp);
+			}
+			else if (graph.getEdgeLabel(nextV, temp)!="UNEXPLORED") {
+				graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
+			}
+		}
+	}
+	for (size_t i=0; i<vertexList.size(); i++)
+		graph.setVertexLabel(vertexList[i], "UNEXPLORED");
+	while (!q.empty()) q.pop(); 
+
+
+	graph.setVertexLabel(start, "VISITED");
+	q.push(start);
+	std::map<Vertex, int> dis;
+	dis[start]=0;
+	map<Vertex, Vertex> parent;
+	Vertex nextV;	
+	while (!q.empty()) {
+		nextV = q.front(); 
+		if (nextV==end) break;
+		else {
+			q.pop();
+			vector<Vertex> adj = graph.getAdjacent(nextV);
+			for (size_t i=0; i<adj.size(); i++) {
+				Vertex temp = adj[i];
+				if (graph.getVertexLabel(temp)=="UNEXPLORED") {
+					graph.setVertexLabel(temp, "VISITED");
+					q.push(temp);
+					dis[temp] = dis[nextV]+1;
+					parent[temp] = nextV;
+				}
+			}
+		}
+	}
+	Vertex	temp = nextV;
+	while (parent[temp]!=start) {
+		graph.setEdgeLabel(parent[temp], temp, "MINPATH");
+		temp = parent[temp];
+	}
+	graph.setEdgeLabel(start, temp, "MINPATH");
+	return dis[nextV];
 }
 
 /**
@@ -71,6 +188,6 @@ int GraphTools::findShortestPath(Graph& graph, Vertex start, Vertex end)
  */
 void GraphTools::findMST(Graph& graph)
 {
-    /* Your code here! */
+	/* Your code here! */
 }
 
