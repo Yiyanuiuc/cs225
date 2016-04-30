@@ -230,7 +230,7 @@ vector<int> SquareMaze::solveMaze () {
 }
 
 // return the y-coordinate of destination
-int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> path, vector<vector<bool>> processed) {
+int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & path, vector<vector<bool>> processed) {
 	// when reach the destination
 	if (x==finalX && y==finalY) return y;
 	// if it is out of bound but not reach destination, it is not a good path
