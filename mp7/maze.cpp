@@ -41,42 +41,31 @@ void SquareMaze::makeMaze (int width, int height) {
 	if (!down.empty())
 		down.clear();
 	// Makes a new SquareMaze of the given height and width with all walls
-	for (int i=0; i<width*height; i++) {
-		// -1 represents walls
-		right.push_back(-1);
-		down.push_back(-1);
-	}
+	int area = width*height;
+	right.resize(area);
+	down.resize(area);
 	this->width = width;
 	this->height = height;
-	s.addelements(width*height);
+	s.addelements(area);
 	// generate random numbers
 	srand(time(NULL));
 	int x, y, dir;
-	bool satisfied = false;
-	while (!satisfied) {
-		while (true) {
-			// You will select random walls to delete without creating a cycle
-			x = rand()%width;
-			y = rand()%height;
-			dir = rand()%2;
-			// if the wall exist
-			if (!canTravel(x,y,dir)) {
-				// if a cycle will generated
-				if (dir==0 && s.find(y*width+x)==s.find(y*width+x+1)) 
-					break;
-				else if (dir==1 && s.find(y*width+x)==s.find((y+1)*width+x)) 
-					break;
-				// if not, delete the wall
+	int count = 2*area-width-height;
+	while (count>0) {
+		// You will select random walls to delete without creating a cycle
+		x = rand()%width;
+		y = rand()%height;
+		int curr = y*width+x;
+		dir = rand()%2;
+		// if the wall exist
+		if (!canTravel(x,y,dir)) {
+			// if a cycle will generated
+			if (dir==0 && s.find(curr)==s.find(curr+1)) ;
+			else if (dir==1 && s.find(curr)==s.find(curr+width)) ;
+			// if not, delete the wall
+			else {
 				setWall (x, y, dir, false);
-			}
-		}
-		// check connection
-		satisfied = true;
-		for (int i=0; i<width*height; i++) {
-			// if there is a square not connected to 0,0
-			if (s.find(0)!=s.find(i)) {
-				satisfied = false;
-				break;
+				count--;
 			}
 		}
 	}
@@ -102,25 +91,26 @@ void SquareMaze::makeMaze (int width, int height) {
  */
 bool SquareMaze::canTravel (int x, int y, int dir) const {
 	if (dir<0||dir>3 || x<0||x>width-1 || y<0||y>height-1) return false;
+	int curr = y*width+x;
 	// dir = 0 represents a rightward step (+1 to the x coordinate)
 	if (dir==0) {
 		if (x==width-1) return false;
- 		else return right[y*width+x]==y*width+(x+1);
+ 		else return right[curr];
  	}
 	// dir = 1 represents a downward step (+1 to the y coordinate)
 	else if (dir==1) {
 		if (y==height-1) return false;
-		else return down[y*width+x]==(y+1)*width+x;
+		else return down[curr];
 	}
 	// dir = 2 represents a leftward step (-1 to the x coordinate)
 	else if (dir==2) {
 		if (x==0) return false;
-		else return right[y*width+(x-1)]==y*width+x;
+		else return right[curr-1];
 	}
 	// dir = 3 represents an upward step (-1 to the y coordinate)
 	else {
 		if (y==0) return false;
-		else return down[(y-1)*width+x]==y*width+x;
+		else return down[curr-width];
 	}
 }
 
@@ -141,23 +131,24 @@ void SquareMaze::setWall (int x, int y, int dir, bool exists){
 	if (x<0||x>width-1 || y<0||y>height-1) return;
 	// reach the margin
 	if (dir==0 && x==width-1) return;
-	else if (dir==1 && y==height-1) return;
+	if (dir==1 && y==height-1) return;
 	// if true, set the wall to exist
-	else if (exists) {
+	int curr = y*width+x;
+	if (exists) {
 		if (dir==0) 
-			right[y*width+x] = -1;
+			right[curr] = false;
 		else if (dir==1) 
-			down[y*width+x] = -1;
+			down[curr] = false;
 	}
 	// if false, delete the wall
 	else {
 		if (dir==0) {
-			right[y*width+x] = y*width+(x+1);
-			s.setunion(y*width+x,y*width+(x+1));
+			right[curr] = true;
+			s.setunion(curr, curr+1);
 		}
 		else if (dir==1) {
-			down[y*width+x] = (y+1)*width+x;
-			s.setunion(y*width+x,(y+1)*width+x);
+			down[curr] = true;
+			s.setunion(curr, curr+width);
 		}
 	}
 }
@@ -272,10 +263,10 @@ PNG * SquareMaze::drawMaze () const {
 	for (int i=0; i<width; i++) {
 		for (int j=0; j<height; j++) {
 			if (!canTravel(i,j,0)) 
-				for (int k=0; k<10; k++)
+				for (int k=0; k<=10; k++)
 					*((*result)((i+1)*10,j*10+k)) = RGBAPixel(0,0,0);
 			if (!canTravel(i,j,1)) 
-				for (int k=0; k<10; k++)
+				for (int k=0; k<=10; k++)
 					*((*result)(i*10+k,(j+1)*10)) = RGBAPixel(0,0,0);
 		}
 	}
