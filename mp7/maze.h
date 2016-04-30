@@ -116,8 +116,8 @@ private:
 
 	int width;
 	int height;
-	vector<bool> right;
-	vector<bool> down;
+	vector<vector<bool>> right;
+	vector<vector<bool>> down;
 	DisjointSets s;
 };
 

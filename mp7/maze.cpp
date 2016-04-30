@@ -41,10 +41,15 @@ void SquareMaze::makeMaze (int width, int height) {
 	if (!down.empty())
 		down.clear();
 	// Makes a new SquareMaze of the given height and width with all walls
-	for (int i=0; i<width*height; i++) {
+	for (int i=0; i<width; i++) {
+		vector<bool> temp;
 		// false represents walls
-		right.push_back(false);
-		down.push_back(false);
+		right.push_back(temp);
+		down.push_back(temp);
+		for (int j=0; j<height; j++) {
+			right[i].push_back(false);
+			down[i].push_back(false);
+		}
 	}
 	this->width = width;
 	this->height = height;
@@ -52,32 +57,60 @@ void SquareMaze::makeMaze (int width, int height) {
 	// generate random numbers
 	srand(time(NULL));
 	int x, y, dir;
-	bool satisfied = false;
-	while (!satisfied) {
-		while (true) {
-			// You will select random walls to delete without creating a cycle
-			x = rand()%width;
-			y = rand()%height;
-			int curr = y*width+x;
-			dir = rand()%2;
-			// if the wall exist
-			if (!canTravel(x,y,dir)) {
-				// if a cycle will generated
-				if (dir==0 && s.find(curr)==s.find(curr+1)) 
-					break;
-				else if (dir==1 && s.find(curr)==s.find(curr+width)) 
-					break;
-				// if not, delete the wall
-				setWall (x, y, dir, false);
+	// bool satisfied = false;
+	// while (!satisfied) {
+	// 	while (true) {
+	// 		// You will select random walls to delete without creating a cycle
+	// 		x = rand()%width;
+	// 		y = rand()%height;
+	// 		int curr = y*width+x;
+	// 		dir = rand()%2;
+	// 		// if the wall exist
+	// 		if (!canTravel(x,y,dir)) {
+	// 			// if a cycle will generated
+	// 			if (dir==0 && s.find(curr)==s.find(curr+1)) 
+	// 				break;
+	// 			else if (dir==1 && s.find(curr)==s.find(curr+width)) 
+	// 				break;
+	// 			// if not, delete the wall
+	// 			setWall (x, y, dir, false);
+	// 		}
+	// 	}
+	// 	// check connection
+	// 	satisfied = true;
+	// 	for (int i=0; i<width*height; i++) {
+	// 		// if there is a square not connected to 0,0
+	// 		if (s.find(0)!=s.find(i)) {
+	// 			satisfied = false;
+	// 			break;
+	// 		}
+	// 	}
+	// }
+	int count = width*height-1;
+	while (count>0) {
+		// You will select random walls to delete without creating a cycle
+		x = rand()%width;
+		y = rand()%height;
+		int curr = y*width+x;
+		dir = rand()%2;
+		// if the wall exist
+		if (!canTravel(x,y,dir)) {
+			// if a cycle will generated
+			if (dir==0) {
+				if (x==width-1) ;
+				else if (s.find(curr)==s.find(curr+1));
+				else {
+					setWall (x, y, dir, false);
+					count -= 1;
+				}
 			}
-		}
-		// check connection
-		satisfied = true;
-		for (int i=0; i<width*height; i++) {
-			// if there is a square not connected to 0,0
-			if (s.find(0)!=s.find(i)) {
-				satisfied = false;
-				break;
+			else {
+				if (y==height-1);
+				else if (s.find(curr)==s.find(curr+width));
+				else {
+					setWall (x, y, dir, false);
+					count -= 1;
+				}
 			}
 		}
 	}
@@ -107,22 +140,22 @@ bool SquareMaze::canTravel (int x, int y, int dir) const {
 	// dir = 0 represents a rightward step (+1 to the x coordinate)
 	if (dir==0) {
 		if (x==width-1) return false;
- 		else return right[curr];
+ 		else return right[x][y];
  	}
 	// dir = 1 represents a downward step (+1 to the y coordinate)
 	else if (dir==1) {
 		if (y==height-1) return false;
-		else return down[curr];
+		else return down[x][y];
 	}
 	// dir = 2 represents a leftward step (-1 to the x coordinate)
 	else if (dir==2) {
 		if (x==0) return false;
-		else return right[curr-1];
+		else return right[x-1][y];
 	}
 	// dir = 3 represents an upward step (-1 to the y coordinate)
 	else {
 		if (y==0) return false;
-		else return down[curr-width];
+		else return down[x][y-1];
 	}
 }
 
@@ -148,18 +181,18 @@ void SquareMaze::setWall (int x, int y, int dir, bool exists){
 	int curr = y*width+x;
 	if (exists) {
 		if (dir==0) 
-			right[curr] = false;
+			right[x][y] = false;
 		else if (dir==1) 
-			down[curr] = false;
+			down[x][y] = false;
 	}
 	// if false, delete the wall
 	else {
 		if (dir==0) {
-			right[curr] = true;
+			right[x][y] = true;
 			s.setunion(curr, curr+1);
 		}
 		else if (dir==1) {
-			down[curr] = true;
+			down[x][y] = true;
 			s.setunion(curr, curr+width);
 		}
 	}
@@ -202,13 +235,15 @@ int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & pa
 	if (x==finalX && y==finalY) return y;
 	// if it is out of bound but not reach destination, it is not a good path
 	if (x<0||x>width-1 || y<0||y>height-1 || finalX<0||finalX>width-1 || finalY<0||finalY>height-1) 
-		return y;
+		return -1;
 	// if it has been processed but not reach destination, it is not a good path
-	if (processed[x][y]) return y;
+	if (processed[x][y]) return -1;
 	// otherwise,
 	processed[x][y] = true;
 	int yFinal = 0; 
 	vector<int> largest;
+	// size_t largest = 0;
+	// int nextStep = 0;
 	if (canTravel(x, y, 0)) {
 		vector<int> tempPath = path;
 		tempPath.push_back(0);
@@ -217,6 +252,14 @@ int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & pa
 			largest = tempPath;
 			yFinal = tempY;
 		}
+		// path.push_back(0);
+		// int tempY = findPath (x+1,y,finalX,finalY,path,processed);
+		// if (tempY==finalY && largest<path.size()) {
+		// 	largest = path.size();
+		// 	nextStep = 0;
+		// 	yFinal = tempY;
+		// }
+		// path.pop_back();
 	}
 	if (canTravel(x, y, 1)) {
 		vector<int> tempPath = path;
@@ -226,6 +269,14 @@ int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & pa
 			largest = tempPath;
 			yFinal = tempY;
 		}
+		// path.push_back(1);
+		// int tempY = findPath (x,y+1,finalX,finalY,path,processed);
+		// if (tempY==finalY && largest<path.size()) {
+		// 	largest = path.size(); 
+		// 	nextStep = 1;
+		// 	yFinal = tempY;
+		// }
+		// path.pop_back();
 	}
 	if (canTravel(x, y, 2)) {
 		vector<int> tempPath = path;
@@ -235,8 +286,25 @@ int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & pa
 			largest = tempPath;
 			yFinal = tempY;
 		}
+		// path.push_back(2);
+		// int tempY = findPath (x-1,y,finalX,finalY,path,processed);
+		// if (tempY==finalY && largest<path.size()) {
+		// 	largest = path.size();
+		// 	nextStep = 2;
+		// 	yFinal = tempY;
+		// }
+		// path.pop_back();
 	}
 	if (canTravel(x, y, 3)) {
+		// path.push_back(3);
+		// int tempY = findPath (x,y-1,finalX,finalY,path,processed);
+		// if (tempY==finalY && largest<path.size()) {
+		// 	largest = path.size();
+		// 	nextStep = 3;
+		// 	yFinal = tempY;
+		// }
+		// path.pop_back();
+
 		vector<int> tempPath = path;
 		tempPath.push_back(3);
 		int tempY = findPath (x,y-1,finalX,finalY,tempPath,processed);
@@ -249,7 +317,9 @@ int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & pa
 		path = largest;
 		return yFinal;
 	}
-	else return y;
+	else return -1;
+	// path.push_back(nextStep);
+	// return yFinal;
 }
 
 /**  
