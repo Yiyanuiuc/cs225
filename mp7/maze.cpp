@@ -11,7 +11,7 @@
 
 #include <ctime>
 #include <iostream>
-
+#include <map>
 /**
  * No-parameter constructor.
  * Creates an empty maze.
@@ -210,77 +210,61 @@ void SquareMaze::setWall (int x, int y, int dir, bool exists){
  * Returns a vector of directions taken to solve the maze
  */
 vector<int> SquareMaze::solveMaze () {
+	std::map<int, int> dis;
+	dis[0]=0;
+	std::map<int, int> parent;
+	vector<bool> processed;
+	for (int i=0; i<width*height; i++)
+		processed.push_back(false);
+	calculate (0,dis,parent,processed);
+	int endpoint = 0;
+	for (std::map<int, int>::iterator it=dis.begin(); it!=dis.end(); it++) {
+		if (it->first >= width*(height-1) && dis[endpoint] < it->second) 
+			endpoint = it->first;
+	}
+	vector<int> reversePath;
+	while (endpoint!=0) {
+		int temp = parent[endpoint];
+		if (endpoint==temp+1) reversePath.push_back(0);
+		else if (endpoint==temp+width) reversePath.push_back(1);
+		else if (endpoint==temp-1) reversePath.push_back(2);
+		else reversePath.push_back(3);
+		endpoint = temp;
+	}
 	vector<int> path;
-	for (int k=0; k<width; k++) {
-		// if they are connected
-		if (s.find(0) == s.find(width*(height-1)+k)) {
-			vector<vector<bool>> processed;
-			for (int i=0; i<width; i++) {
-				processed.push_back(vector<bool>());
-				for (int j=0; j<height; j++)
-					processed[i].push_back(false);
-			}
-		 	vector<int> tempPath;
-		 	findPath(0,0,k,height-1,tempPath,processed);
-		 	// update the longest path
-		 	if (path.size()<tempPath.size()) path = tempPath;
-		}
+	while (!reversePath.empty()) {
+		path.push_back(reversePath.back());
+		reversePath.pop_back();
 	}
 	return path;
 }
 
-// return the y-coordinate of destination
-void SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & path, vector<vector<bool>> processed) {
-	// when reach the destination
-	if (x==finalX && y==finalY) return;
-	// if it is out of bound but not reach destination, it is not a good path
-	if (x<0||x>width-1 || y<0||y>height-1 || finalX<0||finalX>width-1 || finalY<0||finalY>height-1) {
-		path = vector<int>();
-		return;
+void SquareMaze::calculate (int curr, std::map<int,int> & dis, std::map<int,int> &parent, vector<bool> &processed) {
+	processed[curr] = true;
+	int currentX = curr%width;
+	int currentY = curr/width;
+	if (canTravel(currentX,currentY,0) && !processed[curr+1]) {
+		dis[curr+1] = dis[curr] + 1;
+		parent[curr+1] = curr;
+		calculate (curr+1, dis, parent, processed);
 	}
-	// if it has been processed but not reach destination, it is not a good path
-	if (processed[x][y]) {
-		path = vector<int>();
-		return ;
+	if (canTravel(currentX,currentY,1) && !processed[curr+width]) {
+		dis[curr+width] = dis[curr] + 1;
+		parent[curr+width] = curr;
+		calculate (curr+width, dis, parent, processed);
 	}
-	// otherwise,
-	processed[x][y] = true;
-	vector<int> largest;
-	if (canTravel(x, y, 0)) {
-		vector<int> tempPath = path;
-		tempPath.push_back(0);
-		findPath (x+1,y,finalX,finalY,tempPath,processed);
-		if (largest.size()<tempPath.size()) {
-			largest = tempPath;
-		}
+	if (canTravel(currentX,currentY,2) && !processed[curr-1]) {
+		dis[curr-1] = dis[curr] + 1;
+		parent[curr-1] = curr;
+		calculate (curr-1, dis, parent, processed);
 	}
-	if (canTravel(x, y, 1)) {
-		vector<int> tempPath = path;
-		tempPath.push_back(1);
-		findPath (x,y+1,finalX,finalY,tempPath,processed);
-		if (largest.size()<tempPath.size()) {
-			largest = tempPath;
-		}
+	if (canTravel(currentX,currentY,3) && !processed[curr-width]) {
+		dis[curr-width] = dis[curr] + 1;
+		parent[curr-width] = curr;
+		calculate (curr-width, dis, parent, processed);
 	}
-	if (canTravel(x, y, 2)) {
-		vector<int> tempPath = path;
-		tempPath.push_back(2);
-		findPath (x-1,y,finalX,finalY,tempPath,processed);
-		if (largest.size()<tempPath.size()) {
-			largest = tempPath;
-		}
-	}
-	if (canTravel(x, y, 3)) {
-		vector<int> tempPath = path;
-		tempPath.push_back(3);
-		findPath (x,y-1,finalX,finalY,tempPath,processed);
-		if (largest.size()<tempPath.size()) {
-			largest = tempPath;
-		}
-	}
-	path = largest;
 }
-
+	
 /**  
  * Draws the maze without the solution.
  * First, create a new PNG. Set the dimensions of the PNG to (width*10+1,height*10+1). 

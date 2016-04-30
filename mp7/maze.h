@@ -1,6 +1,7 @@
 /* Your code here! */
 
 #include <vector>
+#include <map>
 #include "png.h"
 #include "dsets.h"
 
@@ -83,7 +84,7 @@ void setWall (int x, int y, int dir, bool exists);
  */
 vector<int> solveMaze () ;
 
-void findPath (int x, int y, int finalX, int finalY, vector<int>& tempPath, vector<vector<bool>> processed) ;
+void calculate (int curr, std::map<int,int> &dis, std::map<int,int> &parent, vector<bool> &processed) ;
 
 /**  
  * Draws the maze without the solution.
