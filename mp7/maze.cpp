@@ -221,70 +221,64 @@ vector<int> SquareMaze::solveMaze () {
 					processed[i].push_back(false);
 			}
 		 	vector<int> tempPath;
-		 	int yFinal = findPath(0,0,k,height-1,tempPath,processed);
+		 	findPath(0,0,k,height-1,tempPath,processed);
 		 	// update the longest path
-		 	if (yFinal==height-1 && path.size()<tempPath.size()) path = tempPath;
+		 	if (path.size()<tempPath.size()) path = tempPath;
 		}
 	}
 	return path;
 }
 
 // return the y-coordinate of destination
-int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & path, vector<vector<bool>> processed) {
+void SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & path, vector<vector<bool>> processed) {
 	// when reach the destination
-	if (x==finalX && y==finalY) return y;
+	if (x==finalX && y==finalY) return;
 	// if it is out of bound but not reach destination, it is not a good path
-	if (x<0||x>width-1 || y<0||y>height-1 || finalX<0||finalX>width-1 || finalY<0||finalY>height-1) 
-		return -1;
+	if (x<0||x>width-1 || y<0||y>height-1 || finalX<0||finalX>width-1 || finalY<0||finalY>height-1) {
+		path = vector<int>();
+		return;
+	}
 	// if it has been processed but not reach destination, it is not a good path
-	if (processed[x][y]) return -1;
+	if (processed[x][y]) {
+		path = vector<int>();
+		return ;
+	}
 	// otherwise,
 	processed[x][y] = true;
-	int yFinal = 0; 
 	vector<int> largest;
-	// size_t largest = 0;
-	// int nextStep = 0;
 	if (canTravel(x, y, 0)) {
 		vector<int> tempPath = path;
 		tempPath.push_back(0);
-		int tempY = findPath (x+1,y,finalX,finalY,tempPath,processed);
-		if (tempY==finalY && largest.size()<tempPath.size()) {
+		findPath (x+1,y,finalX,finalY,tempPath,processed);
+		if (largest.size()<tempPath.size()) {
 			largest = tempPath;
-			yFinal = tempY;
 		}
 	}
 	if (canTravel(x, y, 1)) {
 		vector<int> tempPath = path;
 		tempPath.push_back(1);
-		int tempY = findPath (x,y+1,finalX,finalY,tempPath,processed);
-		if (tempY==finalY && largest.size()<tempPath.size()) {
+		findPath (x,y+1,finalX,finalY,tempPath,processed);
+		if (largest.size()<tempPath.size()) {
 			largest = tempPath;
-			yFinal = tempY;
 		}
 	}
 	if (canTravel(x, y, 2)) {
 		vector<int> tempPath = path;
 		tempPath.push_back(2);
-		int tempY = findPath (x-1,y,finalX,finalY,tempPath,processed);
-		if (tempY==finalY && largest.size()<tempPath.size()) {
+		findPath (x-1,y,finalX,finalY,tempPath,processed);
+		if (largest.size()<tempPath.size()) {
 			largest = tempPath;
-			yFinal = tempY;
 		}
 	}
 	if (canTravel(x, y, 3)) {
 		vector<int> tempPath = path;
 		tempPath.push_back(3);
-		int tempY = findPath (x,y-1,finalX,finalY,tempPath,processed);
-		if (tempY==finalY && largest.size()<tempPath.size()) {
+		findPath (x,y-1,finalX,finalY,tempPath,processed);
+		if (largest.size()<tempPath.size()) {
 			largest = tempPath;
-			yFinal = tempY;
 		}
 	}
-	if (path.size()<largest.size()) {
-		path = largest;
-		return yFinal;
-	}
-	else return -1;
+	path = largest;
 }
 
 /**  

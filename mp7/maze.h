@@ -83,7 +83,7 @@ void setWall (int x, int y, int dir, bool exists);
  */
 vector<int> solveMaze () ;
 
-int findPath (int x, int y, int finalX, int finalY, vector<int>& tempPath, vector<vector<bool>> processed) ;
+void findPath (int x, int y, int finalX, int finalY, vector<int>& tempPath, vector<vector<bool>> processed) ;
 
 /**  
  * Draws the maze without the solution.
