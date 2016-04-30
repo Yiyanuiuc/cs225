@@ -6,6 +6,7 @@
  */
 
 #include "graph_tools.h"
+#include "edge.h"
 #include <vector>
 #include <map>
 
@@ -29,64 +30,72 @@ int GraphTools::findMinWeight(Graph& graph)
 {
 	/* Your code here! */
 
+	vector<Edge> edgeList = graph.getEdges(); 
+	Edge minWeight = edgeList[0];
+	for (size_t i=0; i<edgeList.size(); i++) {
+		if (edgeList[i]<minWeight) 
+			minWeight = edgeList[i];
+	}
+	graph.setEdgeLabel(minWeight.source, minWeight.dest, "MIN");
+	return minWeight.weight;
 	// Initially label vertices and edges as unvisited.
-	vector<Vertex> vertexList = graph.getVertices();
-	for (size_t i=0; i<vertexList.size(); i++)
-		graph.setVertexLabel(vertexList[i], "UNEXPLORED");
-	queue<Vertex> q;
-	Vertex v = graph.getStartingVertex();
-	graph.setVertexLabel(v, "VISITED");
-	q.push(v);
-	while (!q.empty()) {
-		Vertex nextV = q.front();
-		q.pop();
-		vector<Vertex> adj = graph.getAdjacent(nextV);
-		for (size_t i=0; i<adj.size(); i++) {
-			Vertex temp = adj[i];
-			if (graph.getVertexLabel(temp)=="UNEXPLORED") {
-				graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
-				graph.setVertexLabel(temp, "VISITED");
-				q.push(temp);
-			}
-			else if (graph.getEdgeLabel(nextV, temp)!="UNEXPLORED") {
-				graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
-			}
-		}
-	}
-	for (size_t i=0; i<vertexList.size(); i++)
-		graph.setVertexLabel(vertexList[i], "UNEXPLORED");
-	while (!q.empty()) q.pop();
+	// vector<Vertex> vertexList = graph.getVertices();
+	// for (size_t i=0; i<vertexList.size(); i++)
+	// 	graph.setVertexLabel(vertexList[i], "UNEXPLORED");
+	// queue<Vertex> q;
+	// Vertex v = graph.getStartingVertex();
+	// graph.setVertexLabel(v, "VISITED");
+	// q.push(v);
+	// while (!q.empty()) {
+	// 	Vertex nextV = q.front();
+	// 	q.pop();
+	// 	vector<Vertex> adj = graph.getAdjacent(nextV);
+	// 	for (size_t i=0; i<adj.size(); i++) {
+	// 		Vertex temp = adj[i];
+	// 		if (graph.getVertexLabel(temp)=="UNEXPLORED") {
+	// 			graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
+	// 			graph.setVertexLabel(temp, "VISITED");
+	// 			q.push(temp);
+	// 		}
+	// 		else if (graph.getEdgeLabel(nextV, temp)!="UNEXPLORED") {
+	// 			graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
+	// 		}
+	// 	}
+	// }
+	// for (size_t i=0; i<vertexList.size(); i++)
+	// 	graph.setVertexLabel(vertexList[i], "UNEXPLORED");
+	// while (!q.empty()) q.pop();
 
-	graph.setVertexLabel(v, "VISITED");
-	q.push(v);
-	Vertex min1 = v;
-	Vertex min2 = graph.getAdjacent(v)[0];
-	while (!q.empty()) {
-		Vertex nextV = q.front();
-		q.pop();
-		vector<Vertex> adj = graph.getAdjacent(nextV);
-		for (size_t i=0; i<adj.size(); i++) {
-			Vertex temp = adj[i];
-			if (graph.getVertexLabel(temp)=="UNEXPLORED") {
-				graph.setEdgeLabel(nextV, temp, "DISCOVERY");
-				graph.setVertexLabel(temp, "VISITED");
-				q.push(temp);
-				if (graph.getEdgeWeight(nextV, temp) < graph.getEdgeWeight(min1, min2)) {
-					min1 = nextV;
-					min2 = temp;
-				}
-			}
-			else if (graph.getEdgeLabel(nextV, temp)=="UNEXPLORED") {
-				graph.setEdgeLabel(nextV, temp, "CROSS");
-				if (graph.getEdgeWeight(nextV, temp) < graph.getEdgeWeight(min1, min2)) {
-					min1 = nextV;
-					min2 = temp;
-				}
-			}
-		}
-	}
-	graph.setEdgeLabel(min1,min2,"MIN");
-	return graph.getEdgeWeight(min1,min2);
+	// graph.setVertexLabel(v, "VISITED");
+	// q.push(v);
+	// Vertex min1 = v;
+	// Vertex min2 = graph.getAdjacent(v)[0];
+	// while (!q.empty()) {
+	// 	Vertex nextV = q.front();
+	// 	q.pop();
+	// 	vector<Vertex> adj = graph.getAdjacent(nextV);
+	// 	for (size_t i=0; i<adj.size(); i++) {
+	// 		Vertex temp = adj[i];
+	// 		if (graph.getVertexLabel(temp)=="UNEXPLORED") {
+	// 			graph.setEdgeLabel(nextV, temp, "DISCOVERY");
+	// 			graph.setVertexLabel(temp, "VISITED");
+	// 			q.push(temp);
+	// 			if (graph.getEdgeWeight(nextV, temp) < graph.getEdgeWeight(min1, min2)) {
+	// 				min1 = nextV;
+	// 				min2 = temp;
+	// 			}
+	// 		}
+	// 		else if (graph.getEdgeLabel(nextV, temp)=="UNEXPLORED") {
+	// 			graph.setEdgeLabel(nextV, temp, "CROSS");
+	// 			if (graph.getEdgeWeight(nextV, temp) < graph.getEdgeWeight(min1, min2)) {
+	// 				min1 = nextV;
+	// 				min2 = temp;
+	// 			}
+	// 		}
+	// 	}
+	// }
+	// graph.setEdgeLabel(min1,min2,"MIN");
+	// return graph.getEdgeWeight(min1,min2);
 }
 
 /**
@@ -117,34 +126,38 @@ int GraphTools::findShortestPath(Graph& graph, Vertex start, Vertex end)
 	vector<Vertex> vertexList = graph.getVertices();
 	for (size_t i=0; i<vertexList.size(); i++)
 		graph.setVertexLabel(vertexList[i], "UNEXPLORED");
+	vector<Edge> edgeList = graph.getEdges();
+	for (size_t i=0; i<edgeList.size(); i++)
+		graph.setEdgeLabel(edgeList[i].source, edgeList[i].dest, "UNEXPLORED");
+
 	queue<Vertex> q;
-	graph.setVertexLabel(start, "VISITED");
-	q.push(start);
-	while (!q.empty()) {
-		Vertex nextV = q.front();
-		q.pop();
-		vector<Vertex> adj = graph.getAdjacent(nextV);
-		for (size_t i=0; i<adj.size(); i++) {
-			Vertex temp = adj[i];
-			if (graph.getVertexLabel(temp)=="UNEXPLORED") {
-				graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
-				graph.setVertexLabel(temp, "VISITED");
-				q.push(temp);
-			}
-			else if (graph.getEdgeLabel(nextV, temp)!="UNEXPLORED") {
-				graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
-			}
-		}
-	}
-	for (size_t i=0; i<vertexList.size(); i++)
-		graph.setVertexLabel(vertexList[i], "UNEXPLORED");
-	while (!q.empty()) q.pop(); 
+	// graph.setVertexLabel(start, "VISITED");
+	// q.push(start);
+	// while (!q.empty()) {
+	// 	Vertex nextV = q.front();
+	// 	q.pop();
+	// 	vector<Vertex> adj = graph.getAdjacent(nextV);
+	// 	for (size_t i=0; i<adj.size(); i++) {
+	// 		Vertex temp = adj[i];
+	// 		if (graph.getVertexLabel(temp)=="UNEXPLORED") {
+	// 			graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
+	// 			graph.setVertexLabel(temp, "VISITED");
+	// 			q.push(temp);
+	// 		}
+	// 		else if (graph.getEdgeLabel(nextV, temp)!="UNEXPLORED") {
+	// 			graph.setEdgeLabel(nextV, temp, "UNEXPLORED");
+	// 		}
+	// 	}
+	// }
+	// for (size_t i=0; i<vertexList.size(); i++)
+	// 	graph.setVertexLabel(vertexList[i], "UNEXPLORED");
+	// while (!q.empty()) q.pop(); 
 
 	graph.setVertexLabel(start, "VISITED");
 	q.push(start);
 	std::map<Vertex, int> dis;
 	dis[start]=0;
-	map<Vertex, Vertex> parent;
+	std::map<Vertex, Vertex> parent;
 	Vertex nextV;	
 	while (!q.empty()) {
 		nextV = q.front(); 
@@ -189,13 +202,32 @@ void GraphTools::findMST(Graph& graph)
 {
 	/* Your code here! */
 	// Get a list of all edges in the graph and sort them by increasing weight.
+	vector<Vertex> vertexList = graph.getVertices();
 	vector<Edge> edgeList = graph.getEdges();
 	std::sort(edgeList.begin(), edgeList.end());
 	// Create a disjoint sets structure where each vertex is represented by a set.
+	std::map<Vertex, int> index;
+	DisjointSets s;
+	s.addelements((int)edgeList.size());
+	for (size_t i=0; i<vertexList.size(); i++) 
+		index[vertexList[i]] = i;
+	int count = vertexList.size()-1;
 	// Traverse the list from the start (i.e., from lightest weight to heaviest).
-	// Inspect the current edge. If that edge connects two vertices from different sets, 
-	// union their respective sets and mark the edge as part of the MST. 
-	// Otherwise there would be a cycle, so do nothing.
-	// Repeat this until n−1n−1 edges have been added, where nn is the number of vertices in the graph.
+	for (size_t i=0; i<edgeList.size(); i++) {
+		// Inspect the current edge. 
+		Vertex v1 = edgeList[i].source;
+		Vertex v2 = edgeList[i].dest;
+		// If that edge connects two vertices from different sets, 
+		if (s.find(index[v1]) != s.find(index[v2])) {
+			// union their respective sets and mark the edge as part of the MST. 
+			s.setunion(index[v1], index[v2]);
+			graph.setEdgeLabel(v1, v2, "MST");
+			count--;
+		}
+		// Otherwise there would be a cycle, so do nothing.
+		else;
+		// Repeat this until n−1 edges have been added, where n is the number of vertices in the graph.
+		if (count==0) break;
+	}
 }
 
