@@ -230,7 +230,7 @@ vector<int> SquareMaze::solveMaze () {
 }
 
 // return the y-coordinate of destination
-int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & path, vector<vector<bool>> processed) {
+int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> path, vector<vector<bool>> processed) {
 	// when reach the destination
 	if (x==finalX && y==finalY) return y;
 	// if it is out of bound but not reach destination, it is not a good path
@@ -252,14 +252,6 @@ int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & pa
 			largest = tempPath;
 			yFinal = tempY;
 		}
-		// path.push_back(0);
-		// int tempY = findPath (x+1,y,finalX,finalY,path,processed);
-		// if (tempY==finalY && largest<path.size()) {
-		// 	largest = path.size();
-		// 	nextStep = 0;
-		// 	yFinal = tempY;
-		// }
-		// path.pop_back();
 	}
 	if (canTravel(x, y, 1)) {
 		vector<int> tempPath = path;
@@ -269,14 +261,6 @@ int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & pa
 			largest = tempPath;
 			yFinal = tempY;
 		}
-		// path.push_back(1);
-		// int tempY = findPath (x,y+1,finalX,finalY,path,processed);
-		// if (tempY==finalY && largest<path.size()) {
-		// 	largest = path.size(); 
-		// 	nextStep = 1;
-		// 	yFinal = tempY;
-		// }
-		// path.pop_back();
 	}
 	if (canTravel(x, y, 2)) {
 		vector<int> tempPath = path;
@@ -286,25 +270,8 @@ int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & pa
 			largest = tempPath;
 			yFinal = tempY;
 		}
-		// path.push_back(2);
-		// int tempY = findPath (x-1,y,finalX,finalY,path,processed);
-		// if (tempY==finalY && largest<path.size()) {
-		// 	largest = path.size();
-		// 	nextStep = 2;
-		// 	yFinal = tempY;
-		// }
-		// path.pop_back();
 	}
 	if (canTravel(x, y, 3)) {
-		// path.push_back(3);
-		// int tempY = findPath (x,y-1,finalX,finalY,path,processed);
-		// if (tempY==finalY && largest<path.size()) {
-		// 	largest = path.size();
-		// 	nextStep = 3;
-		// 	yFinal = tempY;
-		// }
-		// path.pop_back();
-
 		vector<int> tempPath = path;
 		tempPath.push_back(3);
 		int tempY = findPath (x,y-1,finalX,finalY,tempPath,processed);
@@ -318,8 +285,6 @@ int SquareMaze::findPath (int x, int y, int finalX, int finalY, vector<int> & pa
 		return yFinal;
 	}
 	else return -1;
-	// path.push_back(nextStep);
-	// return yFinal;
 }
 
 /**  
