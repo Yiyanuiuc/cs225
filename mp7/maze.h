@@ -84,8 +84,6 @@ void setWall (int x, int y, int dir, bool exists);
  */
 vector<int> solveMaze () ;
 
-void calculate (int curr, std::map<int,int> &dis, std::map<int,int> &parent, vector<bool> &processed) ;
-
 /**  
  * Draws the maze without the solution.
  * First, create a new PNG. Set the dimensions of the PNG to (width*10+1,height*10+1). 

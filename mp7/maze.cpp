@@ -57,35 +57,6 @@ void SquareMaze::makeMaze (int width, int height) {
 	// generate random numbers
 	srand(time(NULL));
 	int x, y, dir;
-	// bool satisfied = false;
-	// while (!satisfied) {
-	// 	while (true) {
-	// 		// You will select random walls to delete without creating a cycle
-	// 		x = rand()%width;
-	// 		y = rand()%height;
-	// 		int curr = y*width+x;
-	// 		dir = rand()%2;
-	// 		// if the wall exist
-	// 		if (!canTravel(x,y,dir)) {
-	// 			// if a cycle will generated
-	// 			if (dir==0 && s.find(curr)==s.find(curr+1)) 
-	// 				break;
-	// 			else if (dir==1 && s.find(curr)==s.find(curr+width)) 
-	// 				break;
-	// 			// if not, delete the wall
-	// 			setWall (x, y, dir, false);
-	// 		}
-	// 	}
-	// 	// check connection
-	// 	satisfied = true;
-	// 	for (int i=0; i<width*height; i++) {
-	// 		// if there is a square not connected to 0,0
-	// 		if (s.find(0)!=s.find(i)) {
-	// 			satisfied = false;
-	// 			break;
-	// 		}
-	// 	}
-	// }
 	int count = width*height-1;
 	while (count>0) {
 		// You will select random walls to delete without creating a cycle
@@ -216,12 +187,43 @@ vector<int> SquareMaze::solveMaze () {
 	vector<bool> processed;
 	for (int i=0; i<width*height; i++)
 		processed.push_back(false);
-	calculate (0,dis,parent,processed);
+	// BFS
+	queue<int> q;
+	q.push(0);
+	while (!q.empty()) {
+		int curr = q.front();
+		q.pop();
+		processed[curr] = true;
+		int currentX = curr%width;
+		int currentY = curr/width;
+		if (canTravel(currentX,currentY,0) && !processed[curr+1]) {
+			dis[curr+1] = dis[curr] + 1;
+			parent[curr+1] = curr;
+			q.push(curr+1);
+		}
+		if (canTravel(currentX,currentY,1) && !processed[curr+width]) {
+			dis[curr+width] = dis[curr] + 1;
+			parent[curr+width] = curr;
+			q.push(curr+width);
+		}
+		if (canTravel(currentX,currentY,2) && !processed[curr-1]) {
+			dis[curr-1] = dis[curr] + 1;
+			parent[curr-1] = curr;
+			q.push(curr-1);
+		}
+		if (canTravel(currentX,currentY,3) && !processed[curr-width]) {
+			dis[curr-width] = dis[curr] + 1;
+			parent[curr-width] = curr;
+			q.push(curr-width);
+		}
+	}
+	// Find the largest path
 	int endpoint = 0;
 	for (std::map<int, int>::iterator it=dis.begin(); it!=dis.end(); it++) {
 		if (it->first >= width*(height-1) && dis[endpoint] < it->second) 
 			endpoint = it->first;
 	}
+	// Get the sequence of steps
 	vector<int> reversePath;
 	while (endpoint!=0) {
 		int temp = parent[endpoint];
@@ -231,6 +233,7 @@ vector<int> SquareMaze::solveMaze () {
 		else reversePath.push_back(3);
 		endpoint = temp;
 	}
+	// Reverse the vector
 	vector<int> path;
 	while (!reversePath.empty()) {
 		path.push_back(reversePath.back());
@@ -239,32 +242,6 @@ vector<int> SquareMaze::solveMaze () {
 	return path;
 }
 
-void SquareMaze::calculate (int curr, std::map<int,int> & dis, std::map<int,int> &parent, vector<bool> &processed) {
-	processed[curr] = true;
-	int currentX = curr%width;
-	int currentY = curr/width;
-	if (canTravel(currentX,currentY,0) && !processed[curr+1]) {
-		dis[curr+1] = dis[curr] + 1;
-		parent[curr+1] = curr;
-		calculate (curr+1, dis, parent, processed);
-	}
-	if (canTravel(currentX,currentY,1) && !processed[curr+width]) {
-		dis[curr+width] = dis[curr] + 1;
-		parent[curr+width] = curr;
-		calculate (curr+width, dis, parent, processed);
-	}
-	if (canTravel(currentX,currentY,2) && !processed[curr-1]) {
-		dis[curr-1] = dis[curr] + 1;
-		parent[curr-1] = curr;
-		calculate (curr-1, dis, parent, processed);
-	}
-	if (canTravel(currentX,currentY,3) && !processed[curr-width]) {
-		dis[curr-width] = dis[curr] + 1;
-		parent[curr-width] = curr;
-		calculate (curr-width, dis, parent, processed);
-	}
-}
-	
 /**  
  * Draws the maze without the solution.
  * First, create a new PNG. Set the dimensions of the PNG to (width*10+1,height*10+1). 
