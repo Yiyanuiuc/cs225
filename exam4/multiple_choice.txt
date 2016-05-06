@@ -1,0 +1,159 @@
+Exam 4 Multiple Choice Questions
+
+- These questions may not be in the same order as what you saw on the exam.
+- Your answer is indicated by a '->'
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+For a minHeap implementation, assume we use the 0th index of the array
+to store the root (instead of index 1). Given an element at position
+$i$, what would be the position of its parent (assume $i \\neq 0$)?
+
+Choices:
+   a. None of other options
+   b. $\frac{i-1}{2}$
+   c. $\left\lceil \frac{i-1}{2} \right\rceil$
+   d. $\left\lfloor \frac{i}{2} \right\rfloor$
+-> e. $\left\lfloor \frac{i-1}{2} \right\rfloor$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider the following array-based representation of a disjoint set:
+
+      index: 0   1  2  3  4  5  6   7  8
+    element: 1  -5  1  2  2  6  7  -4  6
+
+The operations `Find(3)`, `Union(Find(4), Find(8))` and `Find(5)` are
+performed using union-by-size and path compression. How many times is
+node 2 traversed during the operations?
+
+Choices:
+   a. None of these is correct
+   b. 1
+   c. 3
+-> d. 2
+   e. 0
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+What is the maximum number of keys that can be stored in a B-Tree of
+order 32 and height 6?
+
+Choices:
+   a. None of the other options are correct
+   b. $31\times(32^{6} − 1)$
+   c. $6 \times 2^{32} - 1$
+-> d. $32^{7} − 1$
+   e. $31\times(6^{32} − 1)$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Given the following string of characters:
+
+    b a b a c a d a c a b a b
+
+what is the length of the Huffman encoding for character `c`?
+
+Choices:
+   a. 1 binary digit
+   b. None of the other answers
+-> c. 3 binary digits
+   d. 2 binary digits
+   e. 4 binary digits
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `std::map` in C++ is:
+
+Choices:
+-> a. Abstract Data Type
+   b. None of the options is correct
+   c. Iterator
+   d. Abstract Base Class
+   e. Operator
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are several factors that affect the efficiency of lookup
+operations in a hash table. Which of the following is not one of those
+factors?
+
+Choices:
+   a. Quality of the hash function
+-> b. Size of elements stored in the hash table
+   c. All of these factors affect the efficiency of hash table lookups
+   d. Number of elements stored in the hash table
+   e. Number of buckets in the hash table
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose for every node $v$ in a binary tree, you wish to compute the
+length of the longest path from $v$ down to a descendant leaf, storing
+that distance in the node. What is the running time of the best
+algorithm to do this?
+
+Choices:
+   a. $O(n\log n)$
+   b. None of the other answers
+   c. $O(1)$
+   d. $O(n)$
+-> e. $O(n^2)$
+   f. $O(\log n)$
+Your answer was incorrect.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+In our uptree disjoint sets implementation, suppose we employ
+union-by-size and no path compression. The running times of the relevant
+functions are:
+
+Choices:
+   a. $O(n)$ for `setUnion` and $O(1)$ for `Find`
+   b. $O(\log n)$ for `setUnion` and $O(\log n)$ for `Find`
+   c. $O(n)$ for `setUnion` and $O(n\log n)$ for `Find`
+-> d. $O(1)$ for `setUnion` and $O(\log n)$ for `Find`
+   e. None of the other answers
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Priority Queue (PQ) ADT implements the functions `removeMin` and
+`insert`. Suppose you use a sorted, singly linked list with a tail
+pointer and with keys arranged largest to smallest to implement a PQ.
+Which of these is the tightest bound on the running times for
+`removeMin` and `insert` for this implementation on a PQ containing $n$
+keys?
+
+Choices:
+-> a. $O(n)$ for `removeMin` and $O(n)$ for `insert`
+   b. None of the other options
+   c. $O(1)$ for `removeMin` and $(\log n)$ for `insert`
+   d. $O(n)$ for `removeMin` and $O(\log n)$ for `insert`
+   e. $O(1)$ for `removeMin` and $O(n)$ for `insert`
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose you implement a hash table with separate chaining, where instead
+of a linked list, you use an AVL Tree. What is the worst case running
+time for inserting 1 element into the hash table of size $n$ if resizing
+is set to occur every time any of the binary trees reach a size of $m$
+($m$ nodes are present in the binary tree).
+
+Choices:
+   a. $O(m)$
+-> b. $O(\log m)$
+   c. $O(n)$
+   d. None of the other options
+   e. $O(n \log m)$
+   f. $O(m + n)$
+Your answer was correct.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+

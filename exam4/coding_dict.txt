@@ -1,0 +1,61 @@
+#########################################
+##                                     ##
+##     Grading question exam4-dict     ##
+##                                     ##
+#########################################
+:: Compiling...
+g++ -std=c++0x -c -g -O0 -Wall -Wextra -Wno-unused-function   -c -o dict.o dict.cpp
+:: Compiled successfully!
+:: Compiling provided code...
+
+:: Compiling test_difflen.
+:: Running test_difflen.
+Checking if "blah" and "foo" are isomorphic
+Result:   false
+Expected: false
+:: Passed test_difflen.
+
+:: Compiling test_true1.
+:: Running test_true1.
+Checking if "egg" and "add" are isomorphic
+Result:   true
+Expected: true
+:: Passed test_true1.
+
+:: Compiling test_true2.
+:: Running test_true2.
+Checking if "paper" and "title" are isomorphic
+Result:   true
+Expected: true
+:: Passed test_true2.
+
+:: Compiling test_true3.
+:: Running test_true3.
+Checking if "floyd" and "dingy" are isomorphic
+Result:   true
+Expected: true
+:: Passed test_true3.
+
+:: Compiling test_false1.
+:: Running test_false1.
+Checking if "foo" and "bar" are isomorphic
+Result:   false
+Expected: false
+:: Passed test_false1.
+
+:: Compiling test_false2.
+:: Running test_false2.
+Checking if "food" and "aaaa" are isomorphic
+Result:   true
+Expected: false
+:: Failed test_false2.
+
+:: Compiling test_false3.
+:: Running test_false3.
+Checking if "floor" and "baaar" are isomorphic
+Result:   true
+Expected: false
+:: Failed test_false3.
+
+Grade for question exam4-dict: 75/100
+
